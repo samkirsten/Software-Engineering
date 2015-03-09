@@ -1,7 +1,7 @@
 
 public interface Map {
 
-    public int[][] Cell;
+    public int[][] Cell = null;
     public int sizeX = 0;
     public int sizeY = 0;
 
