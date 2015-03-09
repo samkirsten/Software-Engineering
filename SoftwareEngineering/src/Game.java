@@ -1,5 +1,10 @@
-/**
- * Created by Jacob on 09/03/2015.
- */
+
 public interface Game {
+
+    int NUMBER_OF_ROUNDS = 300000;
+
+
+
+
+
 }

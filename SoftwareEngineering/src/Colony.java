@@ -2,27 +2,72 @@ import java.util.List;
 
 public interface Colony {
 
-    public enum Colour {RED,BLACK}
-
-    public Colour colonyColour = null;
-    public Brain brain = null;
-    public List<Ant> ants = null;
-    public int food = 0;
-    public List<Position> hill = null;
-
-
+    /**
+     * Get an Ant object from the list of Ants stored in the given colony.
+     * @param pos The cell position of the ant to be found
+     * @return The Ant at indicated position
+     */
     public Ant getAnt(Position pos);
 
+    /**
+     * Get an Ant object from the list of Ants stored in the given colony.
+     * @param id the id of the ant to be found
+     * @return The Ant with given id
+     */
     public Ant getAnt(int id);
 
+    /**
+     * Get the number of ants currently alive belonging to the colony
+     * @return Number of ants still alive
+     */
+    public int getNumberOfAnts();
+
+    /**
+     * Get the total amount of food held by the colony. This does not include food held by individual ants
+     * belonging to the colony.
+     * @return Amount of food in colony
+     */
+    public int getFoodInColony();
+
+    /**
+     * Increments the total amount of food belonging to the colony by 1.
+     * Invoked when an ant returns to the colony with food as it can only carry one particle at a time
+     */
+    public void incrementFood();
+
+    /**
+     * Load the colony with the given brain. This controls the behaviour of every ant in the colony.
+     * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
+     * @param brain
+     * @return  true if brain successfully loaded into colony, false otherwise.
+     */
     public boolean loadBrain(Brain brain);
 
+    /**
+     * Returns the brain which has been loaded into the colony
+     * @return the colony brain
+     */
+    public Brain getBrain();
+
+    /**
+     * Returns the colony colour, allowing differentiation between the two competing teams
+     * @return RED or BLACK
+     */
     public Colour getColonyColour();
 
+    /**
+     * Sets the given cells as part of the ant colony
+     * Must be exactly of length 7.
+     * The cells must all be connected
+     * @param cells The cells which form the anthill
+     */
+    public void setAntHill(List<Position> cells);
 
-
-
-
-
+    /**
+     * Kills ant belonging to this objects colony by removing it from the list of ants.
+     * When an ant is killed it turns into 3 particles of food.
+     * @param p position of the ant to be killed
+     */
+    public void killAnt(Position p);
 
 }
