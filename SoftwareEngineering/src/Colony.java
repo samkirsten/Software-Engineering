@@ -3,18 +3,18 @@ import java.util.List;
 public interface Colony {
 
     /**
-     * Get an Ant object from the list of Ants stored in the given colony.
+     * Get an Ant_interface object from the list of Ants stored in the given colony.
      * @param pos The cell position of the ant to be found
-     * @return The Ant at indicated position
+     * @return The Ant_interface at indicated position
      */
-    public Ant getAnt(Position pos);
+    public Ant_interface getAnt(Position pos);
 
     /**
-     * Get an Ant object from the list of Ants stored in the given colony.
+     * Get an Ant_interface object from the list of Ants stored in the given colony.
      * @param id the id of the ant to be found
-     * @return The Ant with given id
+     * @return The Ant_interface with given id
      */
-    public Ant getAnt(int id);
+    public Ant_interface getAnt(int id);
 
     /**
      * Get the number of ants currently alive belonging to the colony
