@@ -23,6 +23,11 @@ public interface Colony {
      */
     public int getNumberOfAnts();
 
+    /**
+     * When given an ant id, will return true if specified ant is alive
+     * @param id ant id to check whether alive
+     * @return true if ant alive, false otherwise
+     */
     public boolean isAntAlive(int id);
 
     /**

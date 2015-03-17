@@ -32,6 +32,11 @@ public interface Ant {
      */
     public boolean isResting();
 
+    /**
+     * Marks a scent at a cell when given a position and scent marker
+     * @param pos the position of the cell
+     * @param marker the scent marker
+     */
     public void markScent(Position pos, int marker);
 
     /**
@@ -49,8 +54,9 @@ public interface Ant {
     /**
      * This method is invoked only by the brain. It kills an enemy ant at the given position
      * @param p the position of the enemy ant
+     * @throws AntNotFoundException
      */
-    public void killEnemyAnt(Position p) throws EnemyAntNotFoundException;
+    public void killEnemyAnt(Position p) throws AntNotFoundException;
 
     /**
      * Returns whether the ant is currently carrying food
