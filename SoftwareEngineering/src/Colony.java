@@ -4,24 +4,26 @@ import java.util.List;
 public interface Colony {
 
     /**
-     * Get an Ant_interface object from the list of Ants stored in the given colony.
+     * Get an Ant object from the list of Ants stored in the given colony.
      * @param pos The cell position of the ant to be found
-     * @return The Ant_interface at indicated position
+     * @return The Ant at indicated position
      */
-    public Ant_interface getAnt(Position pos);
+    public Ant getAnt(Position pos);
 
     /**
-     * Get an Ant_interface object from the list of Ants stored in the given colony.
+     * Get an Ant object from the list of Ants stored in the given colony.
      * @param id the id of the ant to be found
-     * @return The Ant_interface with given id
+     * @return The Ant with given id
      */
-    public Ant_interface getAnt(int id);
+    public Ant getAnt(int id);
 
     /**
      * Get the number of ants currently alive belonging to the colony
      * @return Number of ants still alive
      */
     public int getNumberOfAnts();
+
+    public boolean isAntAlive(int id);
 
     /**
      * Get the total amount of food held by the colony. This does not include food held by individual ants
@@ -43,6 +45,7 @@ public interface Colony {
      * @return  true if brain successfully loaded into colony, false otherwise.
      */
     public boolean loadBrain(File brain);
+
 
     /**
      * Returns the brain which has been loaded into the colony

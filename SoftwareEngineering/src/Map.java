@@ -29,7 +29,7 @@ public interface Map {
     /**
      * Gets the scent marker of a cell at a given position.
      * If the scent marker is
-      * @param colourOfQueryingAnt the colour of the colony the querying ant belongs to
+     * @param colourOfQueryingAnt the colour of the colony the querying ant belongs to
      * @param pos the position of the cell
      * @return The scent marker at the given cell. (1-7) are black colony scents
      * (7-13) are red. 0 if no scent marker has been placed.
@@ -38,6 +38,17 @@ public interface Map {
      * THEN THIS METHOD WILL RETURN -1
      */
     public int getCellScentMarker(Colour colourOfQueryingAnt, Position pos);
+
+    public int getAntAtCell(Position pos);
+
+    public void setAntAtCell(Position pos, int antId);
+
+    public void setCellIsRocky(Position pos, boolean rocky);
+
+    public void setCellContents(Position pos, char contents);
+
+    public void setCellScentMarker(Position pos, int marker);
+
 
 
 

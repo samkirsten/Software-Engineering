@@ -21,6 +21,14 @@ public interface Cell {
      * if the cell contains food.
      * @return char representing contents of cell
      */
-    public byte getContents();
+    public char getContents();
+
+    /**
+    * Returns the ID of the ant in the current Cell.
+    * @return int representing ID of ant, -1 if no ant present
+    */
+    public int getAnt();
+
+
 
 }

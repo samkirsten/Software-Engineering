@@ -18,6 +18,7 @@ public interface Ant {
      */
     public int getState();
 
+
     /**
      * Set the current brain state of the ant, invoked by the brain in order to update the ant's
      * behaviour for the next turn
@@ -54,5 +55,6 @@ public interface Ant {
      * @return true if carrying food, false otherwise.
      */
     public boolean hasFood();
+
 
 }
