@@ -1,10 +1,4 @@
-/**
- * Created by Tina on 3/15/2015.
- */
-public class Ant implements Ant_interface {
-
-<<<<<<< HEAD
-public interface Ant {
+public interface Ant_interface {
 
     /**
      * Gets the current direction that the ant is facing
@@ -53,68 +47,12 @@ public interface Ant {
      * This method is invoked only by the brain. It kills an enemy ant at the given position
      * @param p the position of the enemy ant
      */
-    public void killEnemyAnt(Position p);
+    public void killEnemyAnt(Position p) throws EnemyAntNotFoundException;
 
     /**
      * Returns whether the ant is currently carrying food
      * @return true if carrying food, false otherwise.
      */
     public boolean hasFood();
-=======
-    public  int ID;
-    public Colour color;
-    public int state;
-    public int resting;
-    public int direction ;
-    public boolean has_Food;
->>>>>>> origin/master
 
-    public Ant(){
-        resting =0;
-    }
-
-    @java.lang.Override
-    public int getDirection() {
-        return 0;
-    }
-
-    @java.lang.Override
-    public void setDirection(int direction) {
-
-    }
-
-    @java.lang.Override
-    public int getState() {
-        return 0;
-    }
-
-    @java.lang.Override
-    public void setState(int state) {
-
-    }
-
-    @java.lang.Override
-    public boolean isResting() {
-        return false;
-    }
-
-    @java.lang.Override
-    public int getRemainingRest() {
-        return 0;
-    }
-
-    @java.lang.Override
-    public void incrementRest() {
-
-    }
-
-    @java.lang.Override
-    public void killEnemyAnt(Position p) throws EnemyAntNotFoundException {
-
-    }
-
-    @java.lang.Override
-    public boolean hasFood() {
-        return false;
-    }
 }
