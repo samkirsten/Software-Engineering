@@ -48,7 +48,7 @@ public interface Ant {
      * This method is invoked only by the brain. It kills an enemy ant at the given position
      * @param p the position of the enemy ant
      */
-    public void killEnemyAnt(Position p) throws EnemyAntNotFoundException;
+    public void killEnemyAnt(Position p);
 
     /**
      * Returns whether the ant is currently carrying food

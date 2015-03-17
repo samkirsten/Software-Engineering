@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.List;
 
 public interface Colony {
@@ -41,13 +42,13 @@ public interface Colony {
      * @param brain
      * @return  true if brain successfully loaded into colony, false otherwise.
      */
-    public boolean loadBrain(Brain brain);
+    public boolean loadBrain(File brain);
 
     /**
      * Returns the brain which has been loaded into the colony
      * @return the colony brain
      */
-    public Brain getBrain();
+    public File getBrain();
 
     /**
      * Returns the colony colour, allowing differentiation between the two competing teams
@@ -64,10 +65,11 @@ public interface Colony {
     public void setAntHill(List<Position> cells);
 
     /**
-     * Kills ant belonging to this objects colony by removing it from the list of ants.
+     * Removes ant belonging to this objects colony by removing it from the list of ants.
      * When an ant is killed it turns into 3 particles of food.
+     * This method is invoked from the killEnemyAnt method in an Ant object
      * @param p position of the ant to be killed
      */
-    public void killAnt(Position p);
+    public void remove(Position p);
 
 }

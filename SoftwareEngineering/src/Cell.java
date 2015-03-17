@@ -1,21 +1,26 @@
 
 public interface Cell {
 
-    public Position position = null;
-    public byte contents = 0;
-    public int scentMark = 0; // (0-6) black (6-12) red
-
-    public Position getPosition();
-
+    /**
+     * If a Cell is rocky, an ant cannot move into it
+     * @return true if cell is rocky, false otherwise
+     */
     public boolean isRocky();
 
+    /**
+     * Returns the scent mark at the given cell.
+     * (1-7) are black colony scents (7-13) are red. 0 if no
+     * scent marker has been placed.
+     * @return int representing given scent mark
+     */
+    public int getScentMark();
 
-
-
-
-
-
-
-
+    /**
+     * Returns the contents of the Cell.
+     * The return type is a char and can be later parsed to int
+     * if the cell contains food.
+     * @return char representing contents of cell
+     */
+    public byte getContents();
 
 }
