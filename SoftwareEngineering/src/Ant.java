@@ -32,6 +32,8 @@ public interface Ant {
      */
     public boolean isResting();
 
+    public void markScent(Position pos, int marker);
+
     /**
      * Returns the amount of rest that the ant still requires before its next move. An ant rests for 14 turns
      * @return int representing number of turns that the ant still must rest for before its next movement
@@ -55,6 +57,7 @@ public interface Ant {
      * @return true if carrying food, false otherwise.
      */
     public boolean hasFood();
+
 
 
 }
