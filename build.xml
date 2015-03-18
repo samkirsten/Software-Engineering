@@ -12,6 +12,7 @@
   <property name="build" location="SoftwareEngineering/build"/>
 
   <path id="project.classpath">
+    <pathelement location="SoftwareEngineering/lib/junit.jar"/>
     <pathelement location="${build}" />
     <pathelement location="${lib}" />
   </path>
