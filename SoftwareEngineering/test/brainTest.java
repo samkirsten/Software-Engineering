@@ -18,29 +18,33 @@ public class brainTest {
     public void testInstructionToken(){
 
         Brain b = new Brain();
-        b.checkBrain(file);
+        b.loadBrain(file);
         assertTrue(true);
     }
 
+    @Test
     public void testDirectionToken(){
 
         Brain b2 = new Brain();
-        b2.checkBrain(file2);
+        b2.loadBrain(file2);
         assertTrue(true);
 
     }
 
+    @Test
     public void testConditionsToken(){
 
         Brain b3 = new Brain();
-        b3.checkBrain(file3);
+        b3.loadBrain(file3);
         assertTrue(true);
 
     }
+
+    @Test
     public void testArgumentTokens(){
 
         Brain b4 = new Brain();
-        b4.checkBrain(file4);
+        b4.loadBrain(file4);
         assertTrue(true);
     }
 
@@ -49,35 +53,110 @@ public class brainTest {
     public void testMixOfTokens(){
 
         Brain b5 = new Brain();
-        b5.checkBrain(file5);
+        b5.loadbrain(file5);
         assertTrue(true);
 
-    }
 
+    }
 
     // test incorrect tokens mixed with correct tokens
     @Test
     public void testFailTokens(){
 
         Brain b6 = new Brain();
-        b6.checkBrain(file6);
+        b6.loadBrain(file6);
+        assertFalse(false);
+
+      //  Brain b7 = new Brain();
+        b6.loadBrain(file7);
+        assertFalse(false);
+
+     //   Brain b8 = new Brain();
+        b6.loadBrain(file8);
+        assertFalse(false);
+
+      //  Brain b9 = new Brain();
+        b6.loadBrain(file9);
         assertFalse(false);
     }
 
+    @Test
     public void testCorrectWrongTokens(){
 
         Brain b7 = new Brain();
-        b7.checkBrain(file7);
+        b10.loadBrain(file10);
+        assertFalse(false);
+
+       // Brain b11 = new Brain();
+        b7.loadBrain(file11);
+        assertFalse(false);
+
+       // Brain b12 = new Brain();
+        b7.loadBrain(file12);
         assertFalse(false);
     }
 
-    public void testCorrectWrongTokens2(){
 
+    @Test
+
+    pubic void testStepResting(){
+
+        Ant a = new Ant();
         Brain b8 = new Brain();
-        b8.checkBrain(file8);
-        assertFalse(false);
+        a.setResting();
+
+        assertTrue(a.isResting());
+
+        b8.step(a.getID()); // should ant store its ID too
+        assertEquals(13, a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(12,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(11,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(10,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(9,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(8,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(7,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(6,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(5,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(4,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(3,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(2,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(1,a.getResting());
+
+        b8.step(a.getID());
+        assertEquals(0,a.getResting());
+
+        assertFalse(a.isResting());
+
 
     }
+
+
+
+
 
 
 
