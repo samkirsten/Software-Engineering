@@ -108,46 +108,46 @@ public class brainTest {
         assertTrue(a.isResting());
 
         b8.step(a.getID()); // should ant store its ID too
-        assertEquals(13, a.getResting());
+        assertEquals(13, a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(12,a.getResting());
+        assertEquals(12,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(11,a.getResting());
+        assertEquals(11,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(10,a.getResting());
+        assertEquals(10,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(9,a.getResting());
+        assertEquals(9,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(8,a.getResting());
+        assertEquals(8,a.getRegetRemainingReststing());
 
         b8.step(a.getID());
-        assertEquals(7,a.getResting());
+        assertEquals(7,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(6,a.getResting());
+        assertEquals(6,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(5,a.getResting());
+        assertEquals(5,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(4,a.getResting());
+        assertEquals(4,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(3,a.getResting());
+        assertEquals(3,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(2,a.getResting());
+        assertEquals(2,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(1,a.getResting());
+        assertEquals(1,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(0,a.getResting());
+        assertEquals(0,a.getRemainingRest());
 
         assertFalse(a.isResting());
 
