@@ -47,4 +47,10 @@ public interface Cell {
      */
     public void setContents(char content);
 
+    /**
+     * Set ant id on the cell
+     * @param int ant id.
+     */
+    public void setAnt(int ant);
+
 }
