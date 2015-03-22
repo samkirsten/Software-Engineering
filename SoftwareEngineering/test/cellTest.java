@@ -7,12 +7,10 @@ public class CellTest {
 	public void testRocky(){
 		Cell c = new Cell();
 		
-		c.setRocky(true);
 		c.setContents("#");
 		assertTrue(c.isRocky());
 		assertEquals(c.getContents, "#");
 
-		c.setRocky(false);
 		c.setContents(".");
 		assertFalse(c.isRocky());
 		assertEquals(c.getContents, ".");

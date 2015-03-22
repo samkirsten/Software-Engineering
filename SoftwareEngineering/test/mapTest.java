@@ -5,11 +5,6 @@ import static org.junit.Assert.*;
 public class MapTest(){
 
 	@Test
-	public void testGenerateMap(){
-												// I think it doesn't need test.
-	}
-
-	@Test
 	public void testCellIsRocky(){
 		Map map = new Map();
 		map.generateMap();

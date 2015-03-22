@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 
 public class PositionTest {
+	@Test
+	public void testOutOfException(){
+		Position p = new Position(160,0);
+		System.out.println("It supposed to return Out of bound Exception");
+	}
 
 	// Test X coordinate - getter
 	@Test
