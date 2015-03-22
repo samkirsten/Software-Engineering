@@ -20,7 +20,7 @@ public class BrainTest {
     @Test
     public void testInstructionToken(){
 
-        Brain b = new Brain();
+        BrainImpl b = new BrainImpl();
 
         assertTrue(b.loadBrain(file));
     }
@@ -28,7 +28,7 @@ public class BrainTest {
     @Test
     public void testDirectionToken(){
 
-        Brain b2 = new Brain();
+        BrainImpl b2 = new BrainImpl();
 
         assertTrue(b2.loadBrain(file2));
 
@@ -37,7 +37,7 @@ public class BrainTest {
     @Test
     public void testConditionsToken(){
 
-        Brain b3 = new Brain();
+        BrainImpl b3 = new BrainImpl();
 
         assertTrue(b3.loadBrain(file3));
 
@@ -46,7 +46,7 @@ public class BrainTest {
     @Test
     public void testArgumentTokens(){
 
-        Brain b4 = new Brain();
+        BrainImpl b4 = new BrainImpl();
 
         assertTrue(b4.loadBrain(file4));
     }
@@ -55,7 +55,7 @@ public class BrainTest {
     @Test
     public void testMixOfTokens(){
 
-        Brain b5 = new Brain();
+        BrainImpl b5 = new BrainImpl();
 
         assertTrue(b5.loadbrain(file5));
 
@@ -66,7 +66,7 @@ public class BrainTest {
     @Test
     public void testFailTokens(){
 
-        Brain b6 = new Brain();
+        BrainImpl b6 = new BrainImpl();
 
         assertFalse(b6.loadBrain(file6));
 
@@ -86,7 +86,7 @@ public class BrainTest {
     @Test
     public void testCorrectWrongTokens(){
 
-        Brain b7 = new Brain();
+        BrainImpl b7 = new BrainImpl();
 
         assertFalse(b10.loadBrain(file10));
 
@@ -104,8 +104,8 @@ public class BrainTest {
 
     pubic void testStepResting(){
 
-        Ant a = new Ant();
-        Brain b8 = new Brain();
+        AntImpl a = new AntImpl();
+        BrainImpl b8 = new BrainImpl();
         a.startResting();
         a.setID(1);
 
@@ -161,13 +161,13 @@ public class BrainTest {
     @Test
     public void testSenseTrue() throws CellAlreadyOccupiedException {
 
-        Brain b9 = new Brain();
+        BrainImpl b9 = new BrainImpl();
         //Cell c = new Cell();
-        Ant a1 = new Ant();
-        Ant a2 = new Ant();
-        Map map = new Map();
-        Position pos = new Position();
-        Position pos1  = new Position();
+        AntImpl a1 = new AntImpl();
+        AntImpl a2 = new AntImpl();
+        MapImpl map = new MapImpl();
+        PositionImpl pos = new PositionImpl();
+        PositionImpl pos1  = new PositionImpl();
 
         pos.setX(1);
         pos.setY(1);
@@ -199,9 +199,9 @@ public class BrainTest {
     @Test
     public void testMark() throws CellAlreadyOccupiedException {
 
-        Brain b10 = new Brain();
-        Position p = new Position();
-        Map m = new Map();
+        BrainImpl b10 = new BrainImpl();
+        PositionImpl p = new PositionImpl();
+        MapImpl m = new MapImpl();
         p.setX(1);
         p.setY(1);
 
@@ -224,9 +224,9 @@ public class BrainTest {
     @Test
     public void testUnMark() throws CellAlreadyOccupiedException {
 
-        Brain b11 = new Brain();
-        Position p1 = new Position();
-        Map m1 = new Map();
+        BrainImpl b11 = new BrainImpl();
+        PositionImpl p1 = new PositionImpl();
+        MapImpl m1 = new MapImpl();
         p1.setX(1);
         p1.setY(1);
 
@@ -248,8 +248,8 @@ public class BrainTest {
     @Test
     public void testCantUnMarkOtherColour() throws CellAlreadyOccupiedException {
 
-        Brain b12 = new Brain();
-        Position p2 = new Position();
+        BrainImpl b12 = new BrainImpl();
+        PositionImpl p2 = new PositionImpl();
         Map m2 = new Map();
         p2.setX(1);
         p2.setY(1);
@@ -278,16 +278,18 @@ public class BrainTest {
 
     public void testPickUpFood() throws InvalidContentCharacterException, CellAlreadyOccupiedException {
 
-        Brain b13 = new Brain();
-        Position p3 = new Position();
-        Map m3 = new Map();
+        BrainImpl b13 = new BrainImpl();
+        PositionImpl p3 = new PositionImpl();
+        MapImpl m3 = new MapImpl();
 
         p3.setX(1);
         p3.setY(1);
         m3.setCellContents(p3, (char)9);
 
         b13.loadBrain(file18);
-        Ant a7 = new Ant();
+
+        AntImpl a7 = new AntImpl();
+
         a7.setID(1);
 
         m3.setAntAtCell(p3,1);
@@ -300,10 +302,10 @@ public class BrainTest {
         /////////
         ////////
 
-        Brain b14 = new Brain();
-        Position p4 = new Position();
-        Ant a8 = new Ant();
-        Map m4 = new Map();
+        BrainImpl b14 = new BrainImpl();
+        PositionImpl p4 = new PositionImpl();
+        AntImpl a8 = new AntImpl();
+        MapImpl m4 = new MapImpl();
 
         b14.loadBrain(file19);
         p4.setX(1);
@@ -323,10 +325,10 @@ public class BrainTest {
         ////////
         ////////
 
-        Brain b15 = new Brain();
-        Position p5 = new Position();
-        Ant a9 = new Ant();
-        Map m5 = new Map();
+        BrainImpl b15 = new BrainImpl();
+        PositionImpl p5 = new PositionImpl();
+        AntImpl a9 = new AntImpl();
+        MapImpl m5 = new MapImpl();
 
         b15.loadBrain(file20);
         p5.setX(1);
@@ -345,10 +347,10 @@ public class BrainTest {
     @Test
     pubic void testDrop() throws CellAlreadyOccupiedException, InvalidContentCharacterException {
 
-        Brain b16 = new Brain();
-        Position p6 = new Position();
-        Ant a10 = new Ant();
-        Map m6 = new Map();
+        BrainImpl b16 = new BrainImpl();
+        PositionImpl p6 = new PositionImpl();
+        AntImpl a10 = new AntImpl();
+        MapImpl m6 = new MapImpl();
         p6.setX(1);
         p6.setY(1);
 
@@ -368,10 +370,10 @@ public class BrainTest {
         ///////
         ///////
 
-        Brain b17 = new Brain();
-        Position p7 = new Position();
-        Ant a11 = new Ant();
-        Map m7 = new Map();
+        BrainImpl b17 = new BrainImpl();
+        PositionImpl p7 = new PositionImpl();
+        AntImpl a11 = new AntImpl();
+        MapImpl m7 = new MapImpl();
 
         p7.setX(1);
         p7.setY(1);
@@ -395,10 +397,10 @@ public class BrainTest {
 
         // if no food then just change state
 
-        Brain b18 = new Brain();
-        Position p8 = new Position();
-        Ant a12 = new Ant();
-        Map m8 = new Map();
+        BrainImpl b18 = new BrainImpl();
+        PositionImpl p8 = new PositionImpl();
+        AntImpl a12 = new AntImpl();
+        MapImpl m8 = new MapImpl();
 
         p8.setX(1);
         p8.setY(1);
@@ -421,11 +423,11 @@ public class BrainTest {
 
     public void testTurnLeft() throws CellAlreadyOccupiedException {
 
-        Brain b19 = new Brain();
-        Ant a17 = new Ant();
+        BrainImpl b19 = new BrainImpl();
+        AntImpl a17 = new AntImpl();
 
-        Map m9 = new Map();
-        Position p9 = new Position();
+        MapImpl m9 = new MapImpl();
+        PositionImpl p9 = new PositionImpl();
 
         p9.setX(1);
         p9.setY(1);
@@ -475,11 +477,11 @@ public class BrainTest {
 
     public void testTurnRight() throws CellAlreadyOccupiedException {
 
-        Brain b20 = new Brain();
-        Ant a18 = new Ant();
+        BrainImpl b20 = new BrainImpl();
+        AntImpl a18 = new AntImpl();
 
-        Map m10 = new Map();
-        Position p10 = new Position();
+        MapImpl m10 = new MapImpl();
+        PositionImpl p10 = new PositionImpl();
 
         p10.setX(1);
         p10.setY(1);
@@ -528,17 +530,17 @@ public class BrainTest {
 
     public void testMove() throws CellAlreadyOccupiedException {
 
-        Brain b21 = new Brain();
-        Ant a19 = new Ant();
+        BrainImpl b21 = new BrainImpl();
+        AntImpl a19 = new AntImpl();
 
-        Map m11 = new Map();
-        Position p11 = new Position(); // original
-        Position  p12 = new Position();// goes right
-        Position p13 = new Position(); // left
-        Position p14 = new Position(); // top right
-        Position p15 = new Position(); // top left
-        Position p16 = new Position(); // bottom right
-        Position p17 = new Position(); // bottom left
+        MapImpl m11 = new MapImpl();
+        PositionImpl p11 = new PositionImpl(); // original
+        PositionImpl  p12 = new PositionImpl();// goes right
+        PositionImpl p13 = new PositionImpl(); // left
+        PositionImpl p14 = new PositionImpl(); // top right
+        PositionImpl p15 = new PositionImpl(); // top left
+        PositionImpl p16 = new PositionImpl(); // bottom right
+        PositionImpl p17 = new PositionImpl(); // bottom left
 
 
 
@@ -633,7 +635,7 @@ public class BrainTest {
 
         // occupied cell
 
-        Ant a20 = new Ant();
+        AntImpl a20 = new AntImpl();
         a20.setID(2);
 
         m11.setCellContents(p12, 'put hash in');
