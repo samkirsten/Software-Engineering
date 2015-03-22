@@ -8,14 +8,14 @@ public interface Colony {
      * @param pos The cell position of the ant to be found
      * @return The Ant at indicated position
      */
-    public Ant getAnt(Position pos);
+    public Ant getAnt(Position pos) throws AntNotFoundException;
 
     /**
      * Get an Ant object from the list of Ants stored in the given colony.
      * @param id the id of the ant to be found
      * @return The Ant with given id
      */
-    public Ant getAnt(int id);
+    public Ant getAnt(int id) throws AntNotFoundException;
 
     /**
      * Get the number of ants currently alive belonging to the colony
