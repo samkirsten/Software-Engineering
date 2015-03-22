@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * The concrete map class implementation will have Cell getters and setters
  * but these are not public as they are not necessary to know from the
@@ -8,8 +10,14 @@ public interface Map {
 
     /**
      * Generates a pseudo-random map which is 150x150 in size
+     * With terrain and food
      */
     public void generateMap();
+
+    /**
+     * reset map state to when it was last generated
+     */
+    public void clearMap();
 
     /**
      * Returns whether the cell at a given position is Rocky.
@@ -53,6 +61,8 @@ public interface Map {
      * @return number representing adjacent enemy ants
      */
     public int getAdjacentEnemyAnts(Position pos, Colour colour);
+
+    public List<Position> getAnthill(Colour colour);
 
     /**
      * Sets the given cell to contain an ant specified with an ant id.
