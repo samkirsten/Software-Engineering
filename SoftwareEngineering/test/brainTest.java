@@ -21,16 +21,16 @@ public class BrainTest {
     public void testInstructionToken(){
 
         Brain b = new Brain();
-        b.loadBrain(file);
-        assertTrue(true);
+
+        assertTrue(b.loadBrain(file));
     }
 
     @Test
     public void testDirectionToken(){
 
         Brain b2 = new Brain();
-        b2.loadBrain(file2);
-        assertTrue(true);
+
+        assertTrue(b2.loadBrain(file2));
 
     }
 
@@ -38,8 +38,8 @@ public class BrainTest {
     public void testConditionsToken(){
 
         Brain b3 = new Brain();
-        b3.loadBrain(file3);
-        assertTrue(true);
+
+        assertTrue(b3.loadBrain(file3));
 
     }
 
@@ -47,8 +47,8 @@ public class BrainTest {
     public void testArgumentTokens(){
 
         Brain b4 = new Brain();
-        b4.loadBrain(file4);
-        assertTrue(true);
+
+        assertTrue(b4.loadBrain(file4));
     }
 
     // Test a mix of all correct tokens
@@ -56,8 +56,8 @@ public class BrainTest {
     public void testMixOfTokens(){
 
         Brain b5 = new Brain();
-        b5.loadbrain(file5);
-        assertTrue(true);
+
+        assertTrue(b5.loadbrain(file5));
 
 
     }
@@ -67,36 +67,36 @@ public class BrainTest {
     public void testFailTokens(){
 
         Brain b6 = new Brain();
-        b6.loadBrain(file6);
-        assertFalse(false);
+
+        assertFalse(b6.loadBrain(file6));
 
       //  Brain b7 = new Brain();
-        b6.loadBrain(file7);
-        assertFalse(false);
+
+        assertFalse(b6.loadBrain(file7));
 
      //   Brain b8 = new Brain();
-        b6.loadBrain(file8);
-        assertFalse(false);
+
+        assertFalse(b6.loadBrain(file8));
 
       //  Brain b9 = new Brain();
-        b6.loadBrain(file9);
-        assertFalse(false);
+
+        assertFalse( b6.loadBrain(file9));
     }
 
     @Test
     public void testCorrectWrongTokens(){
 
         Brain b7 = new Brain();
-        b10.loadBrain(file10);
-        assertFalse(false);
+
+        assertFalse(b10.loadBrain(file10));
 
        // Brain b11 = new Brain();
-        b7.loadBrain(file11);
-        assertFalse(false);
+
+        assertFalse(b7.loadBrain(file11));
 
        // Brain b12 = new Brain();
-        b7.loadBrain(file12);
-        assertFalse(false);
+
+        assertFalse(b7.loadBrain(file12));
     }
 
 
@@ -106,7 +106,7 @@ public class BrainTest {
 
         Ant a = new Ant();
         Brain b8 = new Brain();
-        a.setResting();
+        a.startResting();
         a.setID(1);
 
         assertTrue(a.isResting());
@@ -127,7 +127,7 @@ public class BrainTest {
         assertEquals(9,a.getRemainingRest());
 
         b8.step(a.getID());
-        assertEquals(8,a.getRegetRemainingReststing());
+        assertEquals(8,a.getRemainingRest());
 
         b8.step(a.getID());
         assertEquals(7,a.getRemainingRest());
@@ -624,7 +624,7 @@ public class BrainTest {
         m11.setAntAtCell(p11 , 0);
         a19.setDirection(0);
 
-        m11.setCellIsRocky(p12, true);
+        m11.setCellContents(p12, 'put hash in');
         b21.step(1);
 
         assertEquals(1, m11.getAntAtCell(p11));
@@ -636,7 +636,7 @@ public class BrainTest {
         Ant a20 = new Ant();
         a20.setID(2);
 
-        m11.setCellIsRocky(p12, false);
+        m11.setCellContents(p12, 'put hash in');
         m11.setAntAtCell(p11 , 1);
         m11.setAntAtCell(p12, 2);
         a19.setDirection(0);
