@@ -1,5 +1,10 @@
 public interface Ant {
 
+
+    public int getID();
+
+    public void setID(int id);
+
     /**
      * Gets the current direction that the ant is facing
      * @return int representing current direction between 0 and 5 (inclusive)
