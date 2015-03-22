@@ -64,13 +64,13 @@ public interface Colony {
      */
     public Colour getColonyColour();
 
-    /**
-     * Sets the given cells as part of the ant colony
-     * Must be exactly of length 7.
-     * The cells must all be connected
-     * @param cells The cells which form the anthill
-     */
-    public void setAntHill(List<Position> cells);
+//    /**
+//     * Sets the given cells as part of the ant colony
+//     * Must be exactly of length 7.
+//     * The cells must all be connected
+//     * @param cells The cells which form the anthill
+//     */
+//    public void setAntHill(List<Position> cells);
 
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.

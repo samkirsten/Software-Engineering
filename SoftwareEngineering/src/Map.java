@@ -47,19 +47,20 @@ public interface Map {
     public int getAntAtCell(Position pos);
 
     /**
+     * #
+     * @param pos the position of the ant
+     * @param colour the colour of the target at at position pos, which is being checked for adjacent ants.
+     * @return number representing adjacent enemy ants
+     */
+    public int getAdjacentEnemyAnts(Position pos, Colour colour);
+
+    /**
      * Sets the given cell to contain an ant specified with an ant id.
      * @param pos the position of the cell
      * @param antId the id of the ant
      * @throws CellAlreadyOccupiedException if the cell already contains an ant.
      */
     public void setAntAtCell(Position pos, int antId) throws CellAlreadyOccupiedException;
-
-    /**
-     * Sets given cell to be rocky, if a cell is rocky it cannot be traversed by an ant.
-     * @param pos the position of the cell
-     * @param rocky set to true if cell is to be rocky, false otherwise
-     */
-    public void setCellIsRocky(Position pos, boolean rocky);
 
     /**
      * Sets the contents of a cell, requires a single character which specifies the contents

@@ -30,12 +30,6 @@ public interface Cell {
     public int getAnt();
 
     /**
-     * Set rocky on the cell
-     * @param bol rocky or not.
-     */
-    public void setRocky(boolean rocky);
-
-    /**
      * Set Scent mark on the cell
      * @param int mark.
      */

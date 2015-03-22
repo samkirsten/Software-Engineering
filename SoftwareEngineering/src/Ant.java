@@ -23,6 +23,10 @@ public interface Ant {
      */
     public int getState();
 
+    public void setColour(Colour colour);
+
+    public Colour getColour();
+
 
     /**
      * Set the current brain state of the ant, invoked by the brain in order to update the ant's
@@ -33,9 +37,14 @@ public interface Ant {
 
     /**
      * Returns whether the ant is resting. After an ant performs an action, it rests for 14 turns.
-     * @return true if ant is resting, false otherwise
+     * @return true if ant is resting, false otherwise (if 0)
      */
     public boolean isResting();
+
+    /**
+     * Sets rest to 1. Which begins the rest period which lasts 14 turns.
+     */
+    public void startResting();
 
     /**
      * Marks a scent at a cell when given a position and scent marker
@@ -57,18 +66,10 @@ public interface Ant {
     public void incrementRest();
 
     /**
-     * This method is invoked only by the brain. It kills an enemy ant at the given position
-     * @param p the position of the enemy ant
-     * @throws AntNotFoundException
-     */
-    public void killEnemyAnt(Position p) throws AntNotFoundException;
-
-    /**
      * Returns whether the ant is currently carrying food
      * @return true if carrying food, false otherwise.
      */
     public boolean hasFood();
 
-
-
+    public void setHasFood(Boolean food);
 }

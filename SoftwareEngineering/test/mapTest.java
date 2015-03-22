@@ -2,7 +2,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class mapTest(){
+public class MapTest(){
 
 	@Test
 	public void testGenerateMap(){

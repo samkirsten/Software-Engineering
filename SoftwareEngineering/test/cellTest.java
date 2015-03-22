@@ -1,7 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class cellTest{
+public class CellTest {
 
 	@Test
 	public void testRocky(){

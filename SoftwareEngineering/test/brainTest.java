@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class brainTest {
+public class BrainTest {
 
 
     // need to create files to input
