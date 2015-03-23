@@ -5,8 +5,6 @@ import org.junit.Test;
 import javax.swing.text.Position;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -58,21 +56,21 @@ public class ColonyTest {
     public void test_GetAnt_with_ID() {
 
         //test if the output of getting ant with ID=1 is the same object with the original ANT
-        Ant output = colony.getAnt(1);
+        Ant output1 = colony.getAnt(1);
         assertSame(ant1, output);
 
-        Ant output = colony.getAnt(2);
+        Ant output2 = colony.getAnt(2);
         assertSame(ant2, output);
 
-        Ant output = colony.getAnt(3);
+        Ant output3 = colony.getAnt(3);
         assertSame(ant3, output);
     }
 
     @Test
     public void test_GetAnt_with_position(){
 
-        //does MAP contains colony, colony contains cells ?
-        //if MAP contains cells, how to access the cells ?
+        //go through the list and search
+
     }
 
 
@@ -119,7 +117,7 @@ public class ColonyTest {
         assertEqual(color , colony.getColonyColour());
     }
 
-    @Test
+  /*  @Test
     public void test_setAntHill() {
         List<Position> test_pos = new List<Position>() ;
 
@@ -133,7 +131,7 @@ public class ColonyTest {
 
         //where to access the cells ?
         //.....
-    }
+    }*/
 
     @Test
     public void test_remove(){

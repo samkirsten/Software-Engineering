@@ -1,5 +1,4 @@
 
-import org.junit.*;
 import org.junit.Test;
 
 import javax.swing.text.Position;
@@ -20,7 +19,7 @@ public class AntTest {
 
         //for the range 0-5, it should be able to input into direction
             for (int i=0;i<6;i++){
-                Ant testAnt = new Ant();
+                AntImpl testAnt = new AntImpl();
                 testAnt.setDirection(i);
                 int result = testAnt.getDirection();
                 assertEquals(i, result);
