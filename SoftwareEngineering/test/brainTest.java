@@ -2,7 +2,6 @@
  * Created by hao-linliang on 17/03/15.
  */
 
-import org.junit.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -647,6 +646,7 @@ public class BrainTest {
 
         assertEquals(1, m11.getAntAtCell(p11));
         assertEquals(11, a19.getState()); // make sure in correct state
+
 
 
 
