@@ -1,11 +1,18 @@
 /**
- * Created by hao-linliang on 17/03/15.
- */
+* Created by hao-linliang on 17/03/15.
+*/
 
 import org.junit.Test;
+
+import java.io.File;
+import java.nio.file.Path;
+
 import static org.junit.Assert.*;
 
+
 public class BrainTest {
+
+
 
 
     // need to create files to input
@@ -21,7 +28,7 @@ public class BrainTest {
 
         BrainImpl b = new BrainImpl();
 
-        assertTrue(b.loadBrain(file));
+        assertTrue(b.loadBrain(new File("../brains/file.txt")));
     }
 
     @Test
@@ -101,7 +108,7 @@ public class BrainTest {
 
     @Test
 
-    pubic void testStepResting(){
+    public void testStepResting(){
 
         AntImpl a = new AntImpl();
         BrainImpl b8 = new BrainImpl();
@@ -344,7 +351,7 @@ public class BrainTest {
     }
 
     @Test
-    pubic void testDrop() throws CellAlreadyOccupiedException, InvalidContentCharacterException {
+    public void testDrop() throws CellAlreadyOccupiedException, InvalidContentCharacterException {
 
         BrainImpl b16 = new BrainImpl();
         PositionImpl p6 = new PositionImpl();
@@ -625,7 +632,7 @@ public class BrainTest {
         m11.setAntAtCell(p11 , 0);
         a19.setDirection(0);
 
-        m11.setCellContents(p12, 'put hash in');
+        m11.setCellContents(p12, '#' );
         b21.step(1);
 
         assertEquals(1, m11.getAntAtCell(p11));
@@ -637,7 +644,7 @@ public class BrainTest {
         AntImpl a20 = new AntImpl();
         a20.setID(2);
 
-        m11.setCellContents(p12, 'put hash in');
+        m11.setCellContents(p12, '#');
         m11.setAntAtCell(p11 , 1);
         m11.setAntAtCell(p12, 2);
         a19.setDirection(0);

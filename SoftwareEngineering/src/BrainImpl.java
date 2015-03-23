@@ -363,17 +363,17 @@ public class BrainImpl implements Brain {
 
     }
 
-
-
-    public static void main(String args[]) {
-        BrainImpl brain = new BrainImpl();
-        brain.loadBrain(new File("../brains/brain1.txt"));
-        for (Token t : brain.lexedList ){
-            System.out.println(t.getClass().toString());
-        }
-
-
-    }
+//
+//
+//    public static void main(String args[]) {
+//        BrainImpl brain = new BrainImpl();
+//        brain.loadBrain(new File("../brains/brain1.txt"));
+//        for (Token t : brain.lexedList ){
+//            System.out.println(t.getClass().toString());
+//        }
+//
+//
+//    }
 
 
 
