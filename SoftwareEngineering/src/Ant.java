@@ -1,4 +1,4 @@
-public interface AntImpl {
+public interface Ant {
 
 
     public int getID();

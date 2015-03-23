@@ -26,7 +26,7 @@ public class AntTest {
             }
 
         // for direction other than 0-6, input should not be set into direction
-            Ant testAnt = new Ant();
+        AntImpl testAnt = new AntImpl();
             testAnt.setDirection(6);
             int result = testAnt.getDirection();
             assertFalse(6 == result);
@@ -37,7 +37,7 @@ public class AntTest {
     //stat range ??
     @Test
     public void test_GetState() {
-        Ant testAnt = new Ant();
+        AntImpl testAnt = new AntImpl();
         testAnt.setState(1);
         int result = testAnt.getState();
         assertEquals(1, result);
@@ -47,13 +47,13 @@ public class AntTest {
     @Test
     public void test_Resting() {
         //test for first round, ant should be not resting
-            Ant testAnt = new Ant();
+        AntImpl testAnt = new AntImpl();
             assertFalse(testAnt.isResting());
 
         //test for the next 14 round, ant should be resting
             for (int i=1;i<15;i++){
                 testAnt.incrementRest();
-                assertEqual(14-i,getRemainingRest());
+                assertEquals(14 - i, AntImpl.getRemainingRest());
                 assertTrue(testAnt.isResting());
             }
 
@@ -70,14 +70,14 @@ public class AntTest {
     public void test_MarkScent(){
         Position testPos = new Position(1,1) ;
         Map testMap = new Map();
-        Color testColor = new Color();
-        Ant testAnt = new Ant(1,testColor,0,0,0,false);
+        Colour testColor = new Colour();
+        AntImpl testAnt = new AntImpl(1,testColor,0,0,0,false);
 
         //set marker in ANT class
             testAnt.markScent(testPos, 1);
 
         //get marker in MAP class
-            assertEqual(1, testMap.getCellScentMarker(testColor,testPos));
+            assertEquals(1, testMap.getCellScentMarker(testColor,testPos));
     }
 
     @Test

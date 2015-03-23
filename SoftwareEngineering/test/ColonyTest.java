@@ -34,9 +34,9 @@ public class ColonyTest {
       //  color = new Colour(RED);
         color = Colour.RED; // this is how to initialise an enum
         antList = new HashMap<int,Ant>() ;
-        ant1 = new Ant(1,color,0,0,0,false);
-        ant2 = new Ant(2,color,0,0,0,false);
-        ant3 = new Ant(3,color,0,0,0,false);
+        ant1 = new AntImpl(1,color,0,0,0,false);
+        ant2 = new AntImpl(2,color,0,0,0,false);
+        ant3 = new AntImpl(3,color,0,0,0,false);
 
         //Brain ?
         brain = new Brain();
@@ -48,7 +48,7 @@ public class ColonyTest {
         antList.add(ant2.getID() , ant2);
         antList.add(ant3.getID() , ant3);
 
-        colony = new colony(color, antList, brain, food, hill, maxAnts);
+        colony = new ColonyImpl(color, antList, brain, food, hill, maxAnts);
     }
 
 
@@ -89,16 +89,16 @@ public class ColonyTest {
 
     @Test
     public void test_getNumberOfAnts(){
-        assertEqual(3, colony.getNumberOfAnts());
+        assertEquals(3, colony.getNumberOfAnts());
     }
 
     @Test
     public void test_food(){
 
-        assertEqual( 0, colony.getFoodInColony());
+        assertEquals( 0, colony.getFoodInColony());
 
         colony.incrementFood();
-        assertEqual( 1, colony.getFoodInColony());
+        assertEquals( 1, colony.getFoodInColony());
 
 
     }
