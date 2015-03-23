@@ -1,6 +1,7 @@
+package tokens;
 
 public class BrainSyntaxIncorrectException extends Exception {
-    BrainSyntaxIncorrectException(String msg){
+    public BrainSyntaxIncorrectException(String msg){
         super(msg);
     }
 }

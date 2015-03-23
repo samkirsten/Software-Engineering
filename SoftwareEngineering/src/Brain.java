@@ -8,7 +8,7 @@ public interface Brain {
      * @param brain the brain to be loaded
      * @return  true if brain successfully loaded into colony, false otherwise.
      */
-    public void loadBrain(File brain) throws BrainSyntaxIncorrectException;
+    public boolean loadBrain(File brain);
 
     /**
      * Executes the next instruction for an ant. Should be invoked by the game
