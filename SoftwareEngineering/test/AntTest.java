@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Tina on 3/15/2015.
  */
-public class Ant_test {
+public class AntTest {
 
 
     @Test

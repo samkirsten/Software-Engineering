@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class ColonyTest {
 
-    Color color ;
+    Colour color ;
 
     //list or hash map ?
     HashMap<int,Ant> antList ;
@@ -33,7 +33,8 @@ public class ColonyTest {
 
     @Before
     public void initialize() {
-        color = new Color(RED);
+      //  color = new Colour(RED);
+        color = Colour.RED; // this is how to initialise an enum
         antList = new HashMap<int,Ant>() ;
         ant1 = new Ant(1,color,0,0,0,false);
         ant2 = new Ant(2,color,0,0,0,false);
