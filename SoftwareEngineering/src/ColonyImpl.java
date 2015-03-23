@@ -7,10 +7,12 @@ import java.util.HashMap;
 public class ColonyImpl implements Colony {
 
     Colour colour ;
-    HashMap<Integer,Ant> antList ;
+    HashMap<Integer,AntImpl> antList ;
     Brain brain ;
     int food ;
     int maxAnts ;
+    int starting_id_index ;
+
 
     public ColonyImpl(Colour colour, Brain brain){
 
@@ -22,12 +24,19 @@ public class ColonyImpl implements Colony {
 
         //initialize ants
         if (colour == Colour.BLACK) {
-            for (int i=1;i<=maxAnts;i++){
-                //******need anthill for position*****
-                AntImpl ant = new AntImpl(i, colour, new Position(1,1));
-                antList
-            }
+            starting_id_index = 1 ;
+        }else{
+            starting_id_index = maxAnts +1 ;
         }
+
+        //put ants into ant list
+        for (int i = starting_id_index ; i <= (starting_id_index + maxAnts) ; i++){
+
+            //******need anthill for position D:*****
+
+            AntImpl ant = new AntImpl(i, colour, new Position(1,1));
+            antList.put(i ,ant);
+            .        }
 
     }
 
@@ -39,8 +48,23 @@ public class ColonyImpl implements Colony {
      * @return The Ant at indicated position
      */
     @Override
-    public Ant getAnt(Position pos) throws AntNotFoundException {
-        return null;
+    public AntImpl getAnt(Position pos) throws AntNotFoundException {
+
+        AntImpl result = null ;
+
+        //try to search for every ant in antlist
+            for (int i = starting_id_index; i<starting_id_index + maxAnts ; i++){
+                AntImpl ant = antList.get(i) ;
+                if (ant.getPosition() == pos){
+                    result = ant ;
+                }
+            }
+        //if not found, throw exception, otherwise return the ant foudn
+            if (result == null){
+                throw new AntNotFoundException("*** Ant not found ***");
+            }else {
+                return result;
+            }
     }
 
     /**
@@ -50,8 +74,15 @@ public class ColonyImpl implements Colony {
      * @return The Ant with given id
      */
     @Override
-    public Ant getAnt(int id) throws AntNotFoundException {
-        return null;
+    public AntImpl getAnt(int id) throws AntNotFoundException {
+        boolean found = antList.containsKey(id) ;
+
+        // if id not found , throw exception, otherwise return ant
+        if (!found){
+            throw new AntNotFoundException("*** Ant not found ***");
+        }else{
+            return antList.get(id) ;
+        }
     }
 
     /**
@@ -61,7 +92,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public int getNumberOfAnts() {
-        return 0;
+        return antList.size();
     }
 
     /**
@@ -72,7 +103,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public boolean isAntAlive(int id) {
-        return false;
+        return antList.containsKey(id) ;
     }
 
     /**
@@ -83,7 +114,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public int getFoodInColony() {
-        return 0;
+        return food;
     }
 
     /**
@@ -92,7 +123,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public void incrementFood() {
-
+        food ++ ;
     }
 
     /**
@@ -124,7 +155,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public Colour getColonyColour() {
-        return null;
+        return colour ;
     }
 
     /**
@@ -136,6 +167,6 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public void remove(Position p) {
-
+        
     }
 }
