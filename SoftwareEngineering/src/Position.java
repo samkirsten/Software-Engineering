@@ -1,10 +1,10 @@
 
-public class PositionImpl implements Position  {
+public class Position  {
 
     private int x;
     private int y;
 
-    PositionImpl(int x, int y) throws PositionOutOfBoundsException {
+    Position(int x, int y) throws PositionOutOfBoundsException {
         if((x < 0 || x > 149) || (y < 0 || x > 149)){
             throw new PositionOutOfBoundsException("The position is out of bound");
         }
