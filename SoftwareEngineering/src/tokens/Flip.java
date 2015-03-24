@@ -1,3 +1,3 @@
-package tokens;
+package Tokens;
 
 public class Flip extends Instruction{}
