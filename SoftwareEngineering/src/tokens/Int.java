@@ -1,4 +1,4 @@
-package Tokens;
+package tokens;
 
 public class Int extends Token{
     public int n;
