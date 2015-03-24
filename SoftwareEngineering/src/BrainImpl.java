@@ -20,110 +20,146 @@ public class BrainImpl implements Brain {
     BrainImpl(){
 
     }
-    public List<Token> getLexedList(){ return lexedList;}
 
     private boolean lexBrain(String brain) {
 
-        int length = brain.length();
-        int i = 0;
-        String tokenAsString = "";
-        String delimiter = ";";
+        lexedList.clear();  // preps the lexedList for new brain lexing
+
         if(brain.length()==0)
             return false;
 
-        while(i<length){
+        String nextToken = "";
 
-            if(!Character.isWhitespace(brain.charAt(i))&&!brain.substring(i,i+1).equals(";")) {
-                tokenAsString = tokenAsString + brain.substring(i, i + 1);
-            }
-            if(brain.substring(i,i+1).equals(";")&&!tokenAsString.isEmpty()) {
-                try {
-                    int n = Integer.parseInt(tokenAsString);
-                    lexedList.add(new Int(n));
-                    tokenAsString = "";
-                } catch (NumberFormatException e) {
+
+
+        String lines[] = brain.split("\\r?\\n");
+
+        for(int i=0;i<lines.length;i++) {
+            String currentLine = lines[i];
+            boolean end = false;
+            int j = 0;
+            while (!end && j < lines[i].length()) {
+                String nextChar = currentLine.substring(j, j + 1);
+                if (nextChar.equals(" ") && !nextToken.isEmpty()) {   // if next char is space AND nextToken is not empty
                     try {
-                        lexedList.add(chooseToken(tokenAsString));
-                        tokenAsString = "";
-                    } catch (BrainSyntaxIncorrectException e1) {
-                        System.out.println(e1);
+                        lexedList.add(chooseToken(nextToken));
+                        nextToken = "";
+                    } catch (BrainSyntaxIncorrectException e) {
+                        System.out.println(e);
+                        lexedList.clear();
                         return false;
                     }
-                }
-                lexedList.add(new Delimiter());
-            }
-            else if(Character.isWhitespace(brain.charAt(i))&&!tokenAsString.isEmpty()) {
-                try {
-                    int n = Integer.parseInt(tokenAsString);
-                    lexedList.add(new Int(n));
-                    tokenAsString = "";
-                } catch (NumberFormatException e) {
-                    try {
-                        lexedList.add(chooseToken(tokenAsString));
-                        tokenAsString = "";
-                    } catch (BrainSyntaxIncorrectException e1) {
-                        System.out.println(e1);
-                        return false;
+                } else if (nextChar.equals(";")) {
+                    if (!nextToken.isEmpty()) {
+                        try {
+                            lexedList.add(chooseToken(nextToken));
+                            nextToken = "";
+                        } catch (BrainSyntaxIncorrectException e) {
+                            System.out.println(e);
+                            lexedList.clear();
+                            return false;
+                        }
+                    }
+                    end = true;
+                } else {
+                    nextToken = nextToken + nextChar;
+                    if(currentLine.length()==(j+1)){
+                        try {
+                            lexedList.add(chooseToken(nextToken));
+                            nextToken = "";
+                        } catch (BrainSyntaxIncorrectException e) {
+                            System.out.println(e);
+                            lexedList.clear();
+                            return false;
+                        }
                     }
                 }
+                j++;
             }
-            i++;
         }
-
 
         return true;
     }
 
     private Token chooseToken(String tokenAsString) throws BrainSyntaxIncorrectException{
         Token token = null;
-        switch (tokenAsString){
-            case "Ahead": token = new Ahead();
-                break;
-            case "Drop": token = new Drop();
-                break;
-            case "Flip": token = new Flip();
-                break;
-            case "Foe": token = new Foe();
-                break;
-            case "FoeHome": token = new FoeHome();
-                break;
-            case "FoeWithFood": token = new FoeWithFood();
-                break;
-            case "FoeMarker": token = new FoeMarker();
-                break;
-            case "Food": token = new Food();
-                break;
-            case "Friend": token = new Friend();
-                break;
-            case "FriendWithFood": token = new FriendWithFood();
-                break;
-            case "Here": token = new Here();
-                break;
-            case "Home": token = new Home();
-                break;
-            case "Left": token = new Left();
-                break;
-            case "LeftAhead": token = new LeftAhead();
-                break;
-            case "Mark": token = new Mark();
-                break;
-            case "Marker": token = new Marker();
-                break;
-            case "Move": token = new Move();
-                break;
-            case "Right": token = new Right();
-                break;
-            case "RightAhead": token = new RightAhead();
-                break;
-            case "Rock": token = new Rock();
-                break;
-            case "Sense": token = new Sense();
-                break;
-            case "Turn": token = new Turn();
-                break;
-            case "Unmark": token = new Move();
-                break;
-            case "PickUp": token = new PickUp();
+        try{
+            token = new Int(Integer.parseInt(tokenAsString));
+        }
+        catch (NumberFormatException e) {
+            switch (tokenAsString) {
+                case "Ahead":
+                    token = new Ahead();
+                    break;
+                case "Drop":
+                    token = new Drop();
+                    break;
+                case "Flip":
+                    token = new Flip();
+                    break;
+                case "Foe":
+                    token = new Foe();
+                    break;
+                case "FoeHome":
+                    token = new FoeHome();
+                    break;
+                case "FoeWithFood":
+                    token = new FoeWithFood();
+                    break;
+                case "FoeMarker":
+                    token = new FoeMarker();
+                    break;
+                case "Food":
+                    token = new Food();
+                    break;
+                case "Friend":
+                    token = new Friend();
+                    break;
+                case "FriendWithFood":
+                    token = new FriendWithFood();
+                    break;
+                case "Here":
+                    token = new Here();
+                    break;
+                case "Home":
+                    token = new Home();
+                    break;
+                case "Left":
+                    token = new Left();
+                    break;
+                case "LeftAhead":
+                    token = new LeftAhead();
+                    break;
+                case "Mark":
+                    token = new Mark();
+                    break;
+                case "Marker":
+                    token = new Marker();
+                    break;
+                case "Move":
+                    token = new Move();
+                    break;
+                case "Right":
+                    token = new Right();
+                    break;
+                case "RightAhead":
+                    token = new RightAhead();
+                    break;
+                case "Rock":
+                    token = new Rock();
+                    break;
+                case "Sense":
+                    token = new Sense();
+                    break;
+                case "Turn":
+                    token = new Turn();
+                    break;
+                case "Unmark":
+                    token = new Move();
+                    break;
+                case "PickUp":
+                    token = new PickUp();
+            }
         }
         if(token!=null) {
             return token;
@@ -137,8 +173,8 @@ public class BrainImpl implements Brain {
     private boolean parseBrain() {
 
         try {
-            List<Token> parsedList = parseInstruction(lexedList);
-            if(parsedList.isEmpty())
+            parseInstruction(lexedList);
+            if(lexedList.isEmpty())
                 return true;
         } catch (BrainSyntaxIncorrectException e) {
             System.out.println(e);
@@ -158,49 +194,49 @@ public class BrainImpl implements Brain {
             tokens = parseSt(tokens);
             tokens = parseSt(tokens);
             tokens = parseCond(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Mark){
             tokens.remove(0);
             tokens = parseI(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Unmark){
             tokens.remove(0);
             tokens = parseI(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof PickUp){
             tokens.remove(0);
             tokens = parseSt(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Drop){
             tokens.remove(0);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Turn){
             tokens.remove(0);
             tokens = parseLr(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Move){
             tokens.remove(0);
             tokens = parseSt(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else if(tokens.get(0) instanceof Flip) {
             tokens.remove(0);
             tokens = parseP(tokens);
             tokens = parseSt(tokens);
             tokens = parseSt(tokens);
-            tokens = parseDelim(tokens);
+            tokens = parseInstruction(tokens);
         }
         else
             throw new BrainSyntaxIncorrectException("Ill-formed Instruction");
@@ -324,16 +360,7 @@ public class BrainImpl implements Brain {
         return tokens;
     }
 
-    private List<Token> parseDelim(List<Token> tokens) throws BrainSyntaxIncorrectException{
-        if(tokens.get(0) instanceof Delimiter){
-            tokens.remove(0);
-            tokens = parseInstruction(tokens);
-        }
-        else
-            throw new BrainSyntaxIncorrectException("No delimiter found");
 
-        return tokens;
-    }
 
 
 
@@ -341,6 +368,7 @@ public class BrainImpl implements Brain {
     public boolean loadBrain(File brain) {
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(String.valueOf(brain)));
+
             if(lexBrain(new String(encoded, StandardCharsets.UTF_8))){
 
                 boolean passed =  parseBrain();
@@ -363,17 +391,17 @@ public class BrainImpl implements Brain {
 
     }
 
-//
-//
-//    public static void main(String args[]) {
-//        BrainImpl brain = new BrainImpl();
-//        brain.loadBrain(new File("../brains/brain1.txt"));
-//        for (Token t : brain.lexedList ){
-//            System.out.println(t.getClass().toString());
-//        }
-//
-//
-//    }
+
+
+    public static void main(String args[]) {
+        BrainImpl brain = new BrainImpl();
+        brain.loadBrain(new File("brains/brain1.txt"));
+        for (Token t : brain.lexedList ){
+            System.out.println(t.getClass().toString());
+        }
+
+
+    }
 
 
 
