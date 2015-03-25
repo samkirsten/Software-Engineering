@@ -1,2 +1,5 @@
-Move 1 2;
-PickUp 200000 3;
+Sense Here 1 2 Friend;
+Sense Ahead 1 2 Friend;
+Sense LeftAhead 1 2 Friend;
+Sense RightAhead 1 2 Friend;
+

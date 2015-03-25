@@ -17,6 +17,7 @@ public class BrainImpl implements Brain {
     public List<Token> lexedList = new ArrayList<>();
 
 
+
     BrainImpl(){
 
     }
@@ -176,11 +177,14 @@ public class BrainImpl implements Brain {
             parseInstruction(lexedList);
             if(lexedList.isEmpty())
                 return true;
+
         } catch (BrainSyntaxIncorrectException e) {
             System.out.println(e);
             return false;
+
         }
         return false;
+
     }
 
     private List<Token> parseInstruction(List<Token> tokens) throws BrainSyntaxIncorrectException {

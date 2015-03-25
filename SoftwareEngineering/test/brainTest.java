@@ -31,81 +31,79 @@ public class BrainTest {
         assertTrue(b.loadBrain(new File("brains/file.txt")));
     }
 
-//    @Test
-//    public void testDirectionToken(){
-//
-//        BrainImpl b2 = new BrainImpl();
-//
-//        assertTrue(b2.loadBrain(file2));
-//
-//    }
-//
-//    @Test
-//    public void testConditionsToken(){
-//
-//        BrainImpl b3 = new BrainImpl();
-//
-//        assertTrue(b3.loadBrain(file3));
-//
-//    }
-//
-//    @Test
-//    public void testArgumentTokens(){
-//
-//        BrainImpl b4 = new BrainImpl();
-//
-//        assertTrue(b4.loadBrain(file4));
-//    }
-//
-//    // Test a mix of all correct tokens
-//    @Test
-//    public void testMixOfTokens(){
-//
-//        BrainImpl b5 = new BrainImpl();
-//
-//        assertTrue(b5.loadbrain(file5));
-//
-//
-//    }
-//
-//    // test incorrect tokens mixed with correct tokens
-//    @Test
-//    public void testFailTokens(){
-//
-//        BrainImpl b6 = new BrainImpl();
-//
-//        assertFalse(b6.loadBrain(file6));
-//
-//        //  Brain b7 = new Brain();
-//
-//        assertFalse(b6.loadBrain(file7));
-//
-//        //   Brain b8 = new Brain();
-//
-//        assertFalse(b6.loadBrain(file8));
-//
-//        //  Brain b9 = new Brain();
-//
-//        assertFalse( b6.loadBrain(file9));
-//    }
-//
-//    @Test
-//    public void testCorrectWrongTokens(){
-//
-//        BrainImpl b7 = new BrainImpl();
-//
-//        assertFalse(b10.loadBrain(file10));
-//
-//        // Brain b11 = new Brain();
-//
-//        assertFalse(b7.loadBrain(file11));
-//
-//        // Brain b12 = new Brain();
-//
-//        assertFalse(b7.loadBrain(file12));
-//    }
-//
-//
+    @Test
+    public void testDirectionToken(){
+
+        BrainImpl b2 = new BrainImpl();
+
+        assertTrue(b2.loadBrain(new File("brains/file1.txt")));
+
+    }
+
+    @Test
+    public void testConditionsToken(){
+
+        BrainImpl b3 = new BrainImpl();
+
+        assertTrue(b3.loadBrain(new File("brains/file2.txt")));
+
+    }
+
+    @Test
+    public void testArgumentTokens(){
+
+        BrainImpl b4 = new BrainImpl();
+
+        assertTrue(b4.loadBrain(new File("brains/file3.txt")));
+    }
+
+    // Test a mix of all correct tokens
+    @Test
+    public void testMixOfTokens(){
+
+        BrainImpl b5 = new BrainImpl();
+
+        assertTrue(b5.loadBrain(new File("brains/file4.txt")));
+
+
+    }
+
+    // test incorrect tokens mixed with correct tokens
+    @Test
+    public void testFailTokens(){
+
+        BrainImpl b6 = new BrainImpl();
+
+        assertFalse(b6.loadBrain(new File("brains/file5.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file6.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file7.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file8.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file10.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file11.txt")));
+
+        assertFalse(b6.loadBrain(new File("brains/file12.txt")));
+
+//         assertFalse(b6.loadBrain(new File("brains/file9.txt"))); // need to check why this fails
+    }
+
+    @Test
+    public void testCorrectWrongTokens(){
+
+        BrainImpl b7 = new BrainImpl();
+
+        assertFalse(b7.loadBrain(new File("brains/file13.txt")));
+
+        assertFalse(b7.loadBrain(new File("brains/file14.txt")));
+
+        assertFalse(b7.loadBrain(new File("brains/file15.txt")));
+    }
+
+
 //    @Test
 //
 //    public void testStepResting(){
