@@ -135,10 +135,10 @@ public class AntImpl implements Ant {
      */
 
     public void incrementRest() {
-        if (resting < 14){
+        if (resting < 15){
             resting ++;
         }
-        if (resting == 14){
+        if (resting == 15){
             resting = 0;
         }
 

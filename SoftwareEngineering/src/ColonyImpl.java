@@ -172,6 +172,6 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public void remove(Position p) {
-        
+
     }
 }
