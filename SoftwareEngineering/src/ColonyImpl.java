@@ -35,11 +35,7 @@ public class ColonyImpl implements Colony {
             //******need anthill for position D:*****
 
             AntImpl ant = null;
-            try {
-                ant = new AntImpl(i, colour, new Position(1,1));
-            } catch (PositionOutOfBoundsException e) {
-                e.printStackTrace();
-            }
+            ant = new AntImpl(i, colour, new Position(1,1));
             antList.put(i ,ant);
                     }
 
