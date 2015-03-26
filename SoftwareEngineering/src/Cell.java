@@ -24,27 +24,25 @@ public interface Cell {
     public char getContents();
 
     /**
-    * Returns the ID of the ant in the current Cell.
-    * @return int representing ID of ant, -1 if no ant present
+    * Returns ant in the current Cell.
+    * @return ant in the current cell
     */
-    public int getAnt();
+    public Ant getAnt() throws AntNotFoundException;
 
     /**
      * Set Scent mark on the cell
-     * @param int mark.
-     */
+    */
     public void setScentMark(int mark);
 
     /**
      * Set content on the cell
-     * @param char content
      */
     public void setContents(char content);
 
     /**
      * Set ant id on the cell
-     * @param int ant id.
+     * @param ant the ant to set at cell, null if removing ant from cell
      */
-    public void setAnt(int ant);
+    public void setAnt(Ant ant);
 
 }
