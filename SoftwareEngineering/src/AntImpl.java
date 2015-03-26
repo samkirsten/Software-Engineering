@@ -13,10 +13,10 @@ public class AntImpl implements Ant {
     public boolean has_food ;
     public Position position ;
 
-    public AntImpl(int ID, Colour colour, Position position){
-        this.ID = ID ;
-        this. colour = colour ;
-        this.position = position ;
+    public AntImpl(){
+        //this.ID = ID ;
+        //this. colour = colour ;
+        //this.position = position ;
 
         direction = 0 ;
         resting =0;
@@ -87,7 +87,10 @@ public class AntImpl implements Ant {
      */
 
     public void setState(int state) {
-        this.state = state ;
+        if (state <= 9999 && state >=0){
+            this.state = state ;
+        }
+
     }
 
     public void setColour(Colour colour) {
@@ -143,16 +146,6 @@ public class AntImpl implements Ant {
         }
 
     }
-    /**
-     * Marks a scent at a cell when given a position and scent marker
-     *
-     * @param pos    the position of the cell
-     * @param marker the scent marker
-     */
-
-    public void markScent(Position pos, int marker) {
-        //***** try in MAP class ? *****
-    }
 
 
 
@@ -170,4 +163,21 @@ public class AntImpl implements Ant {
     public void setHasFood(Boolean food) {
         has_food = food ;
     }
+
+    //    /**
+//     * Marks a scent at a cell when given a position and scent marker
+//     *
+//     * @param pos    the position of the cell
+//     * @param marker the scent marker
+//     */
+//
+//    public void markScent(Position pos, int marker) {
+//        //***** try in MAP class ? *****
+//    }
 }
+
+
+
+
+
+

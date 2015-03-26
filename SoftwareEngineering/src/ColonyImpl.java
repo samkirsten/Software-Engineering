@@ -8,36 +8,43 @@ public class ColonyImpl implements Colony {
 
     Colour colour ;
     HashMap<Integer,AntImpl> antList ;
-    Brain brain ;
+    BrainImpl brain ;
     int food ;
     int maxAnts ;
-    int starting_id_index ;
+//    int starting_id_index ;
 
 
-    public ColonyImpl(Colour colour, Brain brain){
+    public ColonyImpl(Colour colour, HashMap<Integer,AntImpl> antList ){
 
         this.colour = colour ;
-        this.brain = brain ;
+
+
+        //this.brain = brain ;
+        brain = new BrainImpl();
 
         food = 0 ;
         maxAnts = 49 ;
 
-        //initialize ants
-        if (colour == Colour.BLACK) {
-            starting_id_index = 1 ;
-        }else{
-            starting_id_index = maxAnts +1 ;
-        }
+        this.antList = antList ;
 
-        //put ants into ant list
-        for (int i = starting_id_index ; i <= (starting_id_index + maxAnts) ; i++){
 
-            //******need anthill for position D:*****
 
-            AntImpl ant = null;
-            ant = new AntImpl(i, colour, new Position(1,1));
-            antList.put(i ,ant);
-                    }
+//        //initialize ants
+//        if (colour == Colour.BLACK) {
+//            starting_id_index = 1 ;
+//        }else{
+//            starting_id_index = maxAnts +1 ;
+//        }
+
+//        //put ants into ant list
+//        for (int i = starting_id_index ; i <= (starting_id_index + maxAnts) ; i++){
+//
+//            //******need anthill for position D:*****
+//
+//            AntImpl ant = null;
+//            ant = new AntImpl(i, colour, new Position(1,1));
+//            antList.put(i ,ant);
+//                    }
 
     }
 
@@ -53,14 +60,16 @@ public class ColonyImpl implements Colony {
 
         AntImpl result = null ;
 
-        //try to search for every ant in antlist
-            for (int i = starting_id_index; i<starting_id_index + maxAnts ; i++){
-                AntImpl ant = antList.get(i) ;
-                if (ant.getPosition() == pos){
-                    result = ant ;
-                }
+        //search for every ant in antlist
+        for (Integer key : antList.keySet()){
+            AntImpl ant = antList.get(key);
+            if (ant.getPosition() == pos){
+                result = ant ;
             }
-        //if not found, throw exception, otherwise return the ant foudn
+        }
+
+
+        //if not found, throw exception, otherwise return the ant found
             if (result == null){
                 throw new AntNotFoundException("*** Ant not found ***");
             }else {
@@ -125,18 +134,19 @@ public class ColonyImpl implements Colony {
     @Override
     public void incrementFood() {
         food ++ ;
+
     }
 
     /**
      * Load the colony with the given brain. This controls the behaviour of every ant in the colony.
      * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
      *
-     * @param brain
+     * @param brain2
      * @return true if brain successfully loaded into colony, false otherwise.
      */
     @Override
-    public boolean loadBrain(File brain) {
-        return false;
+    public boolean loadBrain(File brain2) {
+        return brain.loadBrain(brain2) ;
     }
 
     /**
@@ -147,6 +157,7 @@ public class ColonyImpl implements Colony {
     @Override
     public File getBrain() {
         return null;
+
     }
 
     /**
@@ -167,7 +178,9 @@ public class ColonyImpl implements Colony {
      * @param p position of the ant to be killed
      */
     @Override
-    public void remove(Position p) {
+    public void remove(Position p) throws AntNotFoundException {
+        AntImpl ant = getAnt(p);
+        antList.remove(ant.getID());
 
     }
 }

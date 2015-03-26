@@ -77,6 +77,6 @@ public interface Colony {
      * This method is invoked from the killEnemyAnt method in an Ant object
      * @param p position of the ant to be killed
      */
-    public void remove(Position p);
+    public void remove(Position p) throws AntNotFoundException;
 
 }
