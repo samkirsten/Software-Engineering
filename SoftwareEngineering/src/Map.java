@@ -12,7 +12,7 @@ public interface Map {
      * Generates a pseudo-random map which is 150x150 in size
      * With terrain and food
      */
-    public void generateMap();
+    public void generateMap() throws PositionOutOfBoundsException;
 
     /**
      * reset map state to when it was last generated
@@ -86,9 +86,6 @@ public interface Map {
      */
     public void setCellScentMarker(Position pos, int marker);
 
-
-
 }
-
 
 
