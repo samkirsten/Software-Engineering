@@ -7,13 +7,14 @@ public class GameImpl implements Game, Tournament {
     Colony black;
 
 
+
     @Override
     public boolean loadBrain(File brain, Colour colour) {
         return false;
     }
 
     @Override
-    public void setColony(Colony colony, Colour colour, List<Position> anthill) {
+    public void setColony(Colony colony, List<Position> anthill) {
 
     }
 
