@@ -5,9 +5,6 @@ public class Position {
     private int y;
 
     Position(int x, int y){
-        if((x < 0 || x > 149) || (y < 0 || x > 149)){
-            throw new PositionOutOfBoundsException("The position is out of bound");
-        }
         this.x = x;
         this.y = y;
     }
@@ -17,9 +14,6 @@ public class Position {
     }
 
     public void setX(int x) {
-        if(x < 0 || x > 149){
-            throw new PositionOutOfBoundsException("The position of X is out of bound");
-        }
         this.x = x;
     }
 
@@ -28,9 +22,6 @@ public class Position {
     }
 
     public void setY(int y) {
-        if(y < 0 || y > 149){
-            throw new PositionOutOfBoundsException("The position of Y is out of bound");
-        }
         this.y = y;
     }
 }

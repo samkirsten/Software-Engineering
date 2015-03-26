@@ -15,7 +15,7 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public void generateMap() throws PositionOutOfBoundsException {
+    public void generateMap(){
         for(int y = 0; y < 150; y++){
             for(int x = 0; x < 150; x++){
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
@@ -85,7 +85,7 @@ public class MapImpl implements Map{
 
     }
 
-    private void generateAntHill(int x,int y,Colour colour) throws PositionOutOfBoundsException {
+    private void generateAntHill(int x,int y,Colour colour){
         char team;
         CellImpl cell, cell1;
         if(colour == Colour.BLACK){
