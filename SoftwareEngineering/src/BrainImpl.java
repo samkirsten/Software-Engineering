@@ -15,7 +15,7 @@ public class BrainImpl implements Brain {
 
     List<Token> brain[];
     public List<Token> lexedList = new ArrayList<>();
-
+    File loadedFile;
 
 
     BrainImpl(){
@@ -377,6 +377,8 @@ public class BrainImpl implements Brain {
 
                 boolean passed =  parseBrain();
                 System.out.println(passed);
+                if(passed)
+                    loadedFile = brain;
                 return passed;
             }
             else
@@ -395,6 +397,15 @@ public class BrainImpl implements Brain {
 
     }
 
+    /**
+     * gets the file that was loaded into the brain
+     *
+     * @return the txt file loaded into the Brain object containing the brain instructions
+     */
+    @Override
+    public File getLoadedFile() {
+        return loadedFile;
+    }
 
 
     public static void main(String args[]) {

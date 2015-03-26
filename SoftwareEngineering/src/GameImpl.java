@@ -5,42 +5,76 @@ public class GameImpl implements Game, Tournament {
 
     Colony red;
     Colony black;
-
+    Map map;
 
 
     @Override
     public boolean loadBrain(File brain, Colour colour) {
-        return false;
+
+        Brain brainClass = new BrainImpl();
+        boolean passed = true;
+
+        if(colour == Colour.RED){
+            passed = brainClass.loadBrain(brain);
+            if(passed){
+                red.setBrain(brainClass);
+            }
+        }
+        else{
+            passed = brainClass.loadBrain(brain);
+            if(passed){
+                black.setBrain(brainClass);
+            }
+        }
+
+        return passed;
     }
 
     @Override
-    public void setColony(Colony colony, List<Position> anthill) {
-
+    public void setColony(Colony colony) {
+        if(colony.getColonyColour()==Colour.RED){
+            red = colony;
+        }
+        else{
+            black = colony;
+        }
     }
 
     @Override
     public Colony getColony(Colour colour) {
-        return null;
+        if(colour==Colour.RED){
+            return red;
+        }
+        else{
+            return black;
+        }
     }
 
     @Override
     public void setMap(Map map) {
-
+        this.map = map;
     }
 
     @Override
     public Map getMap() {
-        return null;
+        return map;
     }
 
     @Override
     public void start() {
-
+        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
+            next();
+        }
     }
 
     @Override
     public void next() {
-
+        for(int i=0;i<red.getNumberOfAnts();i++){
+            red.getBrain().step(i);
+        }
+        for (int i=0;i<black.getNumberOfAnts();i++){
+            black.getBrain().step(i);
+        }
     }
 
     /**
@@ -52,7 +86,14 @@ public class GameImpl implements Game, Tournament {
      */
     @Override
     public char getWinner() {
-        return 0;
+        if(red.getFoodInColony()>black.getFoodInColony()){
+            return 'R';
+        }
+        else if(black.getFoodInColony()>red.getFoodInColony()){
+            return 'B';
+        }
+        else
+            return 'D';
     }
 
     @Override

@@ -16,5 +16,12 @@ public interface Brain {
      */
     public void step(int id);
 
+    /**
+     * gets the file that was loaded into the brain
+     * @return the txt file loaded into the Brain object containing the brain instructions
+     */
+    public File getLoadedFile();
+
+
 
 }

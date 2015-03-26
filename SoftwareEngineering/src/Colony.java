@@ -46,16 +46,15 @@ public interface Colony {
      * Load the colony with the given brain. This controls the behaviour of every ant in the colony.
      * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
      * @param brain
-     * @return  true if brain successfully loaded into colony, false otherwise.
      */
-    public boolean loadBrain(File brain);
+    public void setBrain(Brain brain);
 
 
     /**
      * Returns the brain which has been loaded into the colony
      * @return the colony brain
      */
-    public File getBrain();
+    public Brain getBrain();
 
     /**
      * Returns the colony colour, allowing differentiation between the two competing teams
@@ -63,13 +62,6 @@ public interface Colony {
      */
     public Colour getColonyColour();
 
-//    /**
-//     * Sets the given cells as part of the ant colony
-//     * Must be exactly of length 7.
-//     * The cells must all be connected
-//     * @param cells The cells which form the anthill
-//     */
-//    public void setAntHill(List<Position> cells);
 
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.

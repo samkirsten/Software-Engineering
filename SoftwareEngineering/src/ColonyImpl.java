@@ -145,7 +145,7 @@ public class ColonyImpl implements Colony {
      * @return the colony brain
      */
     @Override
-    public File getBrain() {
+    public Brain getBrain() {
         return null;
     }
 
