@@ -18,17 +18,16 @@ public class GameTest {
 
         assertEquals(game.getColony(Colour.RED).getBrain(),brainFile);
     }
+//
+//    @Test
+//    public void setColonyTest(){
+//        Game game = new GameImpl();
+//        Colony colony = new ColonyImpl(Colour.RED,new BrainImpl());
+//        Map map = new MapImpl();
+//        game.setColony(colony,map.getAnthill(Colour.RED));
+//        assertEquals(game.getColony(Colour.RED),colony);
+//    }
 
-    @Test
-    public void setColonyTest(){
-        Game game = new GameImpl();
-        Colony colony = new ColonyImpl(Colour.RED,new BrainImpl());
-        Map map = new MapImpl();
-        game.setColony(colony,map.getAnthill(Colour.RED));
-        assertEquals(game.getColony(Colour.RED),colony);
-    }
-
-    @Test
 
 
 }
