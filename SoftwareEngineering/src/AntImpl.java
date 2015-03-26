@@ -9,10 +9,9 @@ public class AntImpl implements Ant {
     public Colour colour ;
     public  int state ;
     public int resting ;
-    public  int direction;
+    public int direction;
     public boolean has_food ;
-    public Position position ;
-
+    public Position position;
     public AntImpl(){
         //this.ID = ID ;
         //this. colour = colour ;

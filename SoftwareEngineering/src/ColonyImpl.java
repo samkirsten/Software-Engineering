@@ -60,7 +60,7 @@ public class ColonyImpl implements Colony {
 
         AntImpl result = null ;
 
-        //search for every ant in antlist
+        //search for every ant in ant list
         for (Integer key : antList.keySet()){
             AntImpl ant = antList.get(key);
             if (ant.getPosition() == pos){
