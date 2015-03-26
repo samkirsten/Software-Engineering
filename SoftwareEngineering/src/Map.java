@@ -12,7 +12,7 @@ public interface Map {
      * Generates a pseudo-random map which is 150x150 in size
      * With terrain and food
      */
-    public void generateMap() throws PositionOutOfBoundsException;
+    public void generateMap();
 
     /**
      * reset map state to when it was last generated
@@ -52,7 +52,7 @@ public interface Map {
      * @param pos the position of the cell
      * @return id of ant at given position
      */
-    public int getAntAtCell(Position pos);
+    public Ant getAntAtCell(Position pos);
 
     /**
      * #
@@ -70,7 +70,7 @@ public interface Map {
      * @param antId the id of the ant
      * @throws CellAlreadyOccupiedException if the cell already contains an ant.
      */
-    public void setAntAtCell(Position pos, int antId) throws CellAlreadyOccupiedException;
+    public void setAntAtCell(Position pos, Ant antId) throws CellAlreadyOccupiedException;
 
     /**
      * Sets the contents of a cell, requires a single character which specifies the contents

@@ -13,9 +13,18 @@ public class MapImpl implements Map{
     public MapImpl(){
 
     }
-
+    
+    private Position createPosition(int x, int y) throws PositionOutOfBoundsException {
+        if((x < 0 || x > 149) || (y < 0 || y > 149)){
+            throw new PositionOutOfBoundsException("The position is out of bound");
+        }
+        Position result = new Position(x,y);
+        return result;
+        
+    }
+    
     @Override
-    public void generateMap(){
+    public void generateMap() {
         for(int y = 0; y < 150; y++){
             for(int x = 0; x < 150; x++){
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
@@ -101,13 +110,21 @@ public class MapImpl implements Map{
                     cell1 = map[x+i-(a/2)][y+6-a];
                     cell1.setContents(team);
                     if(team == '-'){
-                        BLACK.add(new Position(x+i-(a/2),y-6+a));
-                        BLACK.add(new Position(x+i-(a/2),y+6-a));
+                        try {
+                            BLACK.add(createPosition(x+i-(a/2),y-6+a));
+                            BLACK.add(createPosition(x+i-(a/2),y+6-a));
+                        } catch (PositionOutOfBoundsException e) {
+                            e.printStackTrace();
+                        }
                         BLACKHILL.add(cell);
                         BLACKHILL.add(cell1);
                     }else if(team == '+'){
-                        RED.add(new Position(x+i-(a/2),y-6+a));
-                        RED.add(new Position(x+i-(a/2),y+6-a));
+                        try {
+                            RED.add(createPosition(x+i-(a/2),y-6+a));
+                            RED.add(createPosition(x+i-(a/2),y+6-a));
+                        } catch (PositionOutOfBoundsException e) {
+                            e.printStackTrace();
+                        }
                         REDHILL.add(cell);
                         REDHILL.add(cell1);
                     }
@@ -115,10 +132,18 @@ public class MapImpl implements Map{
                     cell = map[x+i-(a/2)][y-6+a];
                     cell.setContents(team);
                     if(team == '-'){
-                        BLACK.add(new Position(x+i-(a/2),y-6+a));
+                        try {
+                            BLACK.add(createPosition(x+i-(a/2),y-6+a));
+                        } catch (PositionOutOfBoundsException e) {
+                            e.printStackTrace();
+                        }
                         BLACKHILL.add(cell);
                     }else if(team == '+'){
-                        RED.add(new Position(x+i-(a/2),y-6+a));
+                        try {
+                            RED.add(createPosition(x+i-(a/2),y-6+a));
+                        } catch (PositionOutOfBoundsException e) {
+                            e.printStackTrace();
+                        }
                         REDHILL.add(cell);
                     }
                 }
@@ -213,13 +238,57 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public int getAntAtCell(Position pos) {
+    public Ant getAntAtCell(Position pos) {
         return map[pos.getX()][pos.getY()].getAnt();
     }
 
     @Override
     public int getAdjacentEnemyAnts(Position pos, Colour colour) {
-        return 0;
+        int number = 0;
+        if(pos.getY() % 2 == 1){
+            if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()+1][pos.getY()+1].getAnt().getColour() == colour){
+                number++;
+            }
+        }
+
+        if(pos.getY() % 2 == 0){
+            if(map[pos.getX()-1][pos.getY()-1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()-1][pos.getY()+1].getAnt().getColour() == colour){
+                number++;
+            }
+            if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
+                number++;
+            }
+        }
+
+
+        return number;
     }
 
     @Override
@@ -231,8 +300,12 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public void setAntAtCell(Position pos, int antId) throws CellAlreadyOccupiedException {
-        map[pos.getX()][pos.getY()].setAnt(antId);
+    public void setAntAtCell(Position pos, Ant ant) throws CellAlreadyOccupiedException {
+        if(map[pos.getX()][pos.getY()].getAnt() != null){
+            throw new CellAlreadyOccupiedException("There is Ant already.");
+        }else{
+            map[pos.getX()][pos.getY()].setAnt(ant);
+        }
     }
 
     @Override
