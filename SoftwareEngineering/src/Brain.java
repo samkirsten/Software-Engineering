@@ -8,6 +8,16 @@ public interface Brain {
      * @param brain the brain to be loaded
      * @return  true if brain successfully loaded into colony, false otherwise.
      */
+
+
+    /**
+     * gets the file that was loaded into the brain
+     *
+     * @return the txt file loaded into the Brain object containing the brain instructions
+     */
+
+    public File getLoadedFile();
+
     public boolean loadBrain(File brain);
 
     /**

@@ -1,3 +1,2 @@
-Move 1 2;bhjikghijkl
-PickUp 2 3
-
+Sense Here 1 2 Friend;
+Sense Ahead 1 2 Friend;

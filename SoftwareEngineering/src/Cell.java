@@ -1,5 +1,7 @@
 
-public interface Cell {
+public interface
+
+        Cell {
 
     /**
      * If a Cell is rocky, an ant cannot move into it

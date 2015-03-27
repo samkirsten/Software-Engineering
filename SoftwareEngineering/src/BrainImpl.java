@@ -7,19 +7,40 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class BrainImpl implements Brain {
 
-    List<Token> brain[];
+    private List<Token> brain[];
     public List<Token> lexedList = new ArrayList<>();
+    public List<String> instructionGetter = new ArrayList<>();
+    private File loadedFile;
+    private int flipCounter =0;
+
+    public ArrayList<List<String>> state = new ArrayList<>();
+
+    private MapImpl map = new MapImpl();
+    private ColonyImpl colony = new ColonyImpl();
 
 
 
-    BrainImpl(){
+    BrainImpl(MapImpl map, ColonyImpl colony){
+        this.map = map;
+        this.colony = colony;
 
+    }
+
+    /**
+     * gets the file that was loaded into the brain
+     *
+     * @return the txt file loaded into the Brain object containing the brain instructions
+     */
+    @Override
+    public File getLoadedFile() {
+        return loadedFile;
     }
 
     private boolean lexBrain(String brain) {
@@ -35,6 +56,7 @@ public class BrainImpl implements Brain {
 
         String lines[] = brain.split("\\r?\\n");
 
+
         for(int i=0;i<lines.length;i++) {
             String currentLine = lines[i];
             boolean end = false;
@@ -44,6 +66,9 @@ public class BrainImpl implements Brain {
                 if (nextChar.equals(" ") && !nextToken.isEmpty()) {   // if next char is space AND nextToken is not empty
                     try {
                         lexedList.add(chooseToken(nextToken));
+
+                        instructionGetter.add(nextToken);
+
                         nextToken = "";
                     } catch (BrainSyntaxIncorrectException e) {
                         System.out.println(e);
@@ -54,6 +79,9 @@ public class BrainImpl implements Brain {
                     if (!nextToken.isEmpty()) {
                         try {
                             lexedList.add(chooseToken(nextToken));
+
+                            instructionGetter.add(nextToken);
+
                             nextToken = "";
                         } catch (BrainSyntaxIncorrectException e) {
                             System.out.println(e);
@@ -67,6 +95,9 @@ public class BrainImpl implements Brain {
                     if(currentLine.length()==(j+1)){
                         try {
                             lexedList.add(chooseToken(nextToken));
+
+                            instructionGetter.add(nextToken);
+
                             nextToken = "";
                         } catch (BrainSyntaxIncorrectException e) {
                             System.out.println(e);
@@ -78,6 +109,7 @@ public class BrainImpl implements Brain {
                 j++;
             }
         }
+
 
         return true;
     }
@@ -365,18 +397,27 @@ public class BrainImpl implements Brain {
     }
 
 
-
-
-
     @Override
     public boolean loadBrain(File brain) {
+
+        state.clear();
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(String.valueOf(brain)));
 
             if(lexBrain(new String(encoded, StandardCharsets.UTF_8))){
 
                 boolean passed =  parseBrain();
-                System.out.println(passed);
+
+              //  System.out.println(passed);
+
+                if(passed){
+
+                    loadedFile = brain;
+                }
+
+                setUpStates();
+
+
                 return passed;
             }
             else
@@ -391,21 +432,733 @@ public class BrainImpl implements Brain {
 
 
     @Override
-    public void step(int id) {
+    public void step(int id) {  // throw exception for psos
+
+        Colour enemyColour;
+
+        if(colony.getColonyColour() == Colour.RED){
+
+            enemyColour = Colour.BLACK;
+
+        }else {
+
+            enemyColour = Colour.RED;
+
+        }
+
+        Position p = new Position();
+        AntImpl a;
+        // if its within first half do red else do black  ants
+
+        // for red ants scent marker 1-6 black 7-12     0 to clear
+            if (colony.isAntAlive(id)){
+
+                try {
+                    a = colony.getAnt(id);
+                    p = colony.getAnt(id).getPosition();
+                } catch (AntNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+                if(a.isResting()){
+
+                    a.incrementRest();
+
+                }
+                else {
+
+                    int currentState = 0;
+                    try {
+                        currentState = colony.getAnt(id).getState();
+
+                    } catch (AntNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    String command = state.get(currentState).get(0);
+
+                    if ("Sense".equals(command)) {
+
+                        Position p1 = new Position();
+                        p1 = sensedCell(p, a.getDirection(), state.get(currentState).get(1));
+
+
+                        if (state.get(currentState).get(4).equals("Marker")) {
+
+                            if (cellMatchCheckMarker(p, a.getColour(), Integer.parseInt(state.get(currentState).get(5)))) {
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                            } else {
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(3)));
+
+                            }
+
+                        } else if (state.get(currentState).get(4).equals("FoeMarker")) {
+
+
+                            if (cellMatchCheckEnemyMarker(p, a.getColour())) {
+
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                            } else {
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(3)));
+
+                            }
+
+                        } else if (cellMatches(p, state.get(currentState).get(4), a.getColour())) {
+
+
+                            a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                        }else{
+
+                            a.setState(Integer.parseInt(state.get(currentState).get(3)));
+
+                        }
+
+
+                    } else if ("Mark".equals(command)) {
+
+                        a.markScent(p, Integer.parseInt(state.get(currentState).get(1) + 1)); // have to change antImpl method frmo Position pos to PositionImpl, use ant or map?
+                        a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                    } else if ("Unmark".equals(command)) {
+
+
+                        a.markScent(p, 0); // have to change antImpl method frmo Position pos to PositionImpl
+                        a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+
+                    } else if ("PickUp".equals(command)) {
+
+                        char contents = map.cellContents();
+
+                        if (!a.has_food || Character.isDigit(contents) && (int) contents == 0) {
+
+                            a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                        } else if (Character.isDigit(contents) && (int) contents > 0) {
+
+                            map.setCellContents(p, (int) contents - 1);
+                            a.setHasFood(true);
+                            a.setState(Integer.parseInt(state.get(currentState).get(1)));
+
+                        }
+                    } else if ("Drop".equals(command)) {
+
+                        if (a.has_food) {
+
+                            if ((int) map.getCellContents(p) == 0) {
+                                map.setCellContents(p, (char) 1);
+                            } else {
+
+                                map.setCellContents(p, (int) map.getCellContents(p) + 1);
+
+                            }
+
+                            a.setHasFood(false);
+                            a.setState(Integer.parseInt(state.get(currentState).get(1)));
+                        }
+                    } else if ("Turn".equals(command)) {
+
+                        if ("Right".equals(state.get(currentState).get(1))) {
+                            if (a.getDirection() == 5) {
+
+                                a.setDirection(0);
+
+                            } else {
+
+                                a.setDirection(a.getDirection() + 1);
+
+                            }
+
+
+                        } else if ("Left".equals(state.get(currentState).get(1))) {
+                            if (a.getDirection() == 0) {
+
+                                a.setDirection(5);
+
+                            } else {
+
+                                a.setDirection(a.getDirection() - 1);
+
+                            }
+
+                        }
+
+                        a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+
+                    } else if ("Move".equals(command)) {
+
+
+                        int dir = a.getDirection();
+
+                        Position pos = getAdjacentCell(p,dir);
+
+                        if(map.getCellIsRocky() || map.getAntAtCell(p2) != 0 ){
+
+                            a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                        }else{
+
+
+                            map.setAntAtCell(p, 0);
+                            map.setAntAtCell(p2, id);
+                            a.setState(Integer.parseInt(state.get(currentState).get(1)));
+                            a.startResting();
+                            map.getAdjacentEnemyAnts(p2, enemyColour); // need to kill here?
+
+
+                        }
+
+
+                        }else if("Flip".equals(command)){
+
+                            int check = randomInt(Integer.parseInt(state.get(currentState).get(1)));
+                            if(check == 0){
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                            }else{
+
+                                a.setState(Integer.parseInt(state.get(currentState).get(3)));
+
+                            }
+                    }
+
+                }
+
+            }
 
     }
 
 
+    private int randomInt(int n){
 
-    public static void main(String args[]) {
-        BrainImpl brain = new BrainImpl();
-        brain.loadBrain(new File("brains/brain1.txt"));
-        for (Token t : brain.lexedList ){
-            System.out.println(t.getClass().toString());
+        int s4 = 12345;
+        //int s4=0;
+        for(int x =0; x < 4; x++){
+
+            s4 = s4 * 22695477 + 1;
+
+        }
+
+        for(int y=0; y < flipCounter; y++){
+
+
+            s4 = s4 * 22695477 + 1;
+        }
+
+        int xAtI = (s4/65536)%16384;
+
+        xAtI = xAtI%n;
+
+        flipCounter++;
+        return xAtI;
+
+    }
+
+
+    private boolean cellMatchCheckEnemyMarker(Position p, Colour c){
+
+        int check = map.getCellScentMarker(c,p);
+        if(c == Colour.RED && check >= 7){
+
+            return true;
+
+
+        }else if(c == Colour.BLACK && check < 7){
+
+            return true;
+
+        }else{
+
+
+            return false;
+        }
+
+        return false;
+
+    }
+
+    private boolean cellMatchCheckMarker(Position p,  Colour c, int Marker){
+
+        int check = map.getCellScentMarker(c,p);
+        if(c == Colour.RED && check < 7 && check == Marker){
+
+            return true;
+
+
+        }else if(c == Colour.BLACK && check >= 7 && check < 13 && check == Marker){
+
+
+            return true;
+
+        }else{
+
+            return false;
+        }
+
+    }
+
+    private boolean cellMatches(Position p, String condition, Colour c){
+
+
+
+        if(map.getCellIsRocky(p)){
+
+            if("Rock".equals(condition)){
+
+                return true;
+            }
+            else{
+
+                return false;
+            }
+        }else{
+
+            if("Friend".equals(condition)){
+
+               int check = map.getAntAtCell(p);
+                if(check!= 0){ ////
+
+
+                    try {
+                        if(colony.getAnt(check).getColour() == c) {
+                            return true;
+                        }
+                    } catch (AntNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }////
+                else{
+
+                    return false;
+                }
+
+            }else if("Foe".equals(condition)){
+
+                int check = map.getAntAtCell(p);
+                if(check!= 0){
+
+                    try {
+                        if(colony.getAnt(check).getColour() != c){
+
+                            return true;
+                        }
+                    } catch (AntNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+
+                    return false;
+                }
+
+
+            }else if("FriendWithFood".equals(condition)){
+
+
+                int check = map.getAntAtCell(p);
+                if(check!= 0){
+                    try {
+                        if(colony.getAnt(check).getColour() == c){
+
+                            if(colony.getAnt(check).has_food) {
+
+                                return true;
+                            }
+                        }
+                    } catch (AntNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+
+                    return false;
+                }
+
+            }else if("FoeWithFood".equals(condition)){
+
+                int check = map.getAntAtCell(p);
+                if(check!= 0){
+                    try {
+                        if(map.getAnt(p).getColour != c){
+
+                            if(map.getAnt(p).has_food) { /// need to update map to get this method
+
+                                return true;
+                            }
+                        }
+                    } catch (AntNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+
+                    return false;
+                }
+
+
+
+
+            }else if("Food".equals(condition)){
+
+                char content =  map.getCellContents();
+                if((int) content > 0){
+
+                    return true;
+
+                }else{
+
+
+                    return false;
+                }
+
+            }else if("Rock".equals(condition)){
+
+
+                return false;
+
+            }else if("Home".equals(condition)){
+
+                List<Position> checkAntHill = map.getAntHill(c);
+
+
+                if(checkAntHill.contains(p)){
+
+                    return true;
+
+                }
+
+
+                return false;
+
+            } else if("FoeHome".equals(condition)){
+
+                Colour r = Colour.RED;
+                Colour b = Colour.BLACK;
+                List<Position> checkAntHill =null;
+
+
+                if(c == Colour.RED ){
+
+                    checkAntHill = map.getAntHill(b);
+                }
+                if(c == Colour.BLACK){
+
+                    checkAntHill = map.getAntHill(r);
+
+                }
+
+
+                if(checkAntHill.contains(p)){
+
+                    return true;
+
+                }
+
+                return false;
+
+
+            }
+
+
+
+
+        }
+        return false;
+    }
+
+    private Position sensedCell(Position p, int direction ,String senseDir) throws PositionOutOfBoundsException {
+
+        Position pos = new Position();
+
+        if("Here".equals(senseDir)){
+
+            pos = p;
+
+        }else if("Ahead".equals(senseDir)){
+
+            pos = getAdjacentCell(p,direction);
+
+        }else if("LeftAhead".equals(senseDir)){
+
+            int leftDir;
+            if(direction == 0){
+
+                leftDir = 5;
+            }else{
+
+                leftDir = direction - 1;
+            }
+
+           pos = getAdjacentCell(p, leftDir);
+
+        }else if("RightAhead".equals(senseDir)){
+
+
+            int rightDir;
+            if(direction == 5){
+
+                rightDir = 0;
+            }else{
+
+                rightDir = direction + 1;
+            }
+
+            pos = getAdjacentCell(p, rightDir);
+
+        }
+
+        return pos;
+
+    }
+
+    private Position getAdjacentCell(Position p, int direction) throws PositionOutOfBoundsException {
+
+        Position p2 = new Position();
+
+        if (direction == 0) {
+
+            p2.setX(p.getX() + 1);
+            p2.setY(p.getY());
+        } else if (direction == 1) {
+
+            if(p.getY()%2 == 0) {
+                p2.setX(p.getX());
+                p2.setY(p.getY() + 1);
+            }else{
+
+                p2.setX(p.getX()+1);
+                p2.setY(p.getY() + 1);
+
+            }
+
+        }else if(direction == 2){
+
+            if(p.getY()%2 == 0) {
+                p2.setX(p.getX()-1);
+                p2.setY(p.getY() + 1);
+            }else{
+
+                p2.setX(p.getX());
+                p2.setY(p.getY()+1);
+
+
+            }
+
+
+        }else if(direction == 3){
+
+
+            p2.setX(p.getX()-1);
+            p2.setY(p.getY());
+
+        }
+        else if(direction == 4){
+
+            if(p.getY()%2 == 0) {
+                p2.setX(p.getX()-1);
+                p2.setY(p.getY()-1);
+            }else{
+
+                p2.setX(p.getX());
+                p2.setY(p.getY()-1);
+
+
+            }
+
+
+        }else if(direction == 5){
+
+            if(p.getY()%2 == 0) {
+                p2.setX(p.getX());
+                p2.setY(p.getY()-1);
+            }else{
+
+                p2.setX(p.getX()+1);
+                p2.setY(p.getY()-1);
+
+            }
+        }
+
+        return p2;
+
+    }
+
+    private void setUpStates(){
+
+
+        for(int x = 0; x < instructionGetter.size(); x++){
+
+            String tokenChecker = instructionGetter.get(x);
+
+            if("Sense".equals(tokenChecker)){
+
+                if("Marker".equals(tokenChecker+4)){
+
+
+                    ArrayList<String> temp = new ArrayList<>();
+
+                    temp.add(instructionGetter.get(x));
+                    temp.add(instructionGetter.get(x+1));
+                    temp.add(instructionGetter.get(x+2));
+                    temp.add(instructionGetter.get(x+3));
+                    temp.add((instructionGetter.get(x+4)));
+                    temp.add((instructionGetter.get(x+5)));
+
+
+                    state.add(temp);
+                    x = x +5;
+
+                }else {
+
+
+                    ArrayList<String> temp = new ArrayList<>();
+
+                    temp.add(instructionGetter.get(x));
+                    temp.add(instructionGetter.get(x + 1));
+                    temp.add(instructionGetter.get(x + 2));
+                    temp.add(instructionGetter.get(x + 3));
+                    temp.add((instructionGetter.get(x + 4)));
+
+
+                    state.add(temp);
+                    x = x + 4;
+
+                }
+
+            }
+            else
+            if("Mark".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+
+                state.add(temp);
+
+                x = x + 2;
+
+            }
+            else
+            if("Unmark".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+
+                state.add(temp);
+
+                x = x + 2;
+            }
+            else
+            if("PickUp".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+
+                state.add(temp);
+
+                x = x + 2;
+
+            }
+            else
+            if("Drop".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+
+
+                state.add(temp);
+
+                x = x + 1;
+
+            }
+            else
+            if("Turn".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+
+                state.add(temp);
+
+                x = x + 2;
+
+            }
+            else
+            if("Move".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+
+                state.add(temp);
+
+                x = x + 2;
+
+            }
+            else
+            if("Flip".equals(tokenChecker)){
+
+                ArrayList<String> temp = new ArrayList<>();
+
+                temp.add(instructionGetter.get(x));
+                temp.add(instructionGetter.get(x+1));
+                temp.add(instructionGetter.get(x+2));
+                temp.add(instructionGetter.get(x+3));
+
+                state.add(temp);
+
+                x = x + 3;
+
+            }
+
+
+
         }
 
 
+
+
     }
+
+
+//    public static void main(String args[]) {
+//        BrainImpl brain = new BrainImpl();
+//        brain.loadBrain(new File("brains/brain1.txt"));
+////        for (String t : brain.instructionGetter ){
+////            System.out.println(t);
+////        }
+////
+////        System.out.print(brain.state.size());
+//
+//    }
 
 
 

@@ -25,8 +25,10 @@ public class BrainTest {
     // test through each group of correct tokens
     @Test
     public void testInstructionToken(){
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
 
-        BrainImpl b = new BrainImpl();
+        BrainImpl b = new BrainImpl(m,c);
 
         assertTrue(b.loadBrain(new File("brains/file.txt")));
     }
@@ -34,7 +36,10 @@ public class BrainTest {
     @Test
     public void testDirectionToken(){
 
-        BrainImpl b2 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
+
+        BrainImpl b2 = new BrainImpl(m,c);
 
         assertTrue(b2.loadBrain(new File("brains/file1.txt")));
 
@@ -43,16 +48,23 @@ public class BrainTest {
     @Test
     public void testConditionsToken(){
 
-        BrainImpl b3 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
 
-        assertTrue(b3.loadBrain(new File("brains/file2.txt")));
+        BrainImpl b3 = new BrainImpl(m,c);
+
+        assertTrue(b3.loadBrain(new File("br" +
+                "ains/file2.txt")));
 
     }
 
     @Test
     public void testArgumentTokens(){
 
-        BrainImpl b4 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
+
+        BrainImpl b4 = new BrainImpl(m,c);
 
         assertTrue(b4.loadBrain(new File("brains/file3.txt")));
     }
@@ -61,7 +73,10 @@ public class BrainTest {
     @Test
     public void testMixOfTokens(){
 
-        BrainImpl b5 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
+
+        BrainImpl b5 = new BrainImpl(m,c);
 
         assertTrue(b5.loadBrain(new File("brains/file4.txt")));
 
@@ -72,7 +87,10 @@ public class BrainTest {
     @Test
     public void testFailTokens(){
 
-        BrainImpl b6 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
+
+        BrainImpl b6 = new BrainImpl(m,c);
 
         assertFalse(b6.loadBrain(new File("brains/file5.txt")));
 
@@ -94,7 +112,10 @@ public class BrainTest {
     @Test
     public void testCorrectWrongTokens(){
 
-        BrainImpl b7 = new BrainImpl();
+        ColonyImpl c = new ColonyImpl();
+        MapImpl m = new MapImpl();
+
+        BrainImpl b7 = new BrainImpl(m,c);
 
         assertFalse(b7.loadBrain(new File("brains/file13.txt")));
 
