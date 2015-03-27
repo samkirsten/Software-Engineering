@@ -8,7 +8,7 @@ public interface Game {
 
     public boolean loadBrain(File brain, Colour colour);
 
-    public void setColony(Colony colony, Colour colour, List<Position> anthill);
+    public void setColony(Colony colony);
 
     public Colony getColony(Colour colour);
 
@@ -18,7 +18,7 @@ public interface Game {
 
     public void start();
 
-    public void next();
+
 
     /**
      * R = Red win

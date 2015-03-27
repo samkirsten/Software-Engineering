@@ -7,14 +7,14 @@ public interface Colony {
      * @param pos The cell position of the ant to be found
      * @return The Ant at indicated position
      */
-    public Ant getAnt(Position pos) throws AntNotFoundException;
+    public AntImpl getAnt(Position pos) throws AntNotFoundException;
 
     /**
      * Get an Ant object from the list of Ants stored in the given colony.
      * @param id the id of the ant to be found
      * @return The Ant with given id
      */
-    public Ant getAnt(int id) throws AntNotFoundException;
+    public AntImpl getAnt(int id) throws AntNotFoundException;
 
     /**
      * Get the number of ants currently alive belonging to the colony
@@ -46,16 +46,15 @@ public interface Colony {
      * Load the colony with the given brain. This controls the behaviour of every ant in the colony.
      * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
      * @param brain
-     * @return  true if brain successfully loaded into colony, false otherwise.
      */
-    public boolean loadBrain(File brain);
+    public void setBrain(Brain brain);
 
 
     /**
      * Returns the brain which has been loaded into the colony
      * @return the colony brain
      */
-    public File getBrain();
+    public Brain getBrain();
 
     /**
      * Returns the colony colour, allowing differentiation between the two competing teams
@@ -63,13 +62,8 @@ public interface Colony {
      */
     public Colour getColonyColour();
 
-//    /**
-//     * Sets the given cells as part of the ant colony
-//     * Must be exactly of length 7.
-//     * The cells must all be connected
-//     * @param cells The cells which form the anthill
-//     */
-//    public void setAntHill(List<Position> cells);
+
+    public void setColonyColour(Colour colour);
 
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.
@@ -77,6 +71,13 @@ public interface Colony {
      * This method is invoked from the killEnemyAnt method in an Ant object
      * @param p position of the ant to be killed
      */
-    public void remove(Position p);
+    public void remove(Position p) throws AntNotFoundException;
+
+    public void addAnt(Ant ant);
+
+    public void reset();
 
 }
+
+
+

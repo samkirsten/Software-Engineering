@@ -16,11 +16,15 @@ public class BrainImpl implements Brain {
 
     private List<Token> brain[];
     public List<Token> lexedList = new ArrayList<>();
+<<<<<<< HEAD
     public List<String> instructionGetter = new ArrayList<>();
     private File loadedFile;
     private int flipCounter =0;
 
     public ArrayList<List<String>> state = new ArrayList<>();
+=======
+    File loadedFile;
+>>>>>>> origin/master
 
     private MapImpl map = new MapImpl();
     private ColonyImpl colony = new ColonyImpl();
@@ -407,6 +411,7 @@ public class BrainImpl implements Brain {
             if(lexBrain(new String(encoded, StandardCharsets.UTF_8))){
 
                 boolean passed =  parseBrain();
+<<<<<<< HEAD
 
               //  System.out.println(passed);
 
@@ -418,6 +423,11 @@ public class BrainImpl implements Brain {
                 setUpStates();
 
 
+=======
+                System.out.println(passed);
+                if(passed)
+                    loadedFile = brain;
+>>>>>>> origin/master
                 return passed;
             }
             else
@@ -997,6 +1007,7 @@ public class BrainImpl implements Brain {
 
     }
 
+<<<<<<< HEAD
     private void setUpStates(){
 
 
@@ -1139,6 +1150,17 @@ public class BrainImpl implements Brain {
 
             }
 
+=======
+    /**
+     * gets the file that was loaded into the brain
+     *
+     * @return the txt file loaded into the Brain object containing the brain instructions
+     */
+    @Override
+    public File getLoadedFile() {
+        return loadedFile;
+    }
+>>>>>>> origin/master
 
 
         }

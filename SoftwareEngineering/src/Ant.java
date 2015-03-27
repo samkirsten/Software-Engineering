@@ -46,12 +46,12 @@ public interface Ant {
      */
     public void startResting();
 
-    /**
-     * Marks a scent at a cell when given a position and scent marker
-     * @param pos the position of the cell
-     * @param marker the scent marker
-     */
-    public void markScent(Position pos, int marker);
+//    /**
+//     * Marks a scent at a cell when given a position and scent marker
+//     * @param pos the position of the cell
+//     * @param marker the scent marker
+//     */
+//    public void markScent(Position pos, int marker);
 
     /**
      * Returns the amount of rest that the ant still requires before its next move. An ant rests for 14 turns
