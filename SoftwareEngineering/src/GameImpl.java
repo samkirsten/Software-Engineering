@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class GameImpl implements Game {
     @Override
     public boolean loadBrain(File brain, Colour colour) {
 
-        Brain brainClass = new BrainImpl();
+        Brain brainClass = new BrainImpl(map,getColony(colour));
         boolean passed = true;
 
         if(colour == Colour.RED){
@@ -63,84 +64,66 @@ public class GameImpl implements Game {
         return map;
     }
 
-    private void generateAnts(Colour c){
+    private void generateAnts(){
 
 
-        List<Position> hill = map.getAnthill(c);
-        int smallestX = 150;
-        int smallestY = 150;
-        Colony colony = getColony(c);
-        colony.clearAnts();
-        int id = 1;
-        if(c==Colour.BLACK)
-            id = 164;
+        List<Position> redHill = map.getAntHill(Colour.RED);
+        List<Position> blackHill = map.getAntHill(Colour.BLACK);
 
-        for(Position p : hill){
-            if(p.getY()<smallestY){
-                smallestY = p.getY();
-            }
+        Colony redAnts = getColony(Colour.RED);
+        Colony blackAnts = getColony(Colour.BLACK);
+        redAnts.reset();
+        blackAnts.reset();
 
-            if(p.getY() == smallestY){
-                if(p.getX()<smallestX){
-                    smallestX = p.getX();
-                }
-            }
+        int id = 0;
+
+        for(Position p : redHill){
+           redAnts.addAnt(new Ant(id,p,Colour.RED));
         }
 
-        int start = 7;
-
-        for(int i =0; i < 7; i++){
-             for(int j=0; j<start; j++){
-                 colony.addAnt(new AntImpl(id,c,new Position(smallestX,smallestY)));
-                 id++;
-                 smallestX++;
-             }
-            start = start +2;
-            smallestY++;
+        for(Position p : blackHill){
+            blackAnts.addAnt(new Ant(id,p,Colour.BLACK));
         }
-
-
-        for(int i =0; i < 6; i++){
-            for(int j=0; j<start; j++){
-                colony.addAnt(new AntImpl(id,c,new Position(smallestX,smallestY)));
-                id++;
-                smallestX++;
-            }
-            start = start -2;
-            smallestY++;
-        }
-
-
-
-
-
     }
 
-    /**
-     *
-     * ADD IN GLOBAL RESET METHOD FOR COLONY
-     * REMOVE COLONY HASHMAP LIST FROM CONSTRUCTOR PARAM
-     * ADD CONSTRUCTOR PARAMS BACK TO ANT IMPL
-     * FIX THE FUCKING GENERATE ANT METHOD
-     */
+
+//    @Override
+//    public void startTournamentGame() {
+//
+//
+//        generateAnts();
+//
+//        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
+//            next();
+//        }
+//
+//        redFood = red.getFoodInColony();
+//        blackFood = black.getFoodInColony();
+//        map.clearMap();
+//        Colony newBlack = red;
+//        Colony newRed = black;
+//        newBlack.setColonyColour(Colour.BLACK);
+//        newRed.setColonyColour(Colour.RED);
+//
+//        generateAnts();
+//
+//        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
+//            next();
+//        }
+//
+//        redFood += newRed.getFoodInColony();
+//        blackFood += newBlack.getFoodInColony();
+//
+//
+//
+//    }
+
     @Override
-    public void start() {
-
-        generateAnts(Colour.RED);
-        generateAnts(Colour.BLACK);
-
-        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
-            next();
-        }
+    public Colour start() {
 
         map.clearMap();
-        black = red;
-        black.setColonyColour(Colour.BLACK);
-        red = black;
-        red.setColonyColour(Colour.RED);
 
-        generateAnts(Colour.RED);
-        generateAnts(Colour.BLACK);
+        generateAnts();
 
         for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
             next();
@@ -149,6 +132,7 @@ public class GameImpl implements Game {
         redFood = red.getFoodInColony();
         blackFood = black.getFoodInColony();
 
+        return getWinner();
 
 
     }
@@ -169,16 +153,16 @@ public class GameImpl implements Game {
      *
      * @return R, B or D, depending on the outcome of the game.
      */
-    @Override
-    public char getWinner() {
+
+    private Colour getWinner() {
         if(red.getFoodInColony()>black.getFoodInColony()){
-            return 'R';
+            return Colour.RED;
         }
         else if(black.getFoodInColony()>red.getFoodInColony()){
-            return 'B';
+            return Colour.BLACK;
         }
         else
-            return 'D';
+            return null;
     }
 
 
