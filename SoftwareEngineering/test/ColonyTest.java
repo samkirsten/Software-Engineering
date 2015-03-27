@@ -1,7 +1,6 @@
 
 import org.junit.*;
 import org.junit.Test;
-import javax.swing.text.Position;
 
 import java.io.File;
 import java.util.HashMap;
@@ -30,19 +29,9 @@ public class ColonyTest {
 
         colony = new ColonyImpl(color);
 
-        ant1 = new AntImpl();
-        ant1.setID(1);
-        ant1.setColour(color);
-        ant1.setPosition( new Position(0,0));
-
-        ant2 = new AntImpl();
-        ant2.setID(2);
-        ant2.setColour(color);
-
-        ant3 = new AntImpl();
-        ant3.setID(2);
-        ant3.setColour(color);
-
+        ant1 = new AntImpl(1,color,new Position(0,0));
+        ant2 = new AntImpl(2,color,new Position(0,1));
+        ant3 = new AntImpl(3,color,new Position(0,2));
 
         colony.addAnt(ant1);
         colony.addAnt(ant2);
@@ -129,11 +118,11 @@ public class ColonyTest {
 
 
     @Test
-    public void test_remove(){
+    public void test_remove() throws AntNotFoundException {
         //remove ant at 0,0 which is ant1, it should be deleted from the list
 
-//        colony.remove(new Position(0,0));
-//        assertFalse(colony.isAntAlive(1));
+        colony.remove(new Position(0,0));
+        assertFalse(colony.isAntAlive(1));
 
     }
 

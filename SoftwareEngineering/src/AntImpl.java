@@ -12,10 +12,12 @@ public class AntImpl implements Ant {
     public int direction;
     public boolean has_food ;
     public Position position;
-    public AntImpl(){
-        //this.ID = ID ;
-        //this. colour = colour ;
-        //this.position = position ;
+
+
+    public AntImpl(int ID, Colour colour, Position position){
+        this.ID = ID ;
+        this. colour = colour ;
+        this.position = position ;
 
         direction = 0 ;
         resting =0;
