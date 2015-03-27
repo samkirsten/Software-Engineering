@@ -25,7 +25,7 @@ public class BrainTest {
     // test through each group of correct tokens
     @Test
     public void testInstructionToken(){
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b = new BrainImpl(m,c);
@@ -36,7 +36,7 @@ public class BrainTest {
     @Test
     public void testDirectionToken(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b2 = new BrainImpl(m,c);
@@ -48,7 +48,7 @@ public class BrainTest {
     @Test
     public void testConditionsToken(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b3 = new BrainImpl(m,c);
@@ -60,7 +60,7 @@ public class BrainTest {
     @Test
     public void testArgumentTokens(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b4 = new BrainImpl(m,c);
@@ -72,7 +72,7 @@ public class BrainTest {
     @Test
     public void testMixOfTokens(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b5 = new BrainImpl(m,c);
@@ -86,7 +86,7 @@ public class BrainTest {
     @Test
     public void testFailTokens(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b6 = new BrainImpl(m,c);
@@ -111,7 +111,7 @@ public class BrainTest {
     @Test
     public void testCorrectWrongTokens(){
 
-        ColonyImpl c = new ColonyImpl();
+        ColonyImpl c = new ColonyImpl(null);
         MapImpl m = new MapImpl();
 
         BrainImpl b7 = new BrainImpl(m,c);
@@ -298,7 +298,7 @@ public class BrainTest {
 //
 //    }
 //
-//    @Test
+//    @Testq
 //
 //    public void testPickUpFood() throws InvalidContentCharacterException, CellAlreadyOccupiedException {
 //
