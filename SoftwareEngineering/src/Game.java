@@ -18,7 +18,7 @@ public interface Game {
 
     public void start();
 
-    public void next();
+
 
     /**
      * R = Red win

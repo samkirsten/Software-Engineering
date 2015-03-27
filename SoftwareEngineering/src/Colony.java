@@ -63,6 +63,8 @@ public interface Colony {
     public Colour getColonyColour();
 
 
+    public void setColonyColour(Colour colour);
+
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.
      * When an ant is killed it turns into 3 particles of food.
@@ -71,4 +73,11 @@ public interface Colony {
      */
     public void remove(Position p) throws AntNotFoundException;
 
+    public void addAnt(Ant ant);
+
+    public void reset();
+
 }
+
+
+
