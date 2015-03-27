@@ -1,9 +1,10 @@
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 public interface Tournament {
 
     public void beginTournament(List<File> brains);
 
-    public List<Result> getResults();
+    public HashMap<File,Integer> getResults();
 }

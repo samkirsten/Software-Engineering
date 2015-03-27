@@ -16,17 +16,12 @@ public interface Game {
 
     public Map getMap();
 
-    public void start();
+    public Colour start();
 
 
 
-    /**
-     * R = Red win
-     * B = Black win
-     * D = Draw
-     * @return R, B or D, depending on the outcome of the game.
-     */
-    public char getWinner();
+
+
 
 
 
