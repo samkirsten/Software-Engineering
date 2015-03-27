@@ -16,18 +16,18 @@ public class BrainImpl implements Brain {
 
     private List<Token> brain[];
     public List<Token> lexedList = new ArrayList<>();
-<<<<<<< HEAD
+
     public List<String> instructionGetter = new ArrayList<>();
     private File loadedFile;
     private int flipCounter =0;
 
     public ArrayList<List<String>> state = new ArrayList<>();
-=======
-    File loadedFile;
->>>>>>> origin/master
+
+
+
 
     private MapImpl map = new MapImpl();
-    private ColonyImpl colony = new ColonyImpl();
+    private ColonyImpl colony;
 
 
 
@@ -411,7 +411,7 @@ public class BrainImpl implements Brain {
             if(lexBrain(new String(encoded, StandardCharsets.UTF_8))){
 
                 boolean passed =  parseBrain();
-<<<<<<< HEAD
+
 
               //  System.out.println(passed);
 
@@ -423,11 +423,10 @@ public class BrainImpl implements Brain {
                 setUpStates();
 
 
-=======
                 System.out.println(passed);
                 if(passed)
                     loadedFile = brain;
->>>>>>> origin/master
+
                 return passed;
             }
             else
@@ -456,8 +455,8 @@ public class BrainImpl implements Brain {
 
         }
 
-        Position p = new Position();
-        AntImpl a;
+        Position p=null;
+        AntImpl a = null;
         // if its within first half do red else do black  ants
 
         // for red ants scent marker 1-6 black 7-12     0 to clear
@@ -489,13 +488,13 @@ public class BrainImpl implements Brain {
 
                     if ("Sense".equals(command)) {
 
-                        Position p1 = new Position();
-                        p1 = sensedCell(p, a.getDirection(), state.get(currentState).get(1));
+
+                        Position p1 = sensedCell(p, a.getDirection(), state.get(currentState).get(1));
 
 
                         if (state.get(currentState).get(4).equals("Marker")) {
 
-                            if (cellMatchCheckMarker(p, a.getColour(), Integer.parseInt(state.get(currentState).get(5)))) {
+                            if (cellMatchCheckMarker(p1, a.getColour(), Integer.parseInt(state.get(currentState).get(5)))) {
 
                                 a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
@@ -508,7 +507,7 @@ public class BrainImpl implements Brain {
                         } else if (state.get(currentState).get(4).equals("FoeMarker")) {
 
 
-                            if (cellMatchCheckEnemyMarker(p, a.getColour())) {
+                            if (cellMatchCheckEnemyMarker(p1, a.getColour())) {
 
 
                                 a.setState(Integer.parseInt(state.get(currentState).get(2)));
@@ -519,7 +518,7 @@ public class BrainImpl implements Brain {
 
                             }
 
-                        } else if (cellMatches(p, state.get(currentState).get(4), a.getColour())) {
+                        } else if (cellMatches(p1, state.get(currentState).get(4), a.getColour())) {
 
 
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
@@ -533,19 +532,21 @@ public class BrainImpl implements Brain {
 
                     } else if ("Mark".equals(command)) {
 
-                        a.markScent(p, Integer.parseInt(state.get(currentState).get(1) + 1)); // have to change antImpl method frmo Position pos to PositionImpl, use ant or map?
+                        map.setCellScentMarker(p, Integer.parseInt(state.get(currentState).get(1) + 1));
                         a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                     } else if ("Unmark".equals(command)) {
 
 
-                        a.markScent(p, 0); // have to change antImpl method frmo Position pos to PositionImpl
+                        map.setCellScentMarker(p, 0);
                         a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
 
                     } else if ("PickUp".equals(command)) {
 
-                        char contents = map.cellContents();
+                        char contents = map.getCellContents(p);
+                        int content = Character.getNumericValue(contents);
+                        content = content -1;
 
                         if (!a.has_food || Character.isDigit(contents) && (int) contents == 0) {
 
@@ -553,7 +554,11 @@ public class BrainImpl implements Brain {
 
                         } else if (Character.isDigit(contents) && (int) contents > 0) {
 
-                            map.setCellContents(p, (int) contents - 1);
+                            try {
+                                map.setCellContents(p, (char) (content));
+                            } catch (InvalidContentCharacterException e) {
+                                e.printStackTrace();
+                            }
                             a.setHasFood(true);
                             a.setState(Integer.parseInt(state.get(currentState).get(1)));
 
@@ -563,10 +568,21 @@ public class BrainImpl implements Brain {
                         if (a.has_food) {
 
                             if ((int) map.getCellContents(p) == 0) {
-                                map.setCellContents(p, (char) 1);
+                                try {
+                                    map.setCellContents(p, (char) 1);
+                                } catch (InvalidContentCharacterException e) {
+                                    e.printStackTrace();
+                                }
                             } else {
 
-                                map.setCellContents(p, (int) map.getCellContents(p) + 1);
+                                int cont = (int) map.getCellContents(p);
+                                cont = cont +1;
+
+                                try {
+                                    map.setCellContents(p, (char)cont);
+                                } catch (InvalidContentCharacterException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
 
@@ -610,18 +626,22 @@ public class BrainImpl implements Brain {
 
                         Position pos = getAdjacentCell(p,dir);
 
-                        if(map.getCellIsRocky() || map.getAntAtCell(p2) != 0 ){
+                        if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != 0 ){ // maybe have a method in map that returns a boolean if a cell has ant
 
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                         }else{
 
 
-                            map.setAntAtCell(p, 0);
-                            map.setAntAtCell(p2, id);
+                            map.setAntAtCell(p, 0);// takes in an ant obj, it shouldnt should it maybe clear ant method?
+                            try {
+                                map.setAntAtCell(pos, a);
+                            } catch (CellAlreadyOccupiedException e) {
+                                e.printStackTrace();
+                            }
                             a.setState(Integer.parseInt(state.get(currentState).get(1)));
                             a.startResting();
-                            map.getAdjacentEnemyAnts(p2, enemyColour); // need to kill here?
+                            map.getAdjacentEnemyAnts(pos, enemyColour); // need to kill here?
 
 
                         }
@@ -692,7 +712,7 @@ public class BrainImpl implements Brain {
             return false;
         }
 
-        return false;
+
 
     }
 
@@ -734,12 +754,12 @@ public class BrainImpl implements Brain {
 
             if("Friend".equals(condition)){
 
-               int check = map.getAntAtCell(p);
-                if(check!= 0){ ////
+               AntImpl check = map.getAntAtCell(p);
+                if(check.getPosition() == p){ ////
 
 
                     try {
-                        if(colony.getAnt(check).getColour() == c) {
+                        if(colony.getAnt(check.getID()).getColour() == c) {
                             return true;
                         }
                     } catch (AntNotFoundException e) {
@@ -755,11 +775,11 @@ public class BrainImpl implements Brain {
 
             }else if("Foe".equals(condition)){
 
-                int check = map.getAntAtCell(p);
-                if(check!= 0){
+                AntImpl check = map.getAntAtCell(p);
+                if(check.getPosition() == p){
 
                     try {
-                        if(colony.getAnt(check).getColour() != c){
+                        if(colony.getAnt(check.getID()).getColour() != c){
 
                             return true;
                         }
@@ -777,12 +797,12 @@ public class BrainImpl implements Brain {
             }else if("FriendWithFood".equals(condition)){
 
 
-                int check = map.getAntAtCell(p);
-                if(check!= 0){
+                AntImpl check = map.getAntAtCell(p);
+                if(check.getPosition() == p){
                     try {
-                        if(colony.getAnt(check).getColour() == c){
+                        if(colony.getAnt(check.getID()).getColour() == c){
 
-                            if(colony.getAnt(check).has_food) {
+                            if(colony.getAnt(check.getID()).has_food) {
 
                                 return true;
                             }
@@ -799,27 +819,29 @@ public class BrainImpl implements Brain {
 
             }else if("FoeWithFood".equals(condition)){
 
-                int check = map.getAntAtCell(p);
-                if(check!= 0){
-                    try {
-                        if(map.getAnt(p).getColour != c){
+                AntImpl check = map.getAntAtCell(p);
+                try {
+                    if(colony.getAnt(check.getID()).getPosition() == check.getPosition()){
+                        try {
+                            if(map.getAntAtCell(p).getColour != c){
 
-                            if(map.getAnt(p).has_food) { /// need to update map to get this method
+                                if(map.getAntAtCell(p).has_food) { /// need to update map to get this method
 
-                                return true;
+                                    return true;
+                                }
                             }
+                        } catch (AntNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    } catch (AntNotFoundException e) {
-                        e.printStackTrace();
+
+
+                    }else{
+
+                        return false;
                     }
-
-
-                }else{
-
-                    return false;
+                } catch (AntNotFoundException e) {
+                    e.printStackTrace();
                 }
-
-
 
 
             }else if("Food".equals(condition)){
@@ -890,7 +912,7 @@ public class BrainImpl implements Brain {
         return false;
     }
 
-    private Position sensedCell(Position p, int direction ,String senseDir) throws PositionOutOfBoundsException {
+    private Position sensedCell(Position p, int direction ,String senseDir)  {
 
         Position pos = new Position();
 
@@ -935,7 +957,7 @@ public class BrainImpl implements Brain {
 
     }
 
-    private Position getAdjacentCell(Position p, int direction) throws PositionOutOfBoundsException {
+    private Position getAdjacentCell(Position p, int direction) {
 
         Position p2 = new Position();
 
@@ -1007,7 +1029,7 @@ public class BrainImpl implements Brain {
 
     }
 
-<<<<<<< HEAD
+
     private void setUpStates(){
 
 
@@ -1150,17 +1172,14 @@ public class BrainImpl implements Brain {
 
             }
 
-=======
+
     /**
      * gets the file that was loaded into the brain
      *
      * @return the txt file loaded into the Brain object containing the brain instructions
      */
-    @Override
-    public File getLoadedFile() {
-        return loadedFile;
-    }
->>>>>>> origin/master
+
+
 
 
         }
@@ -1169,6 +1188,7 @@ public class BrainImpl implements Brain {
 
 
     }
+
 
 
 //    public static void main(String args[]) {

@@ -53,8 +53,7 @@ public class BrainTest {
 
         BrainImpl b3 = new BrainImpl(m,c);
 
-        assertTrue(b3.loadBrain(new File("br" +
-                "ains/file2.txt")));
+        assertTrue(b3.loadBrain(new File("brains/file2.txt")));
 
     }
 

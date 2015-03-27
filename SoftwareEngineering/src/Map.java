@@ -62,7 +62,7 @@ public interface Map {
      */
     public int getAdjacentEnemyAnts(Position pos, Colour colour);
 
-    public List<Position> getAnthill(Colour colour);
+    public List<Position> getAntHill(Colour colour);
 
     /**
      * Sets the given cell to contain an ant specified with an ant id.

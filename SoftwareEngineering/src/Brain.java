@@ -16,7 +16,7 @@ public interface Brain {
      * @return the txt file loaded into the Brain object containing the brain instructions
      */
 
-    public File getLoadedFile();
+
 
     public boolean loadBrain(File brain);
 

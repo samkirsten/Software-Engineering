@@ -292,7 +292,7 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public List<Position> getAnthill(Colour colour) {
+    public List<Position> getAntHill(Colour colour) {
         if(colour == Colour.BLACK){
             return BLACK;
         }
