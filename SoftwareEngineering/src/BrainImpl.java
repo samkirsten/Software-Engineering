@@ -26,8 +26,8 @@ public class BrainImpl implements Brain {
 
 
 
-    private MapImpl map = new MapImpl();
-    private ColonyImpl colony;
+    private Map map;
+    private Colony colony;
 
 
 
@@ -456,7 +456,7 @@ public class BrainImpl implements Brain {
         }
 
         Position p=null;
-        AntImpl a = null;
+        Ant a = null;
         // if its within first half do red else do black  ants
 
         // for red ants scent marker 1-6 black 7-12     0 to clear
@@ -548,7 +548,7 @@ public class BrainImpl implements Brain {
                         int content = Character.getNumericValue(contents);
                         content = content -1;
 
-                        if (!a.has_food || Character.isDigit(contents) && (int) contents == 0) {
+                        if (!a.hasFood() || Character.isDigit(contents) && (int) contents == 0) {
 
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
@@ -565,7 +565,7 @@ public class BrainImpl implements Brain {
                         }
                     } else if ("Drop".equals(command)) {
 
-                        if (a.has_food) {
+                        if (a.hasFood()) {
 
                             if ((int) map.getCellContents(p) == 0) {
                                 try {
@@ -626,14 +626,18 @@ public class BrainImpl implements Brain {
 
                         Position pos = getAdjacentCell(p,dir);
 
-                        if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != 0 ){ // maybe have a method in map that returns a boolean if a cell has ant
+                        if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){ // maybe have a method in map that returns a boolean if a cell has ant
 
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                         }else{
 
 
-                            map.setAntAtCell(p, 0);// takes in an ant obj, it shouldnt should it maybe clear ant method?
+                            try {
+                                map.setAntAtCell(p, null);// takes in an ant obj, it shouldnt should it maybe clear ant method?
+                            } catch (CellAlreadyOccupiedException e) {
+                                e.printStackTrace();
+                            }
                             try {
                                 map.setAntAtCell(pos, a);
                             } catch (CellAlreadyOccupiedException e) {
@@ -754,78 +758,64 @@ public class BrainImpl implements Brain {
 
             if("Friend".equals(condition)){
 
-               AntImpl check = map.getAntAtCell(p);
-                if(check.getPosition() == p){ ////
+               Ant check = map.getAntAtCell(p);
+                try {
+                    if(colony.getAnt(p) == check){ ////
 
 
-                    try {
-                        if(colony.getAnt(check.getID()).getColour() == c) {
-                            return true;
+                        try {
+                            if(colony.getAnt(check.getID()).getColour() == c) {
+                                return true;
+                            }
+                        } catch (AntNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    } catch (AntNotFoundException e) {
-                        e.printStackTrace();
+
+
+                    }////
+                    else{
+
+                        return false;
                     }
-
-
-                }////
-                else{
-
-                    return false;
+                } catch (AntNotFoundException e) {
+                    e.printStackTrace();
                 }
 
             }else if("Foe".equals(condition)){
 
-                AntImpl check = map.getAntAtCell(p);
-                if(check.getPosition() == p){
+                Ant check = map.getAntAtCell(p);
+                try {
+                    if(colony.getAnt(p) == check){
 
-                    try {
-                        if(colony.getAnt(check.getID()).getColour() != c){
+                        try {
+                            if(colony.getAnt(check.getID()).getColour() != c){
 
-                            return true;
+                                return true;
+                            }
+                        } catch (AntNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    } catch (AntNotFoundException e) {
-                        e.printStackTrace();
+
+
+                    }else{
+
+                        return false;
                     }
-
-
-                }else{
-
-                    return false;
+                } catch (AntNotFoundException e) {
+                    e.printStackTrace();
                 }
 
 
             }else if("FriendWithFood".equals(condition)){
 
 
-                AntImpl check = map.getAntAtCell(p);
-                if(check.getPosition() == p){
-                    try {
-                        if(colony.getAnt(check.getID()).getColour() == c){
-
-                            if(colony.getAnt(check.getID()).has_food) {
-
-                                return true;
-                            }
-                        }
-                    } catch (AntNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }else{
-
-                    return false;
-                }
-
-            }else if("FoeWithFood".equals(condition)){
-
-                AntImpl check = map.getAntAtCell(p);
+                Ant check = map.getAntAtCell(p);
                 try {
-                    if(colony.getAnt(check.getID()).getPosition() == check.getPosition()){
+                    if(colony.getAnt(p) == check){
                         try {
-                            if(map.getAntAtCell(p).getColour != c){
+                            if(colony.getAnt(check.getID()).getColour() == c){
 
-                                if(map.getAntAtCell(p).has_food) { /// need to update map to get this method
+                                if(colony.getAnt(check.getID()).has_food) {
 
                                     return true;
                                 }
@@ -843,10 +833,32 @@ public class BrainImpl implements Brain {
                     e.printStackTrace();
                 }
 
+            }else if("FoeWithFood".equals(condition)){
+
+                Ant check = map.getAntAtCell(p);
+                try {
+                    if(colony.getAnt(check.getID()).getPosition() == p){
+                        if(map.getAntAtCell(p).getColour() != c){
+
+                            if(map.getAntAtCell(p).hasFood()) { /// need to update map to get this method
+
+                                return true;
+                            }
+                        }
+
+
+                    }else{
+
+                        return false;
+                    }
+                } catch (AntNotFoundException e) {
+                    e.printStackTrace();
+                }
+
 
             }else if("Food".equals(condition)){
 
-                char content =  map.getCellContents();
+                char content =  map.getCellContents(p);
                 if((int) content > 0){
 
                     return true;
@@ -914,7 +926,7 @@ public class BrainImpl implements Brain {
 
     private Position sensedCell(Position p, int direction ,String senseDir)  {
 
-        Position pos = new Position();
+        Position pos = null;
 
         if("Here".equals(senseDir)){
 
@@ -959,7 +971,7 @@ public class BrainImpl implements Brain {
 
     private Position getAdjacentCell(Position p, int direction) {
 
-        Position p2 = new Position();
+        Position p2 = null;
 
         if (direction == 0) {
 
