@@ -47,14 +47,14 @@ public interface Colony {
      * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
      * @param brain
      */
-    public void setBrain(Brain brain);
+    public void setBrain(BrainImpl brain);
 
 
     /**
      * Returns the brain which has been loaded into the colony
      * @return the colony brain
      */
-    public Brain getBrain();
+    public BrainImpl getBrain();
 
     /**
      * Returns the colony colour, allowing differentiation between the two competing teams
@@ -73,7 +73,7 @@ public interface Colony {
      */
     public void remove(Position p) throws AntNotFoundException;
 
-    public void addAnt(Ant ant);
+    public void addAnt(AntImpl ant);
 
     public void reset();
 

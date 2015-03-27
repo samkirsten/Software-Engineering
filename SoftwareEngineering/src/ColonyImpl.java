@@ -24,7 +24,7 @@ public class ColonyImpl implements Colony {
 
         food = 0 ;
         maxAnts = 49 ;
-
+        antList = new HashMap<Integer,AntImpl>();
         this.antList = antList ;
 
 
@@ -144,8 +144,8 @@ public class ColonyImpl implements Colony {
      * @param brain
      */
     @Override
-    public void setBrain(Brain brain) {
-
+    public void setBrain(BrainImpl brain) {
+        this.brain = brain ;
     }
 
 
@@ -155,8 +155,8 @@ public class ColonyImpl implements Colony {
      * @return the colony brain
      */
     @Override
-    public Brain getBrain() {
-        return null;
+    public BrainImpl getBrain() {
+        return brain ;
 
     }
 
@@ -190,12 +190,14 @@ public class ColonyImpl implements Colony {
     }
 
     @Override
-    public void addAnt(Ant ant) {
-
+    public void addAnt(AntImpl ant) {
+        antList.put(ant.getID(), ant) ;
     }
 
     @Override
     public void reset() {
-
+        food = 0;
+        antList = null ;
+        brain = null ;
     }
 }

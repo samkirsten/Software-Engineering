@@ -28,7 +28,7 @@ public class ColonyTest {
         color = Colour.RED; // this is how to initialise an enum
 
 
-        antList = new HashMap<Integer,AntImpl>() ;
+        colony = new ColonyImpl(color);
 
         ant1 = new AntImpl();
         ant1.setID(1);
@@ -44,11 +44,11 @@ public class ColonyTest {
         ant3.setColour(color);
 
 
-        antList.put(ant1.getID(), ant1);
-        antList.put(ant2.getID(), ant2);
-        antList.put(ant3.getID(), ant3);
+        colony.addAnt(ant1);
+        colony.addAnt(ant2);
+        colony.addAnt(ant3);
 
-        colony = new ColonyImpl(color, antList);
+
     }
 
 
@@ -112,9 +112,12 @@ public class ColonyTest {
     @Test
     public void test_brain(){
 
-        File testFile = new File("testing");
-        assertTrue(colony.loadBrain(testFile));
-        assertSame(testFile, colony.getBrain());
+        MapImpl testMap = new MapImpl();
+        ColonyImpl testColony = new ColonyImpl(Colour.RED);
+        BrainImpl testBrain = new BrainImpl(testMap,testColony);
+
+        testColony.setBrain(testBrain);
+        assertSame(testBrain, colony.getBrain());
 
     }
 
