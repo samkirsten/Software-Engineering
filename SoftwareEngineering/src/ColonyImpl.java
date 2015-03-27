@@ -20,7 +20,7 @@ public class ColonyImpl implements Colony {
 
 
         //this.brain = brain ;
-        brain = new BrainImpl();
+        //brain = new BrainImpl();
 
         food = 0 ;
         maxAnts = 49 ;
@@ -145,7 +145,7 @@ public class ColonyImpl implements Colony {
      */
     @Override
     public void setBrain(Brain brain) {
-        
+
     }
 
 
