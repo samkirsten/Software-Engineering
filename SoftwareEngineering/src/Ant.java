@@ -72,4 +72,7 @@ public interface Ant {
     public boolean hasFood();
 
     public void setHasFood(Boolean food);
+    public Position getPosition();
+
+    public void setPosition(Position position);
 }

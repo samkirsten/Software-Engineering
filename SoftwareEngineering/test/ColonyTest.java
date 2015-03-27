@@ -33,7 +33,7 @@ public class ColonyTest {
         ant1 = new AntImpl();
         ant1.setID(1);
         ant1.setColour(color);
-      //  ant1.setPosition( new Position(0,0));
+        ant1.setPosition( new Position(0,0));
 
         ant2 = new AntImpl();
         ant2.setID(2);
