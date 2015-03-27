@@ -14,7 +14,7 @@ public class ColonyImpl implements Colony {
 //    int starting_id_index ;
 
 
-    public ColonyImpl(Colour colour, HashMap<Integer,AntImpl> antList ){
+    public ColonyImpl(Colour colour ){
 
         this.colour = colour ;
 
@@ -141,13 +141,13 @@ public class ColonyImpl implements Colony {
      * Load the colony with the given brain. This controls the behaviour of every ant in the colony.
      * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
      *
-     * @param brain2
-     * @return true if brain successfully loaded into colony, false otherwise.
+     * @param brain
      */
     @Override
-    public boolean loadBrain(File brain2) {
-        return brain.loadBrain(brain2) ;
+    public void setBrain(Brain brain) {
+        
     }
+
 
     /**
      * Returns the brain which has been loaded into the colony
@@ -170,6 +170,11 @@ public class ColonyImpl implements Colony {
         return colour ;
     }
 
+    @Override
+    public void setColonyColour(Colour colour) {
+
+    }
+
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.
      * When an ant is killed it turns into 3 particles of food.
@@ -181,6 +186,16 @@ public class ColonyImpl implements Colony {
     public void remove(Position p) throws AntNotFoundException {
         AntImpl ant = getAnt(p);
         antList.remove(ant.getID());
+
+    }
+
+    @Override
+    public void addAnt(Ant ant) {
+
+    }
+
+    @Override
+    public void reset() {
 
     }
 }
