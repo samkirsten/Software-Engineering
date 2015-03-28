@@ -29,10 +29,10 @@ public class BrainTest {
     // test through each group of correct tokens
     @Test
     public void testInstructionToken(){
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b = new BrainImpl(m,c);
+        Brain b = new BrainImpl(m,c);
 
         assertTrue(b.loadBrain(new File("brains/file.txt")));
     }
@@ -40,10 +40,10 @@ public class BrainTest {
     @Test
     public void testDirectionToken(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b2 = new BrainImpl(m,c);
+        Brain b2 = new BrainImpl(m,c);
 
         assertTrue(b2.loadBrain(new File("brains/file1.txt")));
 
@@ -52,10 +52,10 @@ public class BrainTest {
     @Test
     public void testConditionsToken(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b3 = new BrainImpl(m,c);
+        Brain b3 = new BrainImpl(m,c);
 
         assertTrue(b3.loadBrain(new File("brains/file2.txt")));
 
@@ -64,10 +64,10 @@ public class BrainTest {
     @Test
     public void testArgumentTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b4 = new BrainImpl(m,c);
+        Brain b4 = new BrainImpl(m,c);
 
         assertTrue(b4.loadBrain(new File("brains/file3.txt")));
     }
@@ -76,10 +76,10 @@ public class BrainTest {
     @Test
     public void testMixOfTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b5 = new BrainImpl(m,c);
+        Brain b5 = new BrainImpl(m,c);
 
         assertTrue(b5.loadBrain(new File("brains/file4.txt")));
 
@@ -90,8 +90,8 @@ public class BrainTest {
     @Test
     public void testFailTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
         Brain b6 = new BrainImpl(m,c);
         Brain b7 = new BrainImpl(m,c);
@@ -114,10 +114,6 @@ public class BrainTest {
 
         assertFalse(b11.loadBrain(new File("brains/file11.txt")));
 
-        Brain b18 = new BrainImpl();
-        Position p8 = new Position();
-        Ant a12 = new AntImpl();
-        Map m8 = new MapImpl();
         assertFalse(b12.loadBrain(new File("brains/file12.txt")));
 
         assertFalse(b13.loadBrain(new File("brains/file9.txt"))); // need to check why this fails
@@ -133,8 +129,8 @@ public class BrainTest {
 
         assertFalse(b7.loadBrain(new File("brains/file13.txt")));
 
-        assertEquals(1, a12.getState());
-    }
+       // assertEquals(1, a12.getState());
+
         assertFalse(b7.loadBrain(new File("brains/file14.txt")));
 
         assertFalse(b7.loadBrain(new File("brains/file15.txt")));
@@ -211,17 +207,17 @@ public class BrainTest {
     @Test
     public void testSenseTrue() throws CellAlreadyOccupiedException { /// breaks
 
-        MapImpl map = new MapImpl();
+        Map map = new MapImpl();
         Colony c = new ColonyImpl(Colour.RED);
-        BrainImpl b9 = new BrainImpl(map, c);
+        Brain b9 = new BrainImpl(map, c);
 
         map.generateMap();
         Position pos = new Position(1,1);
         Position pos1  = new Position(2,1);
 
 
-        AntImpl a1 = new AntImpl(1,Colour.RED,pos);
-        AntImpl a2 = new AntImpl(2,Colour.RED,pos1);
+        Ant a1 = new AntImpl(1,Colour.RED,pos);
+        Ant a2 = new AntImpl(2,Colour.RED,pos1);
 
         c.addAnt(a1);
         c.addAnt(a2);
@@ -255,16 +251,16 @@ public class BrainTest {
     @Test
     public void testMark() throws CellAlreadyOccupiedException {
 
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
 
         Colony c= new ColonyImpl(Colour.RED);
 
-        BrainImpl b10 = new BrainImpl(m,c);
+        Brain b10 = new BrainImpl(m,c);
 
         m.generateMap();
         Position p = new Position(1,1);
 
-        AntImpl a3 = new AntImpl(2,Colour.RED,p);
+        Ant a3 = new AntImpl(2,Colour.RED,p);
 
         c.addAnt(a3);
 
@@ -281,7 +277,7 @@ public class BrainTest {
 
        // m.setCellScentMarker(p,1);
         b10.step(a3.getID());
-        System.out.println(m.getCellScentMarker((Colour.RED) , p));
+        //System.out.println(m.getCellScentMarker((Colour.RED) , p));
         assertEquals(1, m.getCellScentMarker(Colour.RED, p));
 
 
@@ -291,11 +287,11 @@ public class BrainTest {
     @Test
     public void testUnMark() throws CellAlreadyOccupiedException {
 
-        MapImpl m1 = new MapImpl();
+        Map m1 = new MapImpl();
         Colony c = new ColonyImpl(Colour.BLACK);
-        BrainImpl b11 = new BrainImpl(m1,c);
+        Brain b11 = new BrainImpl(m1,c);
         Position p1 = new Position(1,1);
-        AntImpl a4 = new AntImpl(2,Colour.BLACK,p1);
+        Ant a4 = new AntImpl(2,Colour.BLACK,p1);
 
 
 
@@ -331,12 +327,12 @@ public class BrainTest {
         Map m2 = new MapImpl();
         Colony c = new ColonyImpl(Colour.BLACK);
 
-        BrainImpl b12 = new BrainImpl(m2,c);
+        Brain b12 = new BrainImpl(m2,c);
         m2.generateMap();
         Position p2 = new Position(1,1);
 
 
-        AntImpl a6 = new AntImpl(3,Colour.BLACK,p2);
+        Ant a6 = new AntImpl(3,Colour.BLACK,p2);
 
 
 
@@ -370,15 +366,15 @@ public class BrainTest {
     public void testPickUpFood() throws InvalidContentCharacterException, CellAlreadyOccupiedException {
 
 
-        MapImpl m3 = new MapImpl();
+        Map m3 = new MapImpl();
         Colony c = new ColonyImpl(Colour.RED);
 
-        BrainImpl b13 = new BrainImpl(m3,c);
+        Brain b13 = new BrainImpl(m3,c);
         Position p3 = new Position(1,1);
         m3.generateMap();
 
 
-        AntImpl a7 = new AntImpl(1,Colour.RED,p3);
+        Ant a7 = new AntImpl(1,Colour.RED,p3);
 
         a7.setHasFood(false);
         m3.setAntAtCell(p3,a7);
@@ -404,10 +400,10 @@ public class BrainTest {
         /////////
         ////////
         Colony col = new ColonyImpl(Colour.RED);
-        MapImpl m4 = new MapImpl();
-        BrainImpl b14 = new BrainImpl(m4,col);
+        Map m4 = new MapImpl();
+        Brain b14 = new BrainImpl(m4,col);
         Position p4 = new Position(1,1);
-        AntImpl a8 = new AntImpl(4,Colour.RED,p4);
+        Ant a8 = new AntImpl(4,Colour.RED,p4);
 
         m4.generateMap();
 
@@ -431,11 +427,11 @@ public class BrainTest {
 //        ////////
 //        ////////
 
-        MapImpl m5 = new MapImpl();
+        Map m5 = new MapImpl();
         Colony col1 = new ColonyImpl(Colour.RED);
-        BrainImpl b15 = new BrainImpl(m5,col1);
+        Brain b15 = new BrainImpl(m5,col1);
         Position p5 = new Position(1,1);
-        AntImpl a9 = new AntImpl(2,Colour.RED,p5);
+        Ant a9 = new AntImpl(2,Colour.RED,p5);
 
         m5.generateMap();
         col1.addAnt(a9);
@@ -454,12 +450,12 @@ public class BrainTest {
     }
 
     @Test
-    public void testDrop() throws com.model.com.model.exceptions.CellAlreadyOccupiedException, com.model.com.model.exceptions.InvalidContentCharacterException {
+    public void testDrop() throws com.model.exceptions.CellAlreadyOccupiedException, com.model.exceptions.InvalidContentCharacterException {
 
-        com.model.BrainImpl b16 = new com.model.BrainImpl();
-        PositionImpl p6 = new PositionImpl();
-        com.model.AntImpl a10 = new com.model.AntImpl();
-        com.model.MapImpl m6 = new com.model.MapImpl();
+        Brain b16 = new com.model.BrainImpl();
+        Position p6 = new Position();
+        Ant a10 = new AntImpl();
+        Map m6 = new MapImpl();
         p6.setX(1);
         p6.setY(1);
 
@@ -479,10 +475,10 @@ public class BrainTest {
         ///////
         ///////
 
-        com.model.BrainImpl b17 = new com.model.BrainImpl();
-        PositionImpl p7 = new PositionImpl();
-        com.model.AntImpl a11 = new com.model.AntImpl();
-        com.model.MapImpl m7 = new com.model.MapImpl();
+        Brain b17 = new BrainImpl();
+        Position p7 = new Position();
+        Ant a11 = new AntImpl();
+        Map m7 = new MapImpl();
 
         p7.setX(1);
         p7.setY(1);
@@ -506,10 +502,10 @@ public class BrainTest {
 
         // if no food then just change state
 
-        com.model.BrainImpl b18 = new com.model.BrainImpl();
-        PositionImpl p8 = new PositionImpl();
-        com.model.AntImpl a12 = new com.model.AntImpl();
-        com.model.MapImpl m8 = new com.model.MapImpl();
+        Brain b18 = new BrainImpl();
+        Position p8 = new Position();
+        Ant a12 = new AntImpl();
+        Map m8 = new com.model.MapImpl();
 
         p8.setX(1);
         p8.setY(1);
@@ -528,242 +524,242 @@ public class BrainTest {
 
     }
 
-    @Test
-
-    public void testTurnLeft() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
-
-        com.model.BrainImpl b19 = new com.model.BrainImpl();
-        com.model.AntImpl a17 = new com.model.AntImpl();
-
-        com.model.MapImpl m9 = new com.model.MapImpl();
-        PositionImpl p9 = new PositionImpl();
-
-        p9.setX(1);
-        p9.setY(1);
-
-
-        b19.loadBrain(file22);
-        a17.setID(1);
-        m9.setAntAtCell(p9,1);
-        a17.setDirection(0);
-
-        b19.step(1);
-
-        assertEquals(5,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-
-        b19.step(1);
-
-        assertEquals(4,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-        b19.step(1);
-
-        assertEquals(3,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-        b19.step(1);
-
-        assertEquals(2,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-        b19.step(1);
-
-        assertEquals(1,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-
-        b19.step(1);
-
-        assertEquals(0,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
-
-
-    }
-
-    @Test
-
-    public void testTurnRight() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
-
-        com.model.BrainImpl b20 = new com.model.BrainImpl();
-        com.model.AntImpl a18 = new com.model.AntImpl();
-
-        com.model.MapImpl m10 = new com.model.MapImpl();
-        PositionImpl p10 = new PositionImpl();
-
-        p10.setX(1);
-        p10.setY(1);
-
-
-        b20.loadBrain(file23);
-        a18.setID(1);
-        m10.setAntAtCell(p10,1);
-        a18.setDirection(0);
-
-        b20.step(1);
-
-        assertEquals(1,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-
-        b20.step(1);
-
-        assertEquals(2,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-        b20.step(1);
-
-        assertEquals(3,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-        b20.step(1);
-
-        assertEquals(4,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-        b20.step(1);
-
-        assertEquals(5,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-
-        b20.step(1);
-
-        assertEquals(0,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
-
-    }
-
-    @Test
-
-    public void testMove() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
-
-        com.model.BrainImpl b21 = new com.model.BrainImpl();
-        com.model.AntImpl a19 = new com.model.AntImpl();
-
-        com.model.MapImpl m11 = new com.model.MapImpl();
-        PositionImpl p11 = new PositionImpl(); // original
-        PositionImpl  p12 = new PositionImpl();// goes right
-        PositionImpl p13 = new PositionImpl(); // left
-        PositionImpl p14 = new PositionImpl(); // top right
-        PositionImpl p15 = new PositionImpl(); // top left
-        PositionImpl p16 = new PositionImpl(); // bottom right
-        PositionImpl p17 = new PositionImpl(); // bottom left
-
-
-
-        p11.setX(1);
-        p11.setY(1);
-
-        p12.setX(2);
-        p12.setY(1);
-
-        p13.setX(0);
-        p13.setY(1);
-
-        p14.setX(2);
-        p14.setY(0);
-
-        p15.setX(1);
-        p15.setY(0);
-
-        p16.setX(2);
-        p16.setY(2);
-
-        p17.setX(1);
-        p17.setY(2);
-
-        a19.setID(1);
-        b21.loadBrain(file24);
-
-        m11.setAntAtCell(p11,1);
-        a19.setDirection(0);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p12));
-
-        // need to clear from prev cell?
-
-        m11.setAntAtCell(p11 , 1);
-        a19.setDirection(3);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p13));
-
-        m11.setAntAtCell(p11 , 0);
-        a19.setDirection(5);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p14));
-
-        m11.setAntAtCell(p11 , 0);
-        a19.setDirection(4);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p15));
-
-        m11.setAntAtCell(p11 , 0);
-        a19.setDirection(1);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p16));
-
-        m11.setAntAtCell(p11 , 0);
-        a19.setDirection(2);
-
-        b21.step(1);
-
-        assertEquals(0, m11.getAntAtCell(p11));
-        assertEquals(1,m11.getAntAtCell(p17));
-
-        //////
-        //////
-
-        /// checking if rocky or occupied if it is do nothing change state
-
-        m11.setAntAtCell(p11 , 0);
-        a19.setDirection(0);
-
-        m11.setCellContents(p12, '#' );
-        b21.step(1);
-
-        assertEquals(1, m11.getAntAtCell(p11));
-        assertEquals(10, a19.getState()); // make sure in correct state
-
-
-        // occupied cell
-
-        com.model.AntImpl a20 = new com.model.AntImpl();
-        a20.setID(2);
-
-        m11.setCellContents(p12, '#');
-        m11.setAntAtCell(p11 , 1);
-        m11.setAntAtCell(p12, 2);
-        a19.setDirection(0);
-
-        b21.step(1);
-
-        assertEquals(1, m11.getAntAtCell(p11));
-        assertEquals(11, a19.getState()); // make sure in correct state
-
-
-
-
-    }
-
-    // flip hard cause its random?
-
-
-
+//    @Test
+//
+//    public void testTurnLeft() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
+//
+//        com.model.BrainImpl b19 = new com.model.BrainImpl();
+//        com.model.AntImpl a17 = new com.model.AntImpl();
+//
+//        com.model.MapImpl m9 = new com.model.MapImpl();
+//        PositionImpl p9 = new PositionImpl();
+//
+//        p9.setX(1);
+//        p9.setY(1);
+//
+//
+//        b19.loadBrain(file22);
+//        a17.setID(1);
+//        m9.setAntAtCell(p9,1);
+//        a17.setDirection(0);
+//
+//        b19.step(1);
+//
+//        assertEquals(5,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//
+//        b19.step(1);
+//
+//        assertEquals(4,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//        b19.step(1);
+//
+//        assertEquals(3,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//        b19.step(1);
+//
+//        assertEquals(2,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//        b19.step(1);
+//
+//        assertEquals(1,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//
+//        b19.step(1);
+//
+//        assertEquals(0,a17.getDirection());
+//        assertEquals(1, a17.getState()); // checks in correct state
+//
+//
+//    }
+//
+//    @Test
+//
+//    public void testTurnRight() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
+//
+//        com.model.BrainImpl b20 = new com.model.BrainImpl();
+//        com.model.AntImpl a18 = new com.model.AntImpl();
+//
+//        com.model.MapImpl m10 = new com.model.MapImpl();
+//        PositionImpl p10 = new PositionImpl();
+//
+//        p10.setX(1);
+//        p10.setY(1);
+//
+//
+//        b20.loadBrain(file23);
+//        a18.setID(1);
+//        m10.setAntAtCell(p10,1);
+//        a18.setDirection(0);
+//
+//        b20.step(1);
+//
+//        assertEquals(1,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//
+//        b20.step(1);
+//
+//        assertEquals(2,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//        b20.step(1);
+//
+//        assertEquals(3,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//        b20.step(1);
+//
+//        assertEquals(4,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//        b20.step(1);
+//
+//        assertEquals(5,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//
+//        b20.step(1);
+//
+//        assertEquals(0,a18.getDirection());
+//        assertEquals(1, a18.getState()); // checks in correct state
+//
+//    }
+//
+//    @Test
+//
+//    public void testMove() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
+//
+//        com.model.BrainImpl b21 = new com.model.BrainImpl();
+//        com.model.AntImpl a19 = new com.model.AntImpl();
+//
+//        com.model.MapImpl m11 = new com.model.MapImpl();
+//        PositionImpl p11 = new PositionImpl(); // original
+//        PositionImpl  p12 = new PositionImpl();// goes right
+//        PositionImpl p13 = new PositionImpl(); // left
+//        PositionImpl p14 = new PositionImpl(); // top right
+//        PositionImpl p15 = new PositionImpl(); // top left
+//        PositionImpl p16 = new PositionImpl(); // bottom right
+//        PositionImpl p17 = new PositionImpl(); // bottom left
+//
+//
+//
+//        p11.setX(1);
+//        p11.setY(1);
+//
+//        p12.setX(2);
+//        p12.setY(1);
+//
+//        p13.setX(0);
+//        p13.setY(1);
+//
+//        p14.setX(2);
+//        p14.setY(0);
+//
+//        p15.setX(1);
+//        p15.setY(0);
+//
+//        p16.setX(2);
+//        p16.setY(2);
+//
+//        p17.setX(1);
+//        p17.setY(2);
+//
+//        a19.setID(1);
+//        b21.loadBrain(file24);
+//
+//        m11.setAntAtCell(p11,1);
+//        a19.setDirection(0);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p12));
+//
+//        // need to clear from prev cell?
+//
+//        m11.setAntAtCell(p11 , 1);
+//        a19.setDirection(3);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p13));
+//
+//        m11.setAntAtCell(p11 , 0);
+//        a19.setDirection(5);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p14));
+//
+//        m11.setAntAtCell(p11 , 0);
+//        a19.setDirection(4);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p15));
+//
+//        m11.setAntAtCell(p11 , 0);
+//        a19.setDirection(1);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p16));
+//
+//        m11.setAntAtCell(p11 , 0);
+//        a19.setDirection(2);
+//
+//        b21.step(1);
+//
+//        assertEquals(0, m11.getAntAtCell(p11));
+//        assertEquals(1,m11.getAntAtCell(p17));
+//
+//        //////
+//        //////
+//
+//        /// checking if rocky or occupied if it is do nothing change state
+//
+//        m11.setAntAtCell(p11 , 0);
+//        a19.setDirection(0);
+//
+//        m11.setCellContents(p12, '#' );
+//        b21.step(1);
+//
+//        assertEquals(1, m11.getAntAtCell(p11));
+//        assertEquals(10, a19.getState()); // make sure in correct state
+//
+//
+//        // occupied cell
+//
+//        com.model.AntImpl a20 = new com.model.AntImpl();
+//        a20.setID(2);
+//
+//        m11.setCellContents(p12, '#');
+//        m11.setAntAtCell(p11 , 1);
+//        m11.setAntAtCell(p12, 2);
+//        a19.setDirection(0);
+//
+//        b21.step(1);
+//
+//        assertEquals(1, m11.getAntAtCell(p11));
+//        assertEquals(11, a19.getState()); // make sure in correct state
+//
+//
+//
+//
+//    }
+//
+//    // flip hard cause its random?
+//
+//
+//
 }
