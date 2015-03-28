@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,6 +64,78 @@ public class TournamentImpl implements Tournament{
             round(brains.get(0),brains.get(1));
         }
 
+
+    }
+
+    public List<List<File>> createFixtures(List<File> brains){
+        List<List<File>> fixtures = new ArrayList<List<File>>();
+        if(brains.size()==4){
+            for(int i=0;i<6;i++){
+                switch (i){
+                    case 0:
+                        List<File> f1 = new ArrayList<File>();
+                        f1.add(brains.get(0));
+                        f1.add(brains.get(1));
+                        fixtures.add(f1);
+                        break;
+                    case 1:
+                        round(brains.get(0),brains.get(2));
+                        List<File> f2 = new ArrayList<File>();
+                        f2.add(brains.get(0));
+                        f2.add(brains.get(2));
+                        fixtures.add(f2);
+                        break;
+                    case 2:
+                        List<File> f3 = new ArrayList<File>();
+                        f3.add(brains.get(0));
+                        f3.add(brains.get(3));
+                        fixtures.add(f3);
+                        break;
+                    case 3:
+                        List<File> f4 = new ArrayList<File>();
+                        f4.add(brains.get(1));
+                        f4.add(brains.get(2));
+                        fixtures.add(f4);
+                        break;
+                    case 4:
+                        List<File> f5 = new ArrayList<File>();
+                        f5.add(brains.get(1));
+                        f5.add(brains.get(3));
+                        fixtures.add(f5);
+                        break;
+                    default:
+                        List<File> f6 = new ArrayList<File>();
+                        f6.add(brains.get(2));
+                        f6.add(brains.get(3));
+                        fixtures.add(f6);
+                }
+            }
+        }
+        else {
+            for(int i=0;i<3;i++){
+                switch (i){
+                    case 0:
+                        List<File> f1 = new ArrayList<File>();
+                        f1.add(brains.get(0));
+                        f1.add(brains.get(1));
+                        fixtures.add(f1);
+                        break;
+                    case 1:
+                        List<File> f2 = new ArrayList<File>();
+                        f2.add(brains.get(0));
+                        f2.add(brains.get(2));
+                        fixtures.add(f2);
+                        break;
+                    default:
+                        List<File> f3 = new ArrayList<File>();
+                        f3.add(brains.get(1));
+                        f3.add(brains.get(2));
+                        fixtures.add(f3);
+                }
+            }
+        }
+
+        return fixtures;
 
     }
 

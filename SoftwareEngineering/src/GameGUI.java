@@ -1,18 +1,17 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.net.*;
 
 import javax.swing.*;
 
 public class GameGUI extends JFrame implements ActionListener {
 	
-	private CellImpl[][] map;
+	private CellImpl[][] graphicalMap;
 	private Polygon poly;
-	CellImg b = new CellImg(4,map);
+	CellImg b = new CellImg(4, graphicalMap);
 	
 	public GameGUI(CellImpl[][] m){
 		super("Ant Game Team 2");
-		map = m;
+		graphicalMap = m;
 		CreateUI();
 	}
 	
@@ -26,6 +25,13 @@ public class GameGUI extends JFrame implements ActionListener {
 		pack();
 		setResizable(true);
 		setVisible(true);
+	}
+
+	private void refreshMap(){
+
+
+
+
 	}
 	
 	private void createMenu(){
@@ -52,13 +58,13 @@ public class GameGUI extends JFrame implements ActionListener {
                 super.paintComponent(g2);
                 for (int j=0;j<150;j++) {
     				for (int i=0;i<150;i++) {
-    					if(map[i][j].getContents() == '+'){
+    					if(graphicalMap[i][j].getContents() == '+'){
     						b.drawHex(i,j,g2,Color.RED);
-    					}else if(map[i][j].getContents() == '-'){
+    					}else if(graphicalMap[i][j].getContents() == '-'){
     						b.drawHex(i,j,g2,Color.BLACK);
-    					}else if(map[i][j].getContents() == '#'){
+    					}else if(graphicalMap[i][j].getContents() == '#'){
     						b.drawHex(i,j,g2,Color.gray);
-    					}else if(map[i][j].getContents() == '.'){
+    					}else if(graphicalMap[i][j].getContents() == '.'){
     						b.drawHex(i,j,g2,Color.WHITE);
     					}else {
     						b.drawHex(i,j,g2,Color.GREEN);

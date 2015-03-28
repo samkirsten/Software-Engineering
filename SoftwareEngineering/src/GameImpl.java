@@ -9,7 +9,7 @@ public class GameImpl implements Game {
     Map map;
     int redFood = 0;
     int blackFood = 0;
-
+    int currentRound = 0;
 
 
     @Override
@@ -55,6 +55,11 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public int getCurrentRound(){
+        return currentRound;
+    }
+
+    @Override
     public void setMap(Map map) {
         this.map = map;
     }
@@ -79,10 +84,12 @@ public class GameImpl implements Game {
 
         for(Position p : redHill){
            redAnts.addAnt(new Ant(id,p,Colour.RED));
+            id++;
         }
 
         for(Position p : blackHill){
             blackAnts.addAnt(new Ant(id,p,Colour.BLACK));
+            id++;
         }
     }
 
@@ -121,12 +128,14 @@ public class GameImpl implements Game {
     @Override
     public Colour start() {
 
+        currentRound = 0;
         map.clearMap();
 
         generateAnts();
 
         for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
             next();
+            currentRound++;
         }
 
         redFood = red.getFoodInColony();

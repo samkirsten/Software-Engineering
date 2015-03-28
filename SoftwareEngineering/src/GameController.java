@@ -1,3 +1,6 @@
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 
 public interface GameController {
 
@@ -7,9 +10,11 @@ public interface GameController {
 
     public void generateNewMap();
 
-    public void beginTournament();
+    public Colour beginSingleGame(File brain1, File brain2);
 
-    public void beginGame();
+    public HashMap<File,Integer> beginTournametGame(File brain1, File brain2, Tournament t);
+
+    public List<List<File>> createFixtures(File brains);
 
 
 }

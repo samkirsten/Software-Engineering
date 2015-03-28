@@ -18,6 +18,8 @@ public interface Game {
 
     public Colour start();
 
+    public int getCurrentRound();
+
 
 
 
