@@ -1,2 +1,1 @@
-Sense Here 1 2 Friend;
-Sense Ahead 1 2 Friend;
+Unmark 1 1

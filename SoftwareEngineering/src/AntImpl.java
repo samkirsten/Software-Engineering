@@ -130,7 +130,7 @@ public class AntImpl implements Ant {
      */
 
     public int getRemainingRest() {
-        return (14-resting) ;
+        return (15-resting) ;
     }
 
     /**

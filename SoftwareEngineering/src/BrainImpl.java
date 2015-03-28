@@ -447,6 +447,8 @@ public class BrainImpl implements Brain {
 
         if(colony.getColonyColour() == Colour.RED){
 
+
+
             enemyColour = Colour.BLACK;
 
         }else {
@@ -455,7 +457,7 @@ public class BrainImpl implements Brain {
 
         }
 
-        Position p=null;
+        Position p = null;
         Ant a = null;
         // if its within first half do red else do black  ants
 
@@ -476,6 +478,7 @@ public class BrainImpl implements Brain {
 
                 }
                 else {
+
 
                     int currentState = 0;
                     try {
@@ -531,15 +534,38 @@ public class BrainImpl implements Brain {
 
 
                     } else if ("Mark".equals(command)) {
+                        if(a.getColour() == Colour.RED){
+                            map.setCellScentMarker(p, Integer.parseInt(state.get(currentState).get(1)));
 
-                        map.setCellScentMarker(p, Integer.parseInt(state.get(currentState).get(1) + 1));
+                        }else if(a.getColour() == Colour.BLACK){
+
+                            map.setCellScentMarker(p, Integer.parseInt(state.get(currentState).get(1) +6));
+                        }
+
                         a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
-                    } else if ("Unmark".equals(command)) {
+                    }
+                      else if ("Unmark".equals(command)) {
+                        if(a.getColour() == Colour.RED){
+                            if(map.getCellScentMarker(a.getColour(),p) == Integer.parseInt(state.get(currentState).get(1))){
 
+                                map.setCellScentMarker(p,0);
+                                a.setState(Integer.parseInt(state.get(currentState).get(2)));
+                            }
+                        }else if(a.getColour() == Colour.BLACK){
 
-                        map.setCellScentMarker(p, 0);
-                        a.setState(Integer.parseInt(state.get(currentState).get(2)));
+                            System.out.println("cunt");
+
+                            if(map.getCellScentMarker(a.getColour(),p)-6 == Integer.parseInt(state.get(currentState).get(1))){
+
+                                System.out.println("wanker");
+                                System.out.println(map.getCellScentMarker(a.getColour(),p)+"stupid marker1");
+                                map.setCellScentMarker(p,0);
+                                System.out.println(map.getCellScentMarker(a.getColour(),p)+"stupid marker");
+                                a.setState(Integer.parseInt(state.get(currentState).get(2)));
+
+                            }
+                        }
 
 
                     } else if ("PickUp".equals(command)) {
@@ -974,52 +1000,46 @@ public class BrainImpl implements Brain {
         Position p2 = null;
 
         if (direction == 0) {
+            p2 = new Position(p.getX()+1, p.getY());
 
-            p2.setX(p.getX() + 1);
-            p2.setY(p.getY());
         } else if (direction == 1) {
 
             if(p.getY()%2 == 0) {
-                p2.setX(p.getX());
-                p2.setY(p.getY() + 1);
+                p2 = new Position(p.getX(), p.getY()+1);
+
+
             }else{
 
-                p2.setX(p.getX()+1);
-                p2.setY(p.getY() + 1);
+                p2 = new Position(p.getX()+1, p.getY()+1);
 
             }
 
         }else if(direction == 2){
 
             if(p.getY()%2 == 0) {
-                p2.setX(p.getX()-1);
-                p2.setY(p.getY() + 1);
+                p2 = new Position(p.getX()-1, p.getY()+1);
+
             }else{
 
-                p2.setX(p.getX());
-                p2.setY(p.getY()+1);
-
+                p2 = new Position(p.getX(), p.getY()+1);
 
             }
 
 
         }else if(direction == 3){
 
-
-            p2.setX(p.getX()-1);
-            p2.setY(p.getY());
+            p2 = new Position(p.getX()-1, p.getY());
 
         }
         else if(direction == 4){
 
             if(p.getY()%2 == 0) {
-                p2.setX(p.getX()-1);
-                p2.setY(p.getY()-1);
+
+                p2 = new Position(p.getX()-1, p.getY()-1);
+
             }else{
 
-                p2.setX(p.getX());
-                p2.setY(p.getY()-1);
-
+                p2 = new Position(p.getX(), p.getY()-1);
 
             }
 
@@ -1027,12 +1047,13 @@ public class BrainImpl implements Brain {
         }else if(direction == 5){
 
             if(p.getY()%2 == 0) {
-                p2.setX(p.getX());
-                p2.setY(p.getY()-1);
+
+                p2 = new Position(p.getX(), p.getY()-1);
+
             }else{
 
-                p2.setX(p.getX()+1);
-                p2.setY(p.getY()-1);
+                p2 = new Position(p.getX()+1, p.getY()-1);
+
 
             }
         }
@@ -1085,8 +1106,7 @@ public class BrainImpl implements Brain {
                 }
 
             }
-            else
-            if("Mark".equals(tokenChecker)){
+            else if("Mark".equals(tokenChecker)){
 
                 ArrayList<String> temp = new ArrayList<>();
 
@@ -1203,16 +1223,44 @@ public class BrainImpl implements Brain {
 
 
 
-//    public static void main(String args[]) {
-//        BrainImpl brain = new BrainImpl();
-//        brain.loadBrain(new File("brains/brain1.txt"));
-////        for (String t : brain.instructionGetter ){
-////            System.out.println(t);
-////        }
-////
-////        System.out.print(brain.state.size());
-//
-//    }
+    public static void main(String args[]) throws CellAlreadyOccupiedException {
+
+
+
+        MapImpl m1 = new MapImpl();
+        Colony c = new ColonyImpl(Colour.RED);
+        BrainImpl b11 = new BrainImpl(m1,c);
+        AntImpl a4 = new AntImpl();
+        b11.loadBrain(new File("brains/file18.txt"));
+
+
+        for(int x = 0; x < b11.instructionGetter.size(); x++){
+
+            System.out.println(b11.instructionGetter.get(x));
+
+        }
+        System.out.println(b11.state.get(0).get(0));
+
+        Position p1 = new Position(1,1);
+        m1.generateMap();
+        c.addAnt(a4);
+        a4.setID(2);
+
+        m1.setAntAtCell(p1, a4);
+
+
+
+
+       // m1.setCellScentMarker(p1,1);
+
+        b11.step(a4.getID()); // need to set file so it unmarks
+
+
+        System.out.println(m1.getCellScentMarker(Colour.RED,p1));
+
+
+
+    }
 
 
 
