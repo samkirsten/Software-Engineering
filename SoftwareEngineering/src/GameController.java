@@ -4,17 +4,12 @@ import java.util.List;
 
 public interface GameController {
 
-    public boolean changeRedBrain();
 
-    public boolean changeBlackBrain();
-
-    public void generateNewMap();
-
-    public Colour beginSingleGame(File brain1, File brain2);
+    public Colour beginSingleGame(File brain1, File brain2, Game g);
 
     public HashMap<File,Integer> beginTournametGame(File brain1, File brain2, Tournament t);
 
-    public List<List<File>> createFixtures(File brains);
+    public List<List<File>> createFixtures(File brains, Tournament t);
 
 
 }
