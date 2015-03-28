@@ -1,5 +1,6 @@
 import com.model.Colour;
 import com.model.Game;
+import com.model.GameImpl;
 import org.junit.Test;
 
 import java.io.File;
