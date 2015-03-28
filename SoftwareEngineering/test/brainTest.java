@@ -27,10 +27,10 @@ public class BrainTest {
     // test through each group of correct tokens
     @Test
     public void testInstructionToken(){
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b = new BrainImpl(m,c);
+        Brain b = new BrainImpl(m,c);
 
         assertTrue(b.loadBrain(new File("brains/file.txt")));
     }
@@ -38,10 +38,10 @@ public class BrainTest {
     @Test
     public void testDirectionToken(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b2 = new BrainImpl(m,c);
+        Brain b2 = new BrainImpl(m,c);
 
         assertTrue(b2.loadBrain(new File("brains/file1.txt")));
 
@@ -50,10 +50,10 @@ public class BrainTest {
     @Test
     public void testConditionsToken(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b3 = new BrainImpl(m,c);
+        Brain b3 = new BrainImpl(m,c);
 
         assertTrue(b3.loadBrain(new File("brains/file2.txt")));
 
@@ -62,10 +62,10 @@ public class BrainTest {
     @Test
     public void testArgumentTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b4 = new BrainImpl(m,c);
+        Brain b4 = new BrainImpl(m,c);
 
         assertTrue(b4.loadBrain(new File("brains/file3.txt")));
     }
@@ -74,10 +74,10 @@ public class BrainTest {
     @Test
     public void testMixOfTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b5 = new BrainImpl(m,c);
+        Brain b5 = new BrainImpl(m,c);
 
         assertTrue(b5.loadBrain(new File("brains/file4.txt")));
 
@@ -88,8 +88,8 @@ public class BrainTest {
     @Test
     public void testFailTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
         Brain b6 = new BrainImpl(m,c);
         Brain b7 = new BrainImpl(m,c);
@@ -120,10 +120,10 @@ public class BrainTest {
     @Test
     public void testCorrectWrongTokens(){
 
-        ColonyImpl c = new ColonyImpl(null);
-        MapImpl m = new MapImpl();
+        Colony c = new ColonyImpl(null);
+        Map m = new MapImpl();
 
-        BrainImpl b7 = new BrainImpl(m,c);
+        Brain b7 = new BrainImpl(m,c);
 
         assertFalse(b7.loadBrain(new File("brains/file13.txt")));
 
@@ -138,8 +138,8 @@ public class BrainTest {
 
 
         Colony c = new ColonyImpl(Colour.BLACK);
-        BrainImpl b8 = new BrainImpl(null,c);
-        AntImpl a = new AntImpl(1,Colour.BLACK,null);
+        Brain b8 = new BrainImpl(null,c);
+        Ant a = new AntImpl(1,Colour.BLACK,null);
 
 
         c.addAnt(a);
@@ -202,17 +202,17 @@ public class BrainTest {
     @Test
     public void testSenseTrue() throws CellAlreadyOccupiedException { /// breaks
 
-        MapImpl map = new MapImpl();
+        Map map = new MapImpl();
         Colony c = new ColonyImpl(Colour.RED);
-        BrainImpl b9 = new BrainImpl(map, c);
+        Brain b9 = new BrainImpl(map, c);
 
         map.generateMap();
         Position pos = new Position(1,1);
         Position pos1  = new Position(2,1);
 
 
-        AntImpl a1 = new AntImpl(1,Colour.RED,pos);
-        AntImpl a2 = new AntImpl(2,Colour.RED,pos1);
+        Ant a1 = new AntImpl(1,Colour.RED,pos);
+        Ant a2 = new AntImpl(2,Colour.RED,pos1);
 
         c.addAnt(a1);
         c.addAnt(a2);
@@ -246,11 +246,11 @@ public class BrainTest {
     @Test
     public void testMark() throws CellAlreadyOccupiedException {
 
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
 
         Colony c= new ColonyImpl(Colour.RED);
 
-        BrainImpl b10 = new BrainImpl(m,c);
+        Brain b10 = new BrainImpl(m,c);
 
         m.generateMap();
         Position p = new Position(1,1);
@@ -282,11 +282,11 @@ public class BrainTest {
     @Test
     public void testUnMark() throws CellAlreadyOccupiedException {
 
-        MapImpl m1 = new MapImpl();
+        Map m1 = new MapImpl();
         Colony c = new ColonyImpl(Colour.BLACK);
-        BrainImpl b11 = new BrainImpl(m1,c);
+        Brain b11 = new BrainImpl(m1,c);
         Position p1 = new Position(1,1);
-        AntImpl a4 = new AntImpl(2,Colour.BLACK,p1);
+        Ant a4 = new AntImpl(2,Colour.BLACK,p1);
 
 
 
@@ -322,12 +322,12 @@ public class BrainTest {
         Map m2 = new MapImpl();
         Colony c = new ColonyImpl(Colour.BLACK);
 
-        BrainImpl b12 = new BrainImpl(m2,c);
+        Brain b12 = new BrainImpl(m2,c);
         m2.generateMap();
         Position p2 = new Position(1,1);
 
 
-        AntImpl a6 = new AntImpl(3,Colour.BLACK,p2);
+        Ant a6 = new AntImpl(3,Colour.BLACK,p2);
 
 
 
@@ -361,15 +361,15 @@ public class BrainTest {
     public void testPickUpFood() throws InvalidContentCharacterException, CellAlreadyOccupiedException {
 
 
-        MapImpl m3 = new MapImpl();
+        Map m3 = new MapImpl();
         Colony c = new ColonyImpl(Colour.RED);
 
-        BrainImpl b13 = new BrainImpl(m3,c);
+        Brain b13 = new BrainImpl(m3,c);
         Position p3 = new Position(1,1);
         m3.generateMap();
 
 
-        AntImpl a7 = new AntImpl(1,Colour.RED,p3);
+        Ant a7 = new AntImpl(1,Colour.RED,p3);
 
         a7.setHasFood(false);
         m3.setAntAtCell(p3,a7);
@@ -395,10 +395,10 @@ public class BrainTest {
         /////////
         ////////
         Colony col = new ColonyImpl(Colour.RED);
-        MapImpl m4 = new MapImpl();
-        BrainImpl b14 = new BrainImpl(m4,col);
+        Map m4 = new MapImpl();
+        Brain b14 = new BrainImpl(m4,col);
         Position p4 = new Position(1,1);
-        AntImpl a8 = new AntImpl(4,Colour.RED,p4);
+        Ant a8 = new AntImpl(4,Colour.RED,p4);
 
         m4.generateMap();
 
@@ -422,11 +422,11 @@ public class BrainTest {
 //        ////////
 //        ////////
 
-        MapImpl m5 = new MapImpl();
+        Map m5 = new MapImpl();
         Colony col1 = new ColonyImpl(Colour.RED);
-        BrainImpl b15 = new BrainImpl(m5,col1);
+        Brain b15 = new BrainImpl(m5,col1);
         Position p5 = new Position(1,1);
-        AntImpl a9 = new AntImpl(2,Colour.RED,p5);
+        Ant a9 = new AntImpl(2,Colour.RED,p5);
 
         m5.generateMap();
         col1.addAnt(a9);
@@ -444,36 +444,38 @@ public class BrainTest {
 
     }
 
-//    @Test
-//    public void testDrop() throws com.model.com.model.exceptions.CellAlreadyOccupiedException, com.model.com.model.exceptions.InvalidContentCharacterException {
-//
-//        com.model.BrainImpl b16 = new com.model.BrainImpl();
-//        PositionImpl p6 = new PositionImpl();
-//        com.model.AntImpl a10 = new com.model.AntImpl();
-//        com.model.MapImpl m6 = new com.model.MapImpl();
-//        p6.setX(1);
-//        p6.setY(1);
-//
-//        b16.loadBrain(file21);
-//        a10.setID(1);
-//        a10.setHasFood(true); // should implement?
-//
-//        m6.setAntAtCell(p6,1);
-//
-//        m6.setCellContents(p6, -1);
-//        b16.step(1);
-//
-//        assertEquals((char) 1, m6.getCellContents(p6));
-//        assertEquals(1, a10.getState()); // should be changed to state 1
-//
-//        ///////
-//        ///////
-//        ///////
-//
+    @Test
+    public void testDrop() throws com.model.exceptions.CellAlreadyOccupiedException, com.model.exceptions.InvalidContentCharacterException {
+
+        Map m6 = new MapImpl();
+        Colony c = new ColonyImpl(Colour.RED);
+        Brain b16 = new BrainImpl(m6,c);
+        Position p6 = new Position(1,1);
+        Ant a10 = new AntImpl(1,Colour.RED, p6);
+
+        m6.generateMap();
+        c.addAnt(a10);
+
+        b16.loadBrain(new File("brains/file23.txt"));
+
+        a10.setHasFood(true); // should implement?
+
+        m6.setAntAtCell(p6,a10);
+
+        m6.setCellContents(p6, '.');
+        b16.step(1);
+
+        assertEquals((char) 1, m6.getCellContents(p6));
+        assertEquals(1, a10.getState()); // should be changed to state 1
+
+        ///////
+        ///////
+        ///////
+
 //        com.model.BrainImpl b17 = new com.model.BrainImpl();
-//        PositionImpl p7 = new PositionImpl();
-//        com.model.AntImpl a11 = new com.model.AntImpl();
-//        com.model.MapImpl m7 = new com.model.MapImpl();
+//        Position p7 = new Position();
+//        Ant a11 = new AntImpl();
+//        Map m7 = new MapImpl();
 //
 //        p7.setX(1);
 //        p7.setY(1);
@@ -497,10 +499,10 @@ public class BrainTest {
 //
 //        // if no food then just change state
 //
-//        com.model.BrainImpl b18 = new com.model.BrainImpl();
-//        PositionImpl p8 = new PositionImpl();
-//        com.model.AntImpl a12 = new com.model.AntImpl();
-//        com.model.MapImpl m8 = new com.model.MapImpl();
+//        Brain b18 = new BrainImpl();
+//        Position p8 = new Position();
+//        Ant a12 = new AntImpl();
+//        Map m8 = new MapImpl();
 //
 //        p8.setX(1);
 //        p8.setY(1);
@@ -516,9 +518,9 @@ public class BrainTest {
 //        b18.step(5);
 //
 //        assertEquals(1, a12.getState());
-//
-//    }
-//
+
+    }
+
 //    @Test
 //
 //    public void testTurnLeft() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
