@@ -9,9 +9,25 @@ import java.awt.event.ActionListener;
 public class GuiTournamentMenu extends JFrame {
 
     JPanel panel;
-    JPanel panel2;
 
     JLabel instruction;
+    JButton player1;
+    JButton player2;
+    JButton player3;
+    JButton player4;
+    JButton start ;
+
+    JLabel p1Brain ;
+    JLabel p2Brain;
+    JLabel p3Brain ;
+    JLabel p4Brain;
+
+
+    Boolean p1Ready ;
+    Boolean p2Ready ;
+    Boolean p3Ready ;
+    Boolean p4Ready ;
+
 
     public GuiTournamentMenu() {
         initLayout();
@@ -19,22 +35,29 @@ public class GuiTournamentMenu extends JFrame {
 
     public final void initLayout() {
         //a label for instructions
-        instruction = new JLabel("Please load your brains here, and press Start com.model.Game ", SwingConstants.CENTER);
+        instruction = new JLabel("players, load brain for your ants ! ", SwingConstants.CENTER);
+        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
+
+        p2Brain = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
+
+        p3Brain = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
+
+        p4Brain = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
 
         //setting up layout and panel
         panel = new JPanel();
         getContentPane().add(panel);
-        //panel.setLayout(new GridLayout(4, 2));
+        panel.setLayout(new GridLayout(10, 1));
 
         //make new load brain button for player 1
-        JButton player1 = new JButton("Player 1");
+        player1 = new JButton("Player 1");
         player1.setPreferredSize(new Dimension(10, 10));
         player1.setBounds(50, 60, 80, 30);
         player1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("com.model.Brain 1");
+                chooser.setDialogTitle("Brain 1");
 
 
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -50,18 +73,18 @@ public class GuiTournamentMenu extends JFrame {
         });
 
         //load brain button for player 2
-        JButton player2 = new JButton("Player 2");
+        player2 = new JButton("Player 2");
         player2.setPreferredSize(new Dimension(10, 10));
         player2.setBounds(50, 60, 80, 30);
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("com.model.Brain 1");
+                chooser.setDialogTitle("Brain 2");
 
 
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
+                    System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
                 } else {
                     System.out.println("No Selection ");
                 }
@@ -73,15 +96,31 @@ public class GuiTournamentMenu extends JFrame {
             }
         });
 
-        //start game button
-        JButton startGame = new JButton("START GAME");
-        startGame.addActionListener(new ActionListener() {
+
+        player3 = new JButton("player3");
+        player3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                //check brain and print out if brain is okay.
-                // then runs game class
 
 
-                //show fixtures in tournamnet (who VS who)in a table
+
+            }
+        });
+
+        player4 = new JButton("player4");
+        player4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+
+
+            }
+        });
+
+        //start game button
+        start = new JButton("START GAME");
+        start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                GuiTournamentGameMenu tGame= new GuiTournamentGameMenu();
+                tGame.setVisible(true);
 
             }
         });
@@ -89,12 +128,20 @@ public class GuiTournamentMenu extends JFrame {
         panel.add(instruction);
         panel.add(player1);
         panel.add(player2);
-        panel.add(startGame);
+        panel.add(player3);
+        panel.add(player4);
+        panel.add(p1Brain);
+        panel.add(p2Brain);
+        panel.add(p3Brain);
+        panel.add(p4Brain);
 
-        setTitle("com.model.Tournament Mode");
+        panel.add(start);
+
+
+        setTitle("Tournament Mode");
         setSize(400, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
