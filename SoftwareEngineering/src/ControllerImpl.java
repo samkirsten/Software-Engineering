@@ -6,24 +6,12 @@ import java.util.List;
  * Created by Jacob on 28/03/2015.
  */
 public class ControllerImpl implements GameController {
-    @Override
-    public boolean changeRedBrain() {
-        return false;
-    }
-
-    @Override
-    public boolean changeBlackBrain() {
-        return false;
-    }
-
-    @Override
-    public void generateNewMap() {
-
-    }
 
     @Override
     public Colour beginSingleGame(File brain1, File brain2, Game game) {
-        return null;
+        game.loadBrain(brain1,Colour.RED);
+        game.loadBrain(brain2,Colour.BLACK);
+        return game.start();
     }
 
     @Override
@@ -31,10 +19,8 @@ public class ControllerImpl implements GameController {
 
 
 
-        return null;
+        return t.round(brain1,brain2);
     }
-
-
 
     @Override
     public List<List<File>> createFixtures(File brains, Tournament t) {
