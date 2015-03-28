@@ -333,9 +333,9 @@ public class MapImpl implements Map{
         map[pos.getX()][pos.getY()].setScentMark(marker);
     }
 
-
-    public CellImpl[][] gestmap(){
+    @Override
+    public Cell[][] getMap() {
         return map;
-
     }
+
 }
