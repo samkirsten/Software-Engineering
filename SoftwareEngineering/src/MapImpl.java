@@ -216,22 +216,29 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public int getCellScentMarker(Colour colourOfQueryingAnt, Position pos) {
+    public int getCellScentMarker(Colour colourOfQueryingAnt, Position pos) { // swapped it around
         int value = 0;
-        if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
-            value = map[pos.getX()][pos.getY()].getScentMark();
-        }
 
         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
-            value = -1;
-        }
-
-        if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
-            value = -1;
-        }
-
-        if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
             value = map[pos.getX()][pos.getY()].getScentMark();
+        }
+
+         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+
+            value = -1;
+        }
+
+         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
+
+                 value = -1;
+
+        }
+
+         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+            value = map[pos.getX()][pos.getY()].getScentMark();
+        }
+        if(map[pos.getX()][pos.getY()].getScentMark() == 0){
+            value =0;
         }
 
         return value;
@@ -301,11 +308,14 @@ public class MapImpl implements Map{
 
     @Override
     public void setAntAtCell(Position pos, Ant ant) throws CellAlreadyOccupiedException {
+
         if(map[pos.getX()][pos.getY()].getAnt() != null){
             throw new CellAlreadyOccupiedException("There is Ant already.");
         }else{
             map[pos.getX()][pos.getY()].setAnt(ant);
+            ant.setPosition(pos);
         }
+
     }
 
     @Override
@@ -319,6 +329,7 @@ public class MapImpl implements Map{
 
     @Override
     public void setCellScentMarker(Position pos, int marker) {
+
         map[pos.getX()][pos.getY()].setScentMark(marker);
     }
 

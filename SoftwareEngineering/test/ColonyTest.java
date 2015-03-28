@@ -29,9 +29,25 @@ public class ColonyTest {
 
         colony = new ColonyImpl(color);
 
+
         ant1 = new AntImpl(1,color,new Position(0,0));
         ant2 = new AntImpl(2,color,new Position(0,1));
         ant3 = new AntImpl(3,color,new Position(0,2));
+
+        ant1 = new AntImpl();
+        ant1.setID(1);
+        ant1.setColour(color);
+       // ant1.setPosition( new Position(0,0));
+
+        ant2 = new AntImpl();
+        ant2.setID(2);
+        ant2.setColour(color);
+
+        ant3 = new AntImpl();
+        ant3.setID(2);
+        ant3.setColour(color);
+
+
 
         colony.addAnt(ant1);
         colony.addAnt(ant2);
