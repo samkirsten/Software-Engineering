@@ -1,35 +1,28 @@
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 
-public class guiTwoPlayerMenu extends JFrame {
+public class guiTournamentMenu extends JFrame {
 
     JPanel panel;
-    JLabel instruction;
-    JLabel p1Brain ;
-    JLabel p2Brain;
+    JPanel panel2;
 
-    Boolean p1Ready ;
-    Boolean p2Ready ;
-    //ControllerImpl gameController ;
-    public guiTwoPlayerMenu() {
-        //gameController = new ControllerImpl() ;
+    JLabel instruction;
+
+    public guiTournamentMenu() {
         initLayout();
     }
 
     public final void initLayout() {
         //a label for instructions
         instruction = new JLabel("Please load your brains here, and press Start Game ", SwingConstants.CENTER);
-        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
 
-        p2Brain = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
         //setting up layout and panel
         panel = new JPanel();
         getContentPane().add(panel);
-        panel.setLayout(new GridLayout(6, 1));
+        //panel.setLayout(new GridLayout(4, 2));
 
         //make new load brain button for player 1
         JButton player1 = new JButton("Player 1");
@@ -38,17 +31,16 @@ public class guiTwoPlayerMenu extends JFrame {
         player1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
-                //chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.setDialogTitle("Brain 1");
 
-                //check for brain goes here. if OKAY, load, if not, tell user.
+
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
-                    p1Brain.setText("Player1 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
-                    p1Ready = true;
                 } else {
-                    System.out.println("Your Brain is not working, retry! ");
+                    System.out.println("No Selection ");
                 }
+
 
                 //checking for the brain goes here
 
@@ -62,16 +54,14 @@ public class guiTwoPlayerMenu extends JFrame {
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
-                //chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.setDialogTitle("Brain 1");
 
-                //check for brain goes here. if OKAY, load, if not, tell user.
+
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
-                    p2Brain.setText("Player2 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
-                    p2Ready = true;
+                    System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
                 } else {
-                    System.out.println("Your Brain is not working, retry! ");
+                    System.out.println("No Selection ");
                 }
 
 
@@ -87,10 +77,9 @@ public class guiTwoPlayerMenu extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 //check brain and print out if brain is okay.
                 // then runs game class
-                if (p1Ready && p2Ready) {
-                    // GameGUI game = new GameGUI();
 
-                }
+
+                //show fixtures in tournamnet (who VS who)in a table
 
             }
         });
@@ -98,11 +87,9 @@ public class guiTwoPlayerMenu extends JFrame {
         panel.add(instruction);
         panel.add(player1);
         panel.add(player2);
-        panel.add(p1Brain);
-        panel.add(p2Brain);
         panel.add(startGame);
 
-        setTitle("2-player Mode");
+        setTitle("Tournament Mode");
         setSize(400, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -111,7 +98,7 @@ public class guiTwoPlayerMenu extends JFrame {
     public static void main(String[] args) {
 
 
-        guiTwoPlayerMenu ex = new guiTwoPlayerMenu();
+        guiTournamentMenu ex = new guiTournamentMenu();
         ex.setVisible(true);
 
 
