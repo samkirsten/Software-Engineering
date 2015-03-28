@@ -1,7 +1,9 @@
 
+import com.model.AntImpl;
+import com.model.Colour;
+import com.model.Position;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +17,7 @@ public class AntTest {
 
     @Before
     public void initialize(){
-        testAnt = new AntImpl(1,Colour.RED,new Position(0,0));
+        testAnt = new AntImpl(1, Colour.RED,new Position(0,0));
     }
 
     @Test
@@ -76,19 +78,19 @@ public class AntTest {
     @Test
     public void test_hasFood(){
         //ant shouldn't have food once created
-        assertFalse(testAnt.has_food);
+        assertFalse(testAnt.hasFood);
 
 
         //ant should have food after bring set
         testAnt.setHasFood(true);
-        assertTrue(testAnt.has_food);
+        assertTrue(testAnt.hasFood);
     }
 //    @Test
 //    public void test_MarkScent(){
-//        Position testPos = new Position(1,1) ;
-//        Map testMap = new Map();
-//        Colour testColor = new Colour();
-//        AntImpl testAnt = new AntImpl(1,testColor,0,0,0,false);
+//        com.model.Position testPos = new com.model.Position(1,1) ;
+//        com.model.Map testMap = new com.model.Map();
+//        com.model.Colour testColor = new com.model.Colour();
+//        com.model.AntImpl testAnt = new com.model.AntImpl(1,testColor,0,0,0,false);
 //
 //        //set marker in ANT class
 //            testAnt.markScent(testPos, 1);

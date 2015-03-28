@@ -5,7 +5,7 @@
 //
 //	@Test
 //	public void testRocky(){
-//		Cell c = new Cell();
+//		com.model.Cell c = new com.model.Cell();
 //
 //		c.setContents("#");
 //		assertTrue(c.isRocky());
@@ -18,7 +18,7 @@
 //
 //	@Test
 //	public void testAnt(){
-//		Cell c = new Cell();
+//		com.model.Cell c = new com.model.Cell();
 //
 //		c.setAnt(30);
 //		assertEquals(c.getAnt, 30);
@@ -26,7 +26,7 @@
 //
 //	@Test
 //	public void testScentMark(){
-//		Cell c = new Cell();
+//		com.model.Cell c = new com.model.Cell();
 //
 //		assertEquals(c.getScentMark(), 0);     // default value of Scent mark;
 //
@@ -36,7 +36,7 @@
 //
 //	@Test
 //	public void testContents(){
-//		Cell c = new Cell();
+//		com.model.Cell c = new com.model.Cell();
 //
 //		assertEquals(c.getContents, ".");		// default value of Contents
 //

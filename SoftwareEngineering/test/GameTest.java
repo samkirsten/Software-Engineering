@@ -1,3 +1,5 @@
+import com.model.Colour;
+import com.model.Game;
 import org.junit.Test;
 
 import java.io.File;
@@ -21,11 +23,11 @@ public class GameTest {
 //
 //    @Test
 //    public void setColonyTest(){
-//        Game game = new GameImpl();
-//        Colony colony = new ColonyImpl(Colour.RED,new BrainImpl());
-//        Map map = new MapImpl();
-//        game.setColony(colony,map.getAnthill(Colour.RED));
-//        assertEquals(game.getColony(Colour.RED),colony);
+//        com.model.Game game = new GameImpl();
+//        com.model.Colony colony = new com.model.ColonyImpl(com.model.Colour.RED,new com.model.BrainImpl());
+//        com.model.Map map = new com.model.MapImpl();
+//        game.setColony(colony,map.getAnthill(com.model.Colour.RED));
+//        assertEquals(game.getColony(com.model.Colour.RED),colony);
 //    }
 
 

@@ -2,10 +2,12 @@
  * Created by hao-linliang on 17/03/15.
  */
 
+import com.model.*;
+import com.model.exceptions.CellAlreadyOccupiedException;
+import com.model.exceptions.InvalidContentCharacterException;
 import org.junit.Test;
 
 import java.io.File;
-import java.nio.file.Path;
 
 import static org.junit.Assert.*;
 
@@ -264,7 +266,7 @@ public class BrainTest {
 
 
 
-        // Cell c = new Cell();
+        // com.model.Cell c = new com.model.Cell();
 
 
 
@@ -443,12 +445,12 @@ public class BrainTest {
     }
 
 //    @Test
-//    public void testDrop() throws CellAlreadyOccupiedException, InvalidContentCharacterException {
+//    public void testDrop() throws com.model.com.model.exceptions.CellAlreadyOccupiedException, com.model.com.model.exceptions.InvalidContentCharacterException {
 //
-//        BrainImpl b16 = new BrainImpl();
+//        com.model.BrainImpl b16 = new com.model.BrainImpl();
 //        PositionImpl p6 = new PositionImpl();
-//        AntImpl a10 = new AntImpl();
-//        MapImpl m6 = new MapImpl();
+//        com.model.AntImpl a10 = new com.model.AntImpl();
+//        com.model.MapImpl m6 = new com.model.MapImpl();
 //        p6.setX(1);
 //        p6.setY(1);
 //
@@ -468,10 +470,10 @@ public class BrainTest {
 //        ///////
 //        ///////
 //
-//        BrainImpl b17 = new BrainImpl();
+//        com.model.BrainImpl b17 = new com.model.BrainImpl();
 //        PositionImpl p7 = new PositionImpl();
-//        AntImpl a11 = new AntImpl();
-//        MapImpl m7 = new MapImpl();
+//        com.model.AntImpl a11 = new com.model.AntImpl();
+//        com.model.MapImpl m7 = new com.model.MapImpl();
 //
 //        p7.setX(1);
 //        p7.setY(1);
@@ -495,10 +497,10 @@ public class BrainTest {
 //
 //        // if no food then just change state
 //
-//        BrainImpl b18 = new BrainImpl();
+//        com.model.BrainImpl b18 = new com.model.BrainImpl();
 //        PositionImpl p8 = new PositionImpl();
-//        AntImpl a12 = new AntImpl();
-//        MapImpl m8 = new MapImpl();
+//        com.model.AntImpl a12 = new com.model.AntImpl();
+//        com.model.MapImpl m8 = new com.model.MapImpl();
 //
 //        p8.setX(1);
 //        p8.setY(1);
@@ -519,12 +521,12 @@ public class BrainTest {
 //
 //    @Test
 //
-//    public void testTurnLeft() throws CellAlreadyOccupiedException {
+//    public void testTurnLeft() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
 //
-//        BrainImpl b19 = new BrainImpl();
-//        AntImpl a17 = new AntImpl();
+//        com.model.BrainImpl b19 = new com.model.BrainImpl();
+//        com.model.AntImpl a17 = new com.model.AntImpl();
 //
-//        MapImpl m9 = new MapImpl();
+//        com.model.MapImpl m9 = new com.model.MapImpl();
 //        PositionImpl p9 = new PositionImpl();
 //
 //        p9.setX(1);
@@ -573,12 +575,12 @@ public class BrainTest {
 //
 //    @Test
 //
-//    public void testTurnRight() throws CellAlreadyOccupiedException {
+//    public void testTurnRight() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
 //
-//        BrainImpl b20 = new BrainImpl();
-//        AntImpl a18 = new AntImpl();
+//        com.model.BrainImpl b20 = new com.model.BrainImpl();
+//        com.model.AntImpl a18 = new com.model.AntImpl();
 //
-//        MapImpl m10 = new MapImpl();
+//        com.model.MapImpl m10 = new com.model.MapImpl();
 //        PositionImpl p10 = new PositionImpl();
 //
 //        p10.setX(1);
@@ -626,12 +628,12 @@ public class BrainTest {
 //
 //    @Test
 //
-//    public void testMove() throws CellAlreadyOccupiedException {
+//    public void testMove() throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
 //
-//        BrainImpl b21 = new BrainImpl();
-//        AntImpl a19 = new AntImpl();
+//        com.model.BrainImpl b21 = new com.model.BrainImpl();
+//        com.model.AntImpl a19 = new com.model.AntImpl();
 //
-//        MapImpl m11 = new MapImpl();
+//        com.model.MapImpl m11 = new com.model.MapImpl();
 //        PositionImpl p11 = new PositionImpl(); // original
 //        PositionImpl  p12 = new PositionImpl();// goes right
 //        PositionImpl p13 = new PositionImpl(); // left
@@ -733,7 +735,7 @@ public class BrainTest {
 //
 //        // occupied cell
 //
-//        AntImpl a20 = new AntImpl();
+//        com.model.AntImpl a20 = new com.model.AntImpl();
 //        a20.setID(2);
 //
 //        m11.setCellContents(p12, '#');

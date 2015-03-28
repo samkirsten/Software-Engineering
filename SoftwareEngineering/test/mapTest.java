@@ -6,9 +6,9 @@
 //
 //	@Test
 //	public void testCellIsRocky(){
-//		MapImpl map = new MapImpl();
+//		com.model.MapImpl map = new com.model.MapImpl();
 //		map.generateMap();
-//		Position p = new Position(1,1);
+//		com.model.Position p = new com.model.Position(1,1);
 //
 //		map.setCellIsRocky(p, true);
 //		assertTrue(map.getCellIsRocky(p));
@@ -19,9 +19,9 @@
 //
 //	@Test
 //	public void testCellContents(){
-//		MapImpl map = new MapImpl();
+//		com.model.MapImpl map = new com.model.MapImpl();
 //		map.generateMap();
-//		Position p = new Position(2,2);
+//		com.model.Position p = new com.model.Position(2,2);
 //
 //		assertEquals(map.getCellContents(p),".");	// defalut value;
 //
@@ -44,18 +44,18 @@
 //
 //	@Test 									// need to discuss
 //	public void testCellScentMarker(){
-//		MapImpl map = new MapImpl();
+//		com.model.MapImpl map = new com.model.MapImpl();
 //		map.generateMap();
-//		Position p = new Position(2,2);
+//		com.model.Position p = new com.model.Position(2,2);
 //
 //		assertEquals(map.getCellScentMarker)
 //	}
 //
 //	@Test 									// need to know default value of ant ID
 //	public void testAntAtCell(){
-//		MapImpl map = new MapImpl();
+//		com.model.MapImpl map = new com.model.MapImpl();
 //		map.generateMap();
-//		Position p = new Position(1,1);
+//		com.model.Position p = new com.model.Position(1,1);
 //
 //		map.setAntAtCell(p, 13);
 //		assertTrue(map.getAntAtCell(p),13);

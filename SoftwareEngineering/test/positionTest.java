@@ -11,13 +11,13 @@
 //     */
 //    @Test
 //    public void equalsTest(){
-//        Position p = new Position(1,1);
-//        Position q = new Position(1,1);
+//        com.model.Position p = new com.model.Position(1,1);
+//        com.model.Position q = new com.model.Position(1,1);
 //
 //        assertTrue(p.equals(q));
 //        assertEquals(p.hashCode(),q.hashCode());
 //
-//        Position x = new Position(1,2);
+//        com.model.Position x = new com.model.Position(1,2);
 //        assertFalse(p.equals(x));
 //
 //    }

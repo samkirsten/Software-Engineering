@@ -1,8 +1,9 @@
 
+import com.model.*;
+import com.model.exceptions.AntNotFoundException;
 import org.junit.*;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ public class ColonyTest {
 
         ant1.setID(1);
         ant1.setColour(color);
-       // ant1.setPosition( new Position(0,0));
+       // ant1.setPosition( new com.model.Position(0,0));
 
         ant2.setID(2);
         ant2.setColour(color);
@@ -75,7 +76,7 @@ public class ColonyTest {
 
         //go through the list and search
 
-//        AntImpl output1 = colony.getAnt( new Position(0,0));
+//        com.model.AntImpl output1 = colony.getAnt( new com.model.Position(0,0));
 //        assertSame(ant1, output1);
 
     }
