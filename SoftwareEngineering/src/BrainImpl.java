@@ -569,42 +569,59 @@ public class BrainImpl implements Brain {
                     } else if ("PickUp".equals(command)) {
 
                         char contents = map.getCellContents(p);
-                        int content = (char)contents;
 
-                        content = content -1;
 
-                        if (!a.hasFood() || Character.isDigit(contents) && (int) contents == 0) {
+
+                        if (a.hasFood() ||  contents == '.') {
 
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
-                        } else if (Character.isDigit(contents) && (int) contents > 0) {
+                        } else if (Character.isDigit(contents) && Character.getNumericValue(contents) > 0) {
+                            int content = Character.getNumericValue(contents);
+                            content = content -1;
+                            if(content == 0){
 
-                            try {
-                                map.setCellContents(p, (char) (content));
-                            } catch (InvalidContentCharacterException e) {
-                                e.printStackTrace();
+                                try {
+                                    map.setCellContents(p,'.');
+                                } catch (InvalidContentCharacterException e) {
+                                    e.printStackTrace();
+                                }
+                            }else{
+
+                                char c = Character.forDigit((content),10);
+                                try {
+                                    map.setCellContents(p, c);
+                                } catch (InvalidContentCharacterException e) {
+                                    e.printStackTrace();
+                                }
+                                a.setHasFood(true);
+                                a.setState(Integer.parseInt(state.get(currentState).get(1)));
+
                             }
-                            a.setHasFood(true);
-                            a.setState(Integer.parseInt(state.get(currentState).get(1)));
-
                         }
+
+
+
                     } else if ("Drop".equals(command)) {
 
+                        char contents = map.getCellContents(p);
                         if (a.hasFood()) {
 
-                            if ((int) map.getCellContents(p) == 0) {
+                            if (contents == '.') {
                                 try {
-                                    map.setCellContents(p, (char) 1);
+                                    map.setCellContents(p, Character.forDigit(1,1));
                                 } catch (InvalidContentCharacterException e) {
                                     e.printStackTrace();
                                 }
                             } else {
 
-                                int cont = (int) map.getCellContents(p);
-                                cont = cont +1;
+
+                                int content = Character.getNumericValue(contents);
+
+                                char c = Character.forDigit((content),10);
 
                                 try {
-                                    map.setCellContents(p, (char)cont);
+                                    map.setCellContents(p,c);
                                 } catch (InvalidContentCharacterException e) {
                                     e.printStackTrace();
                                 }

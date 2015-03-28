@@ -6,7 +6,7 @@
 //
 //	@Test
 //	public void testCellIsRocky(){
-//		Map map = new Map();
+//		MapImpl map = new MapImpl();
 //		map.generateMap();
 //		Position p = new Position(1,1);
 //
@@ -19,7 +19,7 @@
 //
 //	@Test
 //	public void testCellContents(){
-//		Map map = new Map();
+//		MapImpl map = new MapImpl();
 //		map.generateMap();
 //		Position p = new Position(2,2);
 //
@@ -44,7 +44,7 @@
 //
 //	@Test 									// need to discuss
 //	public void testCellScentMarker(){
-//		Map map = new Map();
+//		MapImpl map = new MapImpl();
 //		map.generateMap();
 //		Position p = new Position(2,2);
 //
@@ -53,7 +53,7 @@
 //
 //	@Test 									// need to know default value of ant ID
 //	public void testAntAtCell(){
-//		Map map = new Map();
+//		MapImpl map = new MapImpl();
 //		map.generateMap();
 //		Position p = new Position(1,1);
 //

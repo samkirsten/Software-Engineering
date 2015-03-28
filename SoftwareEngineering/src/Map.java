@@ -86,6 +86,8 @@ public interface Map {
      */
     public void setCellScentMarker(Position pos, int marker);
 
+
+    public Cell[][] getMap();
 }
 
 

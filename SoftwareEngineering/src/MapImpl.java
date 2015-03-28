@@ -320,7 +320,7 @@ public class MapImpl implements Map{
 
     @Override
     public void setCellContents(Position pos, char contents) throws InvalidContentCharacterException {
-        if(contents == '.' ||contents == '#' ||contents == '+' ||contents == '-' ||contents == '1' || contents == '2' ||contents == '3' ||contents == '4' ||contents == '5' || contents == '6' || contents == '7' || contents == '8' || contents == '9'){
+        if(contents == '.' ||contents == '#' ||contents == '+' ||contents == '-' || contents == '0' || contents == '1' || contents == '2' ||contents == '3' ||contents == '4' ||contents == '5' || contents == '6' || contents == '7' || contents == '8' || contents == '9'){
             map[pos.getX()][pos.getY()].setContents(contents);
         }else{
             throw new InvalidContentCharacterException(contents + " is not available contents");
@@ -333,9 +333,9 @@ public class MapImpl implements Map{
         map[pos.getX()][pos.getY()].setScentMark(marker);
     }
 
-
-    public CellImpl[][] gestmap(){
+    @Override
+    public Cell[][] getMap() {
         return map;
-
     }
+
 }
