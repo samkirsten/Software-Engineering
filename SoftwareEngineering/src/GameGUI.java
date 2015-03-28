@@ -1,0 +1,99 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+
+import javax.swing.*;
+
+public class GameGUI extends JFrame implements ActionListener {
+	
+	private CellImpl[][] map;
+	private Polygon poly;
+	CellImg b = new CellImg(4,map);
+	
+	public GameGUI(CellImpl[][] m){
+		super("Ant Game Team 2");
+		map = m;
+		CreateUI();
+	}
+	
+	private void CreateUI(){
+		getContentPane().setLayout(new BorderLayout());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		createMenu();
+		createContent();
+		
+		pack();
+		setResizable(true);
+		setVisible(true);
+	}
+	
+	private void createMenu(){
+		JMenuBar mb;
+		JMenu mm;
+		
+		mm = new JMenu("Menu");
+		mm.add(makeMenuItem("Normal Game"));
+		mm.add(makeMenuItem("Tournament Game"));
+		mm.add(makeMenuItem("Quit Game"));
+		
+		mb = new JMenuBar();
+		mb.add(mm);
+		getContentPane().add(mb,BorderLayout.NORTH);
+	}
+	
+	private void createContent(){
+		
+		JPanel p = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+            	Graphics2D g2 = (Graphics2D)g;
+    			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                super.paintComponent(g2);
+                for (int j=0;j<150;j++) {
+    				for (int i=0;i<150;i++) {
+    					if(map[i][j].getContents() == '+'){
+    						b.drawHex(i,j,g2,Color.RED);
+    					}else if(map[i][j].getContents() == '-'){
+    						b.drawHex(i,j,g2,Color.BLACK);
+    					}else if(map[i][j].getContents() == '#'){
+    						b.drawHex(i,j,g2,Color.gray);
+    					}else if(map[i][j].getContents() == '.'){
+    						b.drawHex(i,j,g2,Color.WHITE);
+    					}else {
+    						b.drawHex(i,j,g2,Color.GREEN);
+    					}
+    				}
+    			}
+            }
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1205, 1000);
+            }
+        };
+        p.setAutoscrolls(true);
+        getContentPane().add(p,BorderLayout.CENTER);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		
+		if (command.equals("Quit Game")) {
+            System.exit(0);
+        } else if (command.equals("Tournament Game")) {
+            // Open menu item action
+            System.out.println("Tournament Game");
+        } else if (command.equals("Normal Game")) {
+            // Save menu item action
+            System.out.println("Normal Game");
+        }
+	}
+	
+	private JMenuItem makeMenuItem(String name){
+		JMenuItem m = new JMenuItem(name);
+		m.addActionListener(this);
+		return m;
+	}
+
+}
