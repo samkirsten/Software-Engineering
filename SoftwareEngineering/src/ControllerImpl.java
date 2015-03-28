@@ -21,7 +21,7 @@ public class ControllerImpl implements GameController {
 
 
 
-        return t.round(brain1,brain2);
+        return t.startTournamentGame(brain1,brain2);
     }
 
     @Override
