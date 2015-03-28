@@ -369,7 +369,7 @@ public class BrainTest {
 
         AntImpl a7 = new AntImpl(1,Colour.RED,p3);
 
-
+        a7.setHasFood(false);
         m3.setAntAtCell(p3,a7);
 
         c.addAnt(a7);
@@ -384,52 +384,61 @@ public class BrainTest {
 
 
         b13.step(1); // should set state to 1 if there is food at cell
-        assertEquals((char)8, m3.getCellContents(p3));
         assertEquals(1, a7.getState());
+        char ch = m3.getCellContents(p3);
+        assertEquals((char) 8, Character.getNumericValue(ch) );
+
 
         /////////
         /////////
         ////////
+        Colony col = new ColonyImpl(Colour.RED);
+        MapImpl m4 = new MapImpl();
+        BrainImpl b14 = new BrainImpl(m4,col);
+        Position p4 = new Position(1,1);
+        AntImpl a8 = new AntImpl(4,Colour.RED,p4);
 
-//        BrainImpl b14 = new BrainImpl();
-//        PositionImpl p4 = new PositionImpl();
-//        AntImpl a8 = new AntImpl();
-//        MapImpl m4 = new MapImpl();
-//
-//        b14.loadBrain(file19);
-//        p4.setX(1);
-//        p4.setY(1);
-//        a8.setID(4);
-//        m4.setCellContents(p4, (char) 0);
-//
-//        m4.setAntAtCell(p4,2);
-//
-//        b14.step(4);
-//
-//
-//        assertEquals((char)0, m4.getCellContents(p4));
-//        assertEquals(2, a8.getState()); // checks that it has gone to state 2 as there is no food
+        m4.generateMap();
+
+        col.addAnt(a8);
+
+        m4.setCellContents(p4, '.');
+
+        m4.setAntAtCell(p4,a8);
+
+        b14.loadBrain(new File("brains/file21.txt"));
+
+
+        b14.step(a8.getID());
+
+
+        assertEquals(2, a8.getState());
+        assertEquals('.', m4.getCellContents(p4));
+         // checks that it has gone to state 2 as there is no food
 //
 //        ////////
 //        ////////
 //        ////////
-//
-//        BrainImpl b15 = new BrainImpl();
-//        PositionImpl p5 = new PositionImpl();
-//        AntImpl a9 = new AntImpl();
-//        MapImpl m5 = new MapImpl();
-//
-//        b15.loadBrain(file20);
-//        p5.setX(1);
-//        p5.setY(1);
-//        a9.setID(2);
-//        m5.setCellContents(p4, (char) 0);
-//        m5.setAntAtCell(p5,2);
-//
-//        b15.step(2);
-//
-//        assertEquals((char)0, m5.getCellContents(p4));
-//        assertEquals(2, a9.getState()); // checks that it has gone to state 2 as the ant is carrying food
+
+        MapImpl m5 = new MapImpl();
+        Colony col1 = new ColonyImpl(Colour.RED);
+        BrainImpl b15 = new BrainImpl(m5,col1);
+        Position p5 = new Position(1,1);
+        AntImpl a9 = new AntImpl(2,Colour.RED,p5);
+
+        m5.generateMap();
+        col1.addAnt(a9);
+        b15.loadBrain(new File("brains/file22.txt"));
+
+
+        m5.setCellContents(p4, '.');
+        m5.setAntAtCell(p5,a9);
+        a9.setHasFood(true);
+
+        b15.step(2);
+
+        assertEquals(('.'), m5.getCellContents(p4));
+        assertEquals(2, a9.getState()); // checks that it has gone to state 2 as the ant is carrying food
 
     }
 
