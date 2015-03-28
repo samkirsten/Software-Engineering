@@ -554,14 +554,12 @@ public class BrainImpl implements Brain {
                             }
                         }else if(a.getColour() == Colour.BLACK){
 
-                            System.out.println("cunt");
+
 
                             if(map.getCellScentMarker(a.getColour(),p)-6 == Integer.parseInt(state.get(currentState).get(1))){
 
-                                System.out.println("wanker");
-                                System.out.println(map.getCellScentMarker(a.getColour(),p)+"stupid marker1");
                                 map.setCellScentMarker(p,0);
-                                System.out.println(map.getCellScentMarker(a.getColour(),p)+"stupid marker");
+
                                 a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                             }
@@ -571,7 +569,8 @@ public class BrainImpl implements Brain {
                     } else if ("PickUp".equals(command)) {
 
                         char contents = map.getCellContents(p);
-                        int content = Character.getNumericValue(contents);
+                        int content = (char)contents;
+
                         content = content -1;
 
                         if (!a.hasFood() || Character.isDigit(contents) && (int) contents == 0) {
@@ -1223,44 +1222,44 @@ public class BrainImpl implements Brain {
 
 
 
-    public static void main(String args[]) throws CellAlreadyOccupiedException {
-
-
-
-        MapImpl m1 = new MapImpl();
-        Colony c = new ColonyImpl(Colour.RED);
-        BrainImpl b11 = new BrainImpl(m1,c);
-        AntImpl a4 = new AntImpl();
-        b11.loadBrain(new File("brains/file18.txt"));
-
-
-        for(int x = 0; x < b11.instructionGetter.size(); x++){
-
-            System.out.println(b11.instructionGetter.get(x));
-
-        }
-        System.out.println(b11.state.get(0).get(0));
-
-        Position p1 = new Position(1,1);
-        m1.generateMap();
-        c.addAnt(a4);
-        a4.setID(2);
-
-        m1.setAntAtCell(p1, a4);
-
-
-
-
-       // m1.setCellScentMarker(p1,1);
-
-        b11.step(a4.getID()); // need to set file so it unmarks
-
-
-        System.out.println(m1.getCellScentMarker(Colour.RED,p1));
-
-
-
-    }
+//    public static void main(String args[]) throws CellAlreadyOccupiedException {
+//
+//
+//
+//        MapImpl m1 = new MapImpl();
+//        Colony c = new ColonyImpl(Colour.RED);
+//        BrainImpl b11 = new BrainImpl(m1,c);
+//        AntImpl a4 = new AntImpl();
+//        b11.loadBrain(new File("brains/file18.txt"));
+//
+//
+//        for(int x = 0; x < b11.instructionGetter.size(); x++){
+//
+//            System.out.println(b11.instructionGetter.get(x));
+//
+//        }
+//        System.out.println(b11.state.get(0).get(0));
+//
+//        Position p1 = new Position(1,1);
+//        m1.generateMap();
+//        c.addAnt(a4);
+//        a4.setID(2);
+//
+//        m1.setAntAtCell(p1, a4);
+//
+//
+//
+//
+//       // m1.setCellScentMarker(p1,1);
+//
+//        b11.step(a4.getID()); // need to set file so it unmarks
+//
+//
+//        System.out.println(m1.getCellScentMarker(Colour.RED,p1));
+//
+//
+//
+//    }
 
 
 
