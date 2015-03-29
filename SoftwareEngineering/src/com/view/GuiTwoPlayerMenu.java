@@ -15,18 +15,18 @@ public class GuiTwoPlayerMenu extends JFrame {
 
     Boolean p1Ready ;
     Boolean p2Ready ;
-    //com.controller.ControllerImpl gameController ;
+    //ControllerImpl gameController ;
     public GuiTwoPlayerMenu() {
-        //gameController = new com.controller.ControllerImpl() ;
+        //gameController = new ControllerImpl() ;
         initLayout();
     }
 
     public final void initLayout() {
         //a label for instructions
-        instruction = new JLabel("Please load your brains here, and press Start com.model.Game ", SwingConstants.CENTER);
-        p1Brain = new JLabel("Player 1's com.model.Brain : Not loaded",SwingConstants.CENTER);
+        instruction = new JLabel("Please load your brains here, and press Start Game ", SwingConstants.CENTER);
+        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
 
-        p2Brain = new JLabel("Player 2's com.model.Brain : Not loaded",SwingConstants.CENTER);
+        p2Brain = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
         //setting up layout and panel
         panel = new JPanel();
         getContentPane().add(panel);
@@ -40,15 +40,15 @@ public class GuiTwoPlayerMenu extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
                 //chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("com.model.Brain 1");
+                chooser.setDialogTitle("Brain 1");
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
-                    p1Brain.setText("Player1 's com.model.Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p1Brain.setText("Player1 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
                     p1Ready = true;
                 } else {
-                    System.out.println("Your com.model.Brain is not working, retry! ");
+                    System.out.println("Your Brain is not working, retry! ");
                 }
 
                 //checking for the brain goes here
@@ -64,15 +64,15 @@ public class GuiTwoPlayerMenu extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
                 //chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("com.model.Brain 1");
+                chooser.setDialogTitle("Brain 1");
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
-                    p2Brain.setText("Player2 's com.model.Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p2Brain.setText("Player2 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
                     p2Ready = true;
                 } else {
-                    System.out.println("Your com.model.Brain is not working, retry! ");
+                    System.out.println("Your Brain is not working, retry! ");
                 }
 
 
@@ -89,7 +89,7 @@ public class GuiTwoPlayerMenu extends JFrame {
                 //check brain and print out if brain is okay.
                 // then runs game class
                 if (p1Ready && p2Ready) {
-                    // com.view.GameGUI game = new com.view.GameGUI();
+                    // GameGUI game = new GameGUI();
 
                 }
 
@@ -106,7 +106,7 @@ public class GuiTwoPlayerMenu extends JFrame {
         setTitle("2-player Mode");
         setSize(400, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {

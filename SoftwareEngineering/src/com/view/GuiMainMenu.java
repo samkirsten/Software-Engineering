@@ -60,6 +60,8 @@ public class GuiMainMenu extends JFrame
         tournamentButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                GuiTournamentMenu tMenu = new GuiTournamentMenu();
+                tMenu.setVisible(true);
 
 
             }
