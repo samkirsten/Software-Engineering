@@ -7,47 +7,42 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 
-public class GuiTournamentMenu extends JFrame {
+public class GameGUI4 extends JFrame {
 
-    JPanel panel;
-
+    JPanel menuPanel;
     JLabel instruction;
-    JButton player1;
-    JButton player2;
-    JButton player3;
-    JButton player4;
-    JButton start ;
 
-    JLabel p1BrainStatus;
-    JLabel p2BrainStatus;
-    JLabel p3BrainStatus;
-    JLabel p4BrainStatus;
+    JTabbedPane tab;
+
+    //indicates if it is a single game or not
+    Boolean isSingleGame ;
 
     File p1Brain;
     File p2Brain;
     File p3Brain;
     File p4Brain;
 
-
-
-
+    //indicates if each brain is ready to go
     Boolean p1Ready ;
     Boolean p2Ready ;
     Boolean p3Ready ;
     Boolean p4Ready ;
 
 
-    public GuiTournamentMenu() {
+    public GameGUI4() {
         initLayout();
     }
 
     public final void initLayout() {
+
+
+
         //a label for instructions
         instruction = new JLabel("players, load brain for your ants ! ", SwingConstants.CENTER);
-        p1BrainStatus = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
-        p2BrainStatus = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
-        p3BrainStatus = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
-        p4BrainStatus = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
+        final JLabel p1BrainStatus = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
+        final JLabel p2BrainStatus = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
+        final JLabel p3BrainStatus = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
+        final JLabel p4BrainStatus = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
 
         //initialize booleans
         p1Ready = false;
@@ -56,12 +51,12 @@ public class GuiTournamentMenu extends JFrame {
         p4Ready = false;
 
         //setting up layout and menuPanel
-        panel = new JPanel();
-        getContentPane().add(panel);
-        panel.setLayout(new GridLayout(10, 1));
+        menuPanel = new JPanel();
+        getContentPane().add(menuPanel);
+        menuPanel.setLayout(new GridLayout(15, 1));
 
         //make new load brain button for player 1
-        player1 = new JButton("Player 1");
+        JButton player1 = new JButton("Player 1");
         player1.setPreferredSize(new Dimension(10, 10));
         player1.setBounds(50, 60, 80, 30);
         player1.addActionListener(new ActionListener() {
@@ -83,7 +78,7 @@ public class GuiTournamentMenu extends JFrame {
         });
 
         //load brain button for player 2
-        player2 = new JButton("Player 2");
+        JButton player2 = new JButton("Player 2");
         player2.setPreferredSize(new Dimension(10, 10));
         player2.setBounds(50, 60, 80, 30);
         player2.addActionListener(new ActionListener() {
@@ -109,10 +104,9 @@ public class GuiTournamentMenu extends JFrame {
         });
 
 
-        player3 = new JButton("player3");
+        final JButton player3 = new JButton("player3");
         player3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-
 
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new java.io.File("."));
@@ -133,7 +127,7 @@ public class GuiTournamentMenu extends JFrame {
             }
         });
 
-        player4 = new JButton("player4");
+        final JButton player4 = new JButton("player4");
         player4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
@@ -144,7 +138,7 @@ public class GuiTournamentMenu extends JFrame {
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    p4BrainStatus.setText("Player2 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    p4BrainStatus.setText("Player4 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
                     p4Brain = chooser.getSelectedFile();
 
                     p4Ready = true;
@@ -157,38 +151,57 @@ public class GuiTournamentMenu extends JFrame {
             }
         });
 
-        //start game button
-        start = new JButton("START GAME");
-        start.addActionListener(new ActionListener() {
+        //make radio buttons
+        ButtonGroup gameButton = new ButtonGroup();
+        JRadioButton singleGameButton = new JRadioButton("Single Game");
+        singleGameButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent event) {
-
-                if (p1Ready&&p2Ready&&p3Ready&&p4Ready){
-
-                    GuiTournamentGameMenu tGame= new GuiTournamentGameMenu(p1Brain,p2Brain,p3Brain,p4Brain);
-
-                    tGame.setVisible(true);
-                }else{
-                    instruction.setText("Please make sure all brains are loaded !");
-                    instruction.setForeground(Color.RED);
-                }
-
-                //check if 4 brains are ready goes here
-
-
+                isSingleGame = true ;
+                player3.setEnabled(false);
+                player4.setEnabled(false);
+                p3BrainStatus.setEnabled(false);
+                p4BrainStatus.setEnabled(false);
             }
         });
 
-        panel.add(instruction);
-        panel.add(player1);
-        panel.add(player2);
-        panel.add(player3);
-        panel.add(player4);
-        panel.add(p1BrainStatus);
-        panel.add(p2BrainStatus);
-        panel.add(p3BrainStatus);
-        panel.add(p4BrainStatus);
+        //set defalt button as single game
+        singleGameButton.setSelected(true);
+        isSingleGame = true ;
+        player3.setEnabled(false);
+        player4.setEnabled(false);
+        p3BrainStatus.setEnabled(false);
+        p4BrainStatus.setEnabled(false);
 
-        panel.add(start);
+        JRadioButton tournamentGameButton = new JRadioButton("Tournament");
+        tournamentGameButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                isSingleGame = false ;
+                player3.setEnabled(true);
+                player4.setEnabled(true);
+                p3BrainStatus.setEnabled(true);
+                p4BrainStatus.setEnabled(true);
+
+            }
+        });
+        gameButton.add(singleGameButton);
+        gameButton.add(tournamentGameButton);
+
+
+        menuPanel.add(singleGameButton, SwingConstants.CENTER);
+        menuPanel.add(tournamentGameButton, SwingConstants.CENTER);
+
+        menuPanel.add(instruction);
+        menuPanel.add(player1);
+        menuPanel.add(player2);
+        menuPanel.add(player3);
+        menuPanel.add(player4);
+        menuPanel.add(p1BrainStatus);
+        menuPanel.add(p2BrainStatus);
+        menuPanel.add(p3BrainStatus);
+        menuPanel.add(p4BrainStatus);
+
 
 
         setTitle("Tournament Mode");
@@ -200,7 +213,7 @@ public class GuiTournamentMenu extends JFrame {
     public static void main(String[] args) {
 
 
-        GuiTournamentMenu ex = new GuiTournamentMenu();
+        GameGUI4 ex = new GameGUI4();
         ex.setVisible(true);
 
 

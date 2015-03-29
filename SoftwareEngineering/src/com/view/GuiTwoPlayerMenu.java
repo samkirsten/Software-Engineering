@@ -13,9 +13,9 @@ import java.io.File;
 import javax.swing.*;
 
 
-public class GuiTwoPlayerMenu extends JFrame {
+public class GuiTwoPlayerMenu extends JDialog {
 
-    JPanel panel;
+    JPanel menuPanel;
     JLabel instruction;
     JLabel p1BrainStatus;
     JLabel p2BrainStatus;
@@ -47,10 +47,10 @@ public class GuiTwoPlayerMenu extends JFrame {
         p1Ready = false ;
         p2Ready = false ;
 
-        //setting up layout and panel
-        panel = new JPanel();
-        getContentPane().add(panel);
-        panel.setLayout(new GridLayout(6, 1));
+        //setting up layout and menuPanel
+        menuPanel = new JPanel();
+        getContentPane().add(menuPanel);
+        menuPanel.setLayout(new GridLayout(6, 1));
 
         //make new load brain button for player 1
         JButton player1 = new JButton("Player 1");
@@ -119,12 +119,12 @@ public class GuiTwoPlayerMenu extends JFrame {
                     singleGame = new GameImpl();
                     singleController = new ControllerImpl();
 
-                    Colour winner = singleController.beginSingleGame(p1Brain, p2Brain, singleGame) ;
-                    if (winner == Colour.BLACK){
+                    Colour winner = singleController.beginSingleGame(p1Brain, p2Brain, singleGame);
+                    if (winner == Colour.BLACK) {
                         System.out.println("winner is black");
                     }
 
-                }else{
+                } else {
                     instruction.setText("Please make sure all brains are loaded !");
                     instruction.setForeground(Color.RED);
                 }
@@ -132,12 +132,12 @@ public class GuiTwoPlayerMenu extends JFrame {
             }
         });
 
-        panel.add(instruction);
-        panel.add(player1);
-        panel.add(player2);
-        panel.add(p1BrainStatus);
-        panel.add(p2BrainStatus);
-        panel.add(startGame);
+        menuPanel.add(instruction);
+        menuPanel.add(player1);
+        menuPanel.add(player2);
+        menuPanel.add(p1BrainStatus);
+        menuPanel.add(p2BrainStatus);
+        menuPanel.add(startGame);
 
         setTitle("2-player Mode");
         setSize(600, 400);

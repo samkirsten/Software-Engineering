@@ -74,7 +74,7 @@ public class GuiTournamentGameMenu extends JFrame {
         tournament = new TournamentImpl();
         tController = new ControllerImpl() ;
 
-        //setting up layout and panel
+        //setting up layout and menuPanel
         panel = new JPanel();
         getContentPane().add(panel);
         panel.setLayout(new GridLayout(12, 1));
