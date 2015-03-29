@@ -32,7 +32,7 @@ public class BrainImpl implements Brain {
 
 
 
-    BrainImpl(Map map, Colony colony){
+    public BrainImpl(Map map, Colony colony){
         this.map = map;
         this.colony = colony;
 

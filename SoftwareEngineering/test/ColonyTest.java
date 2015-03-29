@@ -60,14 +60,14 @@ public class ColonyTest {
     public void test_GetAnt_with_ID() throws AntNotFoundException {
 
         //test if the output of getting ant with ID=1 is the same object with the original ANT
-        AntImpl output1 = colony.getAnt(1);
+        Ant output1 = colony.getAnt(1);
         assertSame(ant1, output1);
 
 
-        AntImpl output2 = colony.getAnt(2);
+        Ant output2 = colony.getAnt(2);
         assertSame(ant2, output2);
 
-        AntImpl output3 = colony.getAnt(3);
+        Ant output3 = colony.getAnt(3);
         assertSame(ant3, output3);
     }
 
