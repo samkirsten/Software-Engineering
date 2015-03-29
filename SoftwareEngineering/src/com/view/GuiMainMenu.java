@@ -25,7 +25,7 @@ public class GuiMainMenu extends JFrame
 
         quitGameButton = new JButton("Quit game");
 
-        setTitle("The com.model.Ant com.model.Game");
+        setTitle("The Ant Game");
         Container pane = getContentPane();
         pane.setLayout(new GridLayout(4, 2));
         //Add things to the pane in the order you want them to appear (left to right, top to bottom)
@@ -37,7 +37,7 @@ public class GuiMainMenu extends JFrame
 
         setSize(600, 400);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         quitGameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

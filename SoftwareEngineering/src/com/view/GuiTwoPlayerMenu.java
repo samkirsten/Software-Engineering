@@ -24,9 +24,15 @@ public class GuiTwoPlayerMenu extends JFrame {
     public final void initLayout() {
         //a label for instructions
         instruction = new JLabel("Please load your brains here, and press Start Game ", SwingConstants.CENTER);
-        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
 
+        //initialise text lables
+        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
         p2Brain = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
+
+        //initialize booleans
+        p1Ready = false ;
+        p2Ready = false ;
+
         //setting up layout and panel
         panel = new JPanel();
         getContentPane().add(panel);
@@ -44,14 +50,12 @@ public class GuiTwoPlayerMenu extends JFrame {
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
+                    //System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
                     p1Brain.setText("Player1 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
                     p1Ready = true;
                 } else {
-                    System.out.println("Your Brain is not working, retry! ");
+                    p1Brain.setText("Your Brain is not working, retry! ");
                 }
-
-                //checking for the brain goes here
 
             }
         });
@@ -68,13 +72,12 @@ public class GuiTwoPlayerMenu extends JFrame {
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
+                    //System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
                     p2Brain.setText("Player2 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
                     p2Ready = true;
                 } else {
-                    System.out.println("Your Brain is not working, retry! ");
+                    p2Brain.setText("Your Brain is not working, retry! ");
                 }
-
 
                 //checking for the brain goes here
 
@@ -90,7 +93,7 @@ public class GuiTwoPlayerMenu extends JFrame {
                 // then runs game class
                 if (p1Ready && p2Ready) {
                     // GameGUI game = new GameGUI();
-
+                    GuiMainMenu m = new GuiMainMenu() ;
                 }
 
             }
@@ -104,7 +107,7 @@ public class GuiTwoPlayerMenu extends JFrame {
         panel.add(startGame);
 
         setTitle("2-player Mode");
-        setSize(400, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }

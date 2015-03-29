@@ -44,6 +44,12 @@ public class GuiTournamentMenu extends JFrame {
 
         p4Brain = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
 
+        //initialize booleans
+        p1Ready = false;
+        p2Ready = false;
+        p3Ready = false;
+        p4Ready = false;
+
         //setting up layout and panel
         panel = new JPanel();
         getContentPane().add(panel);
@@ -60,15 +66,14 @@ public class GuiTournamentMenu extends JFrame {
                 chooser.setDialogTitle("Brain 1");
 
 
+                //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
+                    //System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
+                    p1Brain.setText("Player1 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p1Ready = true;
                 } else {
-                    System.out.println("No Selection ");
+                    p1Brain.setText("Your Brain is not working, retry! ");
                 }
-
-
-                //checking for the brain goes here
-
             }
         });
 
@@ -83,14 +88,14 @@ public class GuiTournamentMenu extends JFrame {
                 chooser.setDialogTitle("Brain 2");
 
 
+                //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
+                    //System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
+                    p2Brain.setText("Player2 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p2Ready = true;
                 } else {
-                    System.out.println("No Selection ");
+                    p2Brain.setText("Your Brain is not working, retry! ");
                 }
-
-
-                //checking for the brain goes here
 
 
             }
@@ -119,6 +124,8 @@ public class GuiTournamentMenu extends JFrame {
         start = new JButton("START GAME");
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
+                //check if 4 brains are ready goes here
                 GuiTournamentGameMenu tGame= new GuiTournamentGameMenu();
                 tGame.setVisible(true);
 
@@ -139,7 +146,7 @@ public class GuiTournamentMenu extends JFrame {
 
 
         setTitle("Tournament Mode");
-        setSize(400, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
