@@ -7,14 +7,14 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class GameGUI extends JFrame implements ActionListener {
+public class GameGUI extends JFrame implements ActionListener, Runnable {
 	
 	private CellImpl[][] graphicalMap;
 	private Polygon poly;
 	CellImg b = new CellImg(4, graphicalMap);
 	
 	public GameGUI(CellImpl[][] m){
-		super("com.model.Ant com.model.Game Team 2");
+		super("Ant Game Team 2");
 		graphicalMap = m;
 		CreateUI();
 	}
@@ -53,7 +53,7 @@ public class GameGUI extends JFrame implements ActionListener {
 	}
 	
 	private void createContent(){
-		
+
 		JPanel p = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -106,4 +106,8 @@ public class GameGUI extends JFrame implements ActionListener {
 		return m;
 	}
 
+    @Override
+    public void run() {
+
+    }
 }
