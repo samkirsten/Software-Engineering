@@ -1,1 +1,2 @@
-PickUp 1 2
+Turn Right 1
+Turn Right 1

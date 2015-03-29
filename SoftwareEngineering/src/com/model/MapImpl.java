@@ -255,44 +255,82 @@ public class MapImpl implements Map{
     @Override
     public int getAdjacentEnemyAnts(Position pos, Colour colour) {
         int number = 0;
+
         if(pos.getY() % 2 == 1){
-            if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
+            if(map[pos.getX()][pos.getY()-1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
+            if(map[pos.getX()+1][pos.getY()-1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
+            if(map[pos.getX()-1][pos.getY()].getAnt() == null){
+
+            }
+            else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
+            if(map[pos.getX()+1][pos.getY()].getAnt() == null){
+
+            }
+            else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
+            if(map[pos.getX()][pos.getY()+1].getAnt() == null ){
+
+            }
+            else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()+1][pos.getY()+1].getAnt().getColour() == colour){
+            if(map[pos.getX()+1][pos.getY()+1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()+1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
+
         }
 
         if(pos.getY() % 2 == 0){
-            if(map[pos.getX()-1][pos.getY()-1].getAnt().getColour() == colour){
+            if(map[pos.getX()-1][pos.getY()-1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()-1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
+            if(map[pos.getX()][pos.getY()-1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
+            if(map[pos.getX()-1][pos.getY()].getAnt() == null){
+
+            }
+            else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
+            if(map[pos.getX()+1][pos.getY()].getAnt() == null){
+
+            }
+            else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()-1][pos.getY()+1].getAnt().getColour() == colour){
+            if(map[pos.getX()-1][pos.getY()+1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()-1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
+            if(map[pos.getX()][pos.getY()+1].getAnt() == null){
+
+            }
+            else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
         }
@@ -339,6 +377,13 @@ public class MapImpl implements Map{
     @Override
     public Cell[][] getMap() {
         return map;
+    }
+
+    @Override
+    public void clearAnt(Position pos){
+
+        map[pos.getX()][pos.getY()].setAnt(null);
+
     }
 
 

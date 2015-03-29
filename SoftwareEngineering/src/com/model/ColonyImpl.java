@@ -186,9 +186,9 @@ public class ColonyImpl implements Colony {
      * @param p position of the ant to be killed
      */
     @Override
-    public void remove(Position p) throws AntNotFoundException {
-        Ant ant = getAnt(p);
-        antList.remove(ant.getID());
+    public void remove(int id) throws AntNotFoundException {
+
+        antList.remove(id);
 
     }
 

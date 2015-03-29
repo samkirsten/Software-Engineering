@@ -610,7 +610,7 @@ public class BrainImpl implements Brain {
 
                             if (contents == '.') {
                                 try {
-                                    map.setCellContents(p, Character.forDigit(1,1));
+                                    map.setCellContents(p, '1');
                                 } catch (InvalidContentCharacterException e) {
                                     e.printStackTrace();
                                 }
@@ -618,6 +618,7 @@ public class BrainImpl implements Brain {
 
 
                                 int content = Character.getNumericValue(contents);
+                                content++;
 
                                 char c = Character.forDigit((content),10);
 
@@ -630,8 +631,10 @@ public class BrainImpl implements Brain {
                             }
 
                             a.setHasFood(false);
-                            a.setState(Integer.parseInt(state.get(currentState).get(1)));
+                         //   a.setState(Integer.parseInt(state.get(currentState).get(1)));
                         }
+                        a.setState(Integer.parseInt(state.get(currentState).get(1)));
+
                     } else if ("Turn".equals(command)) {
 
                         if ("Right".equals(state.get(currentState).get(1))) {
@@ -664,8 +667,9 @@ public class BrainImpl implements Brain {
 
                     } else if ("Move".equals(command)) {
 
-
+                        System.out.println("hihi");
                         int dir = a.getDirection();
+                      //  System.out.print(dir);
 
                         Position pos = getAdjacentCell(p,dir);
 
@@ -677,18 +681,25 @@ public class BrainImpl implements Brain {
 
 
                             try {
-                                map.setAntAtCell(p, null);// takes in an ant obj, it shouldnt should it maybe clear ant method?
+                                System.out.println(pos.getX()+" " + pos.getY());
+                                map.clearAnt(p);
+                                map.setAntAtCell(pos, a);// takes in an ant obj, it shouldnt should it maybe clear ant method?
                             } catch (CellAlreadyOccupiedException e) {
                                 e.printStackTrace();
                             }
-                            try {
-                                map.setAntAtCell(pos, a);
-                            } catch (CellAlreadyOccupiedException e) {
-                                e.printStackTrace();
-                            }
+
                             a.setState(Integer.parseInt(state.get(currentState).get(1)));
                             a.startResting();
-                            map.getAdjacentEnemyAnts(pos, enemyColour); // need to kill here?
+                            if(map.getAdjacentEnemyAnts(pos, enemyColour) == 5 || map.getAdjacentEnemyAnts(pos, enemyColour) == 6){
+
+                                try {
+                                    colony.remove(a.getID());
+                                } catch (AntNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                             // need to kill here?
 
 
                         }

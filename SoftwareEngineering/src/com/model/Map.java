@@ -93,6 +93,8 @@ public interface Map {
 
 
     public Cell[][] getMap();
+
+    public void clearAnt(Position p);
 }
 
 
