@@ -8,7 +8,7 @@ public interface Tournament {
 
     public List<List<File>> createFixtures(List<File> brains);
 
-    public HashMap<File,Integer> startTournamentGame(File brain1, File brain2);
+    public void updateScores(Game game);
 
     public HashMap<File,Integer> getResults();
 }

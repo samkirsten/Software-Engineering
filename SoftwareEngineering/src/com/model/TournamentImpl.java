@@ -8,7 +8,7 @@ import java.util.List;
 public class TournamentImpl implements Tournament {
 
     private HashMap<File,Integer> resultsTable = new HashMap<File, Integer>();
-    private Game game = new GameImpl();
+    private List<Game> gamesPlayed = new ArrayList<>();
 
     @Override
     public List<List<File>> createFixtures(List<File> brains) {
@@ -81,54 +81,24 @@ public class TournamentImpl implements Tournament {
 
     }
 
-
     @Override
-    public HashMap<File,Integer> startTournamentGame(File brain1, File brain2) {
-        HashMap<File,Integer> currentResults = new HashMap<File, Integer>();
-        game.loadBrain(brain1, Colour.RED);
-        game.loadBrain(brain2, Colour.BLACK);
-        Colour winner = game.start();
+    public void updateScores(Game game){
+        Colour winner = game.getWinner();
+        File red = game.getBrain(Colour.RED);
+        File black = game.getBrain(Colour.BLACK);
+        gamesPlayed.add(game);
         if(winner == null){
-            resultsTable.put(brain1,resultsTable.get(brain1)+1);
-            resultsTable.put(brain2,resultsTable.get(brain2)+1);
-            currentResults.put(brain1,currentResults.get(brain1)+1);
-            currentResults.put(brain2,currentResults.get(brain2)+1);
-
+            resultsTable.put(red,resultsTable.get(red) + 1);
+            resultsTable.put(black,resultsTable.get(black)+1);
         }
         else if(winner == Colour.RED){
-            resultsTable.put(brain1,resultsTable.get(brain1)+2);
-            currentResults.put(brain1,currentResults.get(brain1)+2);
-
+            resultsTable.put(red,resultsTable.get(red)+2);
         }
         else{
-            resultsTable.put(brain2,resultsTable.get(brain2)+2);
-            currentResults.put(brain2,currentResults.get(brain2)+2);
-
+            resultsTable.put(black,resultsTable.get(black)+2);
         }
-
-        game.loadBrain(brain1, Colour.BLACK);
-        game.loadBrain(brain2, Colour.RED);
-        winner = game.start();
-
-        if(winner == null){
-            resultsTable.put(brain1,resultsTable.get(brain1)+1);
-            resultsTable.put(brain2,resultsTable.get(brain2)+1);
-            currentResults.put(brain1,currentResults.get(brain1)+1);
-            currentResults.put(brain2,currentResults.get(brain2)+1);
-        }
-        else if(winner == Colour.RED){
-            resultsTable.put(brain2,resultsTable.get(brain2)+2);
-            currentResults.put(brain2,currentResults.get(brain2)+2);
-
-        }
-        else{
-            resultsTable.put(brain1,resultsTable.get(brain1)+2);
-            currentResults.put(brain1,currentResults.get(brain1)+2);
-
-        }
-
-        return currentResults;
     }
+
 
     @Override
     public HashMap<File, Integer> getResults() {

@@ -7,14 +7,35 @@ public class GameImpl implements Game {
 
     Colony red;
     Colony black;
-    Map map;
+    Map map = new MapImpl();
     int redFood = 0;
     int blackFood = 0;
     int currentRound = 0;
 
+    public GameImpl(File brain1, File brain2){
+        loadBrain(brain1,Colour.RED);
+        loadBrain(brain2, Colour.BLACK);
+        red = new ColonyImpl(Colour.RED);
+        black = new ColonyImpl(Colour.BLACK);
+        map.generateMap();
+        setup();
+    }
+
+    public GameImpl(File brain1, File brain2, Map map){
+        loadBrain(brain1,Colour.RED);
+        loadBrain(brain2,Colour.BLACK);
+        red = new ColonyImpl(Colour.RED);
+        black = new ColonyImpl(Colour.BLACK);
+        this.map = map;
+        map.clearMap();
+        setup();
+    }
+
+
 
     @Override
     public boolean loadBrain(File brain, Colour colour) {
+
 
         Brain brainClass = new BrainImpl(map,getColony(colour));
         boolean passed = true;
@@ -36,16 +57,6 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void setColony(Colony colony) {
-        if(colony.getColonyColour()==Colour.RED){
-            red = colony;
-        }
-        else{
-            black = colony;
-        }
-    }
-
-    @Override
     public Colony getColony(Colour colour) {
         if(colour==Colour.RED){
             return red;
@@ -56,13 +67,18 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public int getCurrentRound(){
-        return currentRound;
+    public File getBrain(Colour colour) {
+        if(colour==Colour.RED){
+            return red.getBrain().getLoadedFile();
+        }
+        else{
+            return black.getBrain().getLoadedFile();
+        }
     }
 
     @Override
-    public void setMap(Map map) {
-        this.map = map;
+    public int getCurrentRound(){
+        return currentRound;
     }
 
     @Override
@@ -94,36 +110,47 @@ public class GameImpl implements Game {
         }
     }
 
-
-    @Override
-    public Colour start() {
-
+    public void setup(){
         currentRound = 0;
         map.clearMap();
 
         generateAnts();
 
-        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
-            next();
-            currentRound++;
-        }
-
-        redFood = red.getFoodInColony();
-        blackFood = black.getFoodInColony();
-
-        return getWinner();
-
-
     }
 
-    private void next() {
+//
+//    @Override
+//    public Colour start() {
+//
+//        currentRound = 0;
+//        map.clearMap();
+//
+//        generateAnts();
+//
+//        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
+//            next();
+//            currentRound++;
+//        }
+//
+//        redFood = red.getFoodInColony();
+//        blackFood = black.getFoodInColony();
+//
+//        return getWinner();
+//
+//
+//    }
+
+    @Override
+    public void nextRound() {
         for(int i=0;i<red.getNumberOfAnts();i++){
             red.getBrain().step(i);
         }
         for (int i=0;i<black.getNumberOfAnts();i++){
             black.getBrain().step(i);
         }
+        currentRound++;
     }
+
 
     /**
      * R = Red win
@@ -132,8 +159,8 @@ public class GameImpl implements Game {
      *
      * @return R, B or D, depending on the outcome of the game.
      */
-
-    private Colour getWinner() {
+    @Override
+    public Colour getWinner() {
         if(red.getFoodInColony()>black.getFoodInColony()){
             return Colour.RED;
         }

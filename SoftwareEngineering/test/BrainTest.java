@@ -9,7 +9,6 @@ import com.model.exceptions.InvalidContentCharacterException;
 import org.junit.Test;
 
 import java.io.File;
-import java.nio.file.Path;
 
 import static org.junit.Assert.*;
 

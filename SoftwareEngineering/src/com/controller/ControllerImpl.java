@@ -1,5 +1,6 @@
 package com.controller;
 import com.model.*;
+import com.view.GameGUI;
 
 import java.io.File;
 import java.util.HashMap;
@@ -11,23 +12,34 @@ import java.util.List;
 public class ControllerImpl implements GameController {
 
     @Override
-    public Colour beginSingleGame(File brain1, File brain2, Game game) {
-        game.loadBrain(brain1, Colour.RED);
-        game.loadBrain(brain2, Colour.BLACK);
-        return game.start();
+    public List<List<File>> createFixtures(List<File> brains, Tournament t) {
+        return t.createFixtures(brains);
     }
 
     @Override
-    public HashMap<File, Integer> beginTournametGame(File brain1, File brain2, Tournament t) {
+    public Game createGame(File brain1, File brain2){
+        Game game = new GameImpl(brain1,brain2);
+        return game;
+    }
 
 
-
-        return t.startTournamentGame(brain1,brain2);
+    @Override
+    public void nextRound(Game game) {
+        game.nextRound();
     }
 
     @Override
-    public List<List<File>> createFixtures(File brains, Tournament t) {
-        return null;
+    public Game changeSides(Game game){
+        File brain1 = game.getBrain(Colour.BLACK);
+        File brain2 = game.getBrain(Colour.RED);
+        Map map = game.getMap();
+
+        return new GameImpl(brain1,brain2,map);
+    }
+
+    @Override
+    public void updateScores(Game game, Tournament t) {
+        t.updateScores(game);
     }
 }
 

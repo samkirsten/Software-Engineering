@@ -9,18 +9,19 @@ public interface Game {
 
     public boolean loadBrain(File brain, Colour colour);
 
-    public void setColony(Colony colony);
-
     public Colony getColony(Colour colour);
 
-    public void setMap(Map map);
+    public File getBrain(Colour colour);
 
     public Map getMap();
 
-    public Colour start();
+    public void setup();
+
+    public void nextRound();
 
     public int getCurrentRound();
 
+    public Colour getWinner();
 
 
 

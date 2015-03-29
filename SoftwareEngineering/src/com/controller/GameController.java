@@ -8,12 +8,25 @@ import java.util.List;
 
 public interface GameController {
 
+    public List<List<File>> createFixtures(List<File> brains, Tournament t);
 
-    public Colour beginSingleGame(File brain1, File brain2, Game g);
+    public void nextRound(Game game);
 
-    public HashMap<File,Integer> beginTournametGame(File brain1, File brain2, Tournament t);
+    /**
+     * Returns a new game with the black and red anthills flipped on the same map
+     * @param game
+     * @return
+     */
+    public Game changeSides(Game game);
 
-    public List<List<File>> createFixtures(File brains, Tournament t);
+    public Game createGame(File brain1, File brain2);
 
+
+    /**
+     * Updates the results of the game and appends it to the tournament objects
+     * @param game
+     * @param tournament
+     */
+    public void updateScores(Game game, Tournament tournament);
 
 }
