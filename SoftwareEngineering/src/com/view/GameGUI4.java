@@ -11,6 +11,10 @@ public class GameGUI4 extends JFrame {
 
     JPanel menuPanel;
     JLabel instruction;
+    private JTable fixture, rank;
+    private JPanel  tablePanel, mapPanel;
+    private Container container;
+    //make a java tab
 
     JTabbedPane tab;
 
@@ -30,10 +34,28 @@ public class GameGUI4 extends JFrame {
 
 
     public GameGUI4() {
-        initLayout();
+        CreateUI();
+
+    }
+    private void CreateUI() {
+        tab  = new JTabbedPane();
+
+        container = getContentPane();
+        container.setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        createMenuPanel();
+        //        createtablePanel();
+        //      createmapPanel();
+
+        tab.addTab("Game Page", container);
+        tab.addTab("Load Brain Page", menuPanel);
+        setContentPane(tab);
+
     }
 
-    public final void initLayout() {
+    public final void createMenuPanel() {
 
 
 
@@ -52,7 +74,7 @@ public class GameGUI4 extends JFrame {
 
         //setting up layout and menuPanel
         menuPanel = new JPanel();
-        getContentPane().add(menuPanel);
+        //getContentPane().add(menuPanel);
         menuPanel.setLayout(new GridLayout(15, 1));
 
         //make new load brain button for player 1
@@ -153,7 +175,7 @@ public class GameGUI4 extends JFrame {
 
         //make radio buttons
         ButtonGroup gameButton = new ButtonGroup();
-        JRadioButton singleGameButton = new JRadioButton("Single Game");
+        JRadioButton singleGameButton = new JRadioButton("Single Game Mode");
         singleGameButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -173,7 +195,7 @@ public class GameGUI4 extends JFrame {
         p3BrainStatus.setEnabled(false);
         p4BrainStatus.setEnabled(false);
 
-        JRadioButton tournamentGameButton = new JRadioButton("Tournament");
+        JRadioButton tournamentGameButton = new JRadioButton("Tournament Mode");
         tournamentGameButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -204,7 +226,7 @@ public class GameGUI4 extends JFrame {
 
 
 
-        setTitle("Tournament Mode");
+        setTitle("Please load your brains");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
