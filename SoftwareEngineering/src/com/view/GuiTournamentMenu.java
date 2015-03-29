@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 
 public class GuiTournamentMenu extends JFrame {
@@ -17,10 +18,17 @@ public class GuiTournamentMenu extends JFrame {
     JButton player4;
     JButton start ;
 
-    JLabel p1Brain ;
-    JLabel p2Brain;
-    JLabel p3Brain ;
-    JLabel p4Brain;
+    JLabel p1BrainStatus;
+    JLabel p2BrainStatus;
+    JLabel p3BrainStatus;
+    JLabel p4BrainStatus;
+
+    File p1Brain;
+    File p2Brain;
+    File p3Brain;
+    File p4Brain;
+
+
 
 
     Boolean p1Ready ;
@@ -36,13 +44,10 @@ public class GuiTournamentMenu extends JFrame {
     public final void initLayout() {
         //a label for instructions
         instruction = new JLabel("players, load brain for your ants ! ", SwingConstants.CENTER);
-        p1Brain = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
-
-        p2Brain = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
-
-        p3Brain = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
-
-        p4Brain = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
+        p1BrainStatus = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
+        p2BrainStatus = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
+        p3BrainStatus = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
+        p4BrainStatus = new JLabel("Player 4's Brain : Not loaded",SwingConstants.CENTER);
 
         //initialize booleans
         p1Ready = false;
@@ -68,11 +73,11 @@ public class GuiTournamentMenu extends JFrame {
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    //System.out.println("Player 1 's brain : " + chooser.getSelectedFile());
-                    p1Brain.setText("Player1 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p1BrainStatus.setText("Player1 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    p1Brain = chooser.getSelectedFile();
                     p1Ready = true;
                 } else {
-                    p1Brain.setText("Your Brain is not working, retry! ");
+                    p1BrainStatus.setText("Your Brain is not working, retry! ");
                 }
             }
         });
@@ -83,6 +88,7 @@ public class GuiTournamentMenu extends JFrame {
         player2.setBounds(50, 60, 80, 30);
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.setDialogTitle("Brain 2");
@@ -90,11 +96,12 @@ public class GuiTournamentMenu extends JFrame {
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    //System.out.println("Player 2 's brain : " + chooser.getSelectedFile());
-                    p2Brain.setText("Player2 's Brain : ["+chooser.getName(chooser.getSelectedFile())+" ]is loaded.");
+                    p2BrainStatus.setText("Player2 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    p2Brain = chooser.getSelectedFile();
+
                     p2Ready = true;
                 } else {
-                    p2Brain.setText("Your Brain is not working, retry! ");
+                    p2BrainStatus.setText("Your Brain is not working, retry! ");
                 }
 
 
@@ -107,6 +114,21 @@ public class GuiTournamentMenu extends JFrame {
             public void actionPerformed(ActionEvent event) {
 
 
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setDialogTitle("Brain 3");
+
+
+                //check for brain goes here. if OKAY, load, if not, tell user.
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    p3BrainStatus.setText("Player3 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    p3Brain = chooser.getSelectedFile();
+
+                    p3Ready = true;
+                } else {
+                    p3BrainStatus.setText("Your Brain is not working, retry! ");
+                }
+
 
             }
         });
@@ -114,6 +136,21 @@ public class GuiTournamentMenu extends JFrame {
         player4 = new JButton("player4");
         player4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setDialogTitle("Brain 4");
+
+
+                //check for brain goes here. if OKAY, load, if not, tell user.
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    p4BrainStatus.setText("Player2 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    p4Brain = chooser.getSelectedFile();
+
+                    p4Ready = true;
+                } else {
+                    p4BrainStatus.setText("Your Brain is not working, retry! ");
+                }
 
 
 
@@ -125,9 +162,18 @@ public class GuiTournamentMenu extends JFrame {
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
+                if (p1Ready&&p2Ready&&p3Ready&&p4Ready){
+
+                    GuiTournamentGameMenu tGame= new GuiTournamentGameMenu(p1Brain,p2Brain,p3Brain,p4Brain);
+
+                    tGame.setVisible(true);
+                }else{
+                    instruction.setText("Please make sure all brains are loaded !");
+                    instruction.setForeground(Color.RED);
+                }
+
                 //check if 4 brains are ready goes here
-                GuiTournamentGameMenu tGame= new GuiTournamentGameMenu();
-                tGame.setVisible(true);
+
 
             }
         });
@@ -137,10 +183,10 @@ public class GuiTournamentMenu extends JFrame {
         panel.add(player2);
         panel.add(player3);
         panel.add(player4);
-        panel.add(p1Brain);
-        panel.add(p2Brain);
-        panel.add(p3Brain);
-        panel.add(p4Brain);
+        panel.add(p1BrainStatus);
+        panel.add(p2BrainStatus);
+        panel.add(p3BrainStatus);
+        panel.add(p4BrainStatus);
 
         panel.add(start);
 

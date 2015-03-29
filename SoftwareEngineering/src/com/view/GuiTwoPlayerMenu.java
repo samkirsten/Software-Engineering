@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.ControllerImpl;
 import com.controller.GameController;
+import com.model.Colour;
 import com.model.Game;
 import com.model.GameImpl;
 
@@ -34,12 +35,9 @@ public class GuiTwoPlayerMenu extends JFrame {
         initLayout();
     }
 
-    public final void initLayout() {
+    public  void initLayout() {
         //a label for instructions
-        instruction = new JLabel("Please load your brains here, and press Start Game ", SwingConstants.CENTER);
-        //initialise game and controller
-        singleGame = new GameImpl();
-        singleController = new ControllerImpl();
+        instruction = new JLabel("Players, load your brain for your ants and press Start Game Button ! ", SwingConstants.CENTER);
 
         //initialise text lables
         p1BrainStatus = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
@@ -61,7 +59,7 @@ public class GuiTwoPlayerMenu extends JFrame {
         player1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
-                //chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.setDialogTitle("Brain 1");
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
@@ -84,7 +82,7 @@ public class GuiTwoPlayerMenu extends JFrame {
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JFileChooser chooser = new JFileChooser();
-                //chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.setDialogTitle("Brain 1");
 
                 //check for brain goes here. if OKAY, load, if not, tell user.
@@ -108,15 +106,28 @@ public class GuiTwoPlayerMenu extends JFrame {
         JButton startGame = new JButton("START GAME");
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
+
                 //check brain and print out if brain is okay.
                 // then runs game class
                 if (p1Ready && p2Ready) {
                     // GameGUI game = new GameGUI();
                     //GuiMainMenu m = new GuiMainMenu() ;
 
+
+                    //initialise game and controller
+                    singleGame = new GameImpl();
+                    singleController = new ControllerImpl();
+
+                    Colour winner = singleController.beginSingleGame(p1Brain, p2Brain, singleGame) ;
+                    if (winner == Colour.BLACK){
+                        System.out.println("winner is black");
+                    }
+
+                }else{
+                    instruction.setText("Please make sure all brains are loaded !");
+                    instruction.setForeground(Color.RED);
                 }
-
-
 
             }
         });

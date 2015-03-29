@@ -33,8 +33,11 @@ public class GameImpl implements Game {
 
 
 
+
     @Override
     public boolean loadBrain(File brain, Colour colour) {
+        red = new ColonyImpl(colour);
+        black = new ColonyImpl(colour);
 
 
         Brain brainClass = new BrainImpl(map,getColony(colour));
