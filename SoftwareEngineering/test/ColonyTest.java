@@ -131,14 +131,14 @@ public class ColonyTest {
         assertEquals(color , colony.getColonyColour());
     }
 
-
-    @Test
-    public void test_remove() throws AntNotFoundException {
-        //remove ant at 0,0 which is ant1, it should be deleted from the list
-
-        colony.remove(new Position(0,0));
-        assertFalse(colony.isAntAlive(1));
-
-    }
+//
+//    @Test
+//    public void test_remove() throws AntNotFoundException {
+//        //remove ant at 0,0 which is ant1, it should be deleted from the list
+//
+//        colony.remove(new Position(0,0));
+//        assertFalse(colony.isAntAlive(1));
+//
+//    }
 
 }

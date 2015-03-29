@@ -193,7 +193,7 @@ public class BrainImpl implements Brain {
                     token = new Turn();
                     break;
                 case "Unmark":
-                    token = new Move();
+                    token = new Unmark();
                     break;
                 case "PickUp":
                     token = new PickUp();
@@ -475,7 +475,54 @@ public class BrainImpl implements Brain {
 
                 if(a.isResting()){
 
-                    a.incrementRest();
+                    if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){
+
+                        try {
+                            colony.remove(a.getID());
+                        } catch (AntNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        if(map.getCellContents(p) == '.'){
+
+                            try {
+                                map.setCellContents(p,'3');
+                            } catch (InvalidContentCharacterException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else if( Character.isDigit(map.getCellContents(p))){
+                            int content = Character.getNumericValue(map.getCellContents(p));
+                            if(a.hasFood()){
+                                if(content<5) {
+                                    content = content + 4;
+                                }else if(content >= 6){
+                                    content = 9;
+                                }
+                            }else{
+                                if(content <5){
+                                    content = content +3;
+                                }else if(content >=6){
+
+                                    content =9;
+                                }
+                            }
+
+                            char c = Character.forDigit((content),10);
+                            try {
+                                map.setCellContents(p,c);
+                            } catch (InvalidContentCharacterException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                    }else{
+                        a.incrementRest();
+                    }
+
+
+
 
                 }
                 else {
@@ -490,7 +537,54 @@ public class BrainImpl implements Brain {
                     }
                     String command = state.get(currentState).get(0);
 
-                    if ("Sense".equals(command)) {
+
+                    if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){
+
+                        try {
+                            colony.remove(a.getID());
+                        } catch (AntNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        if(map.getCellContents(p) == '.'){
+
+                            try {
+                                map.setCellContents(p,'3');
+                            } catch (InvalidContentCharacterException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else if( Character.isDigit(map.getCellContents(p))){
+                            int content = Character.getNumericValue(map.getCellContents(p));
+                            if(a.hasFood()){
+                                if(content<5) {
+                                    content = content + 4;
+                                }else if(content >= 6){
+                                    content = 9;
+                                }
+                            }else{
+
+                                if(content <5){
+                                    content = content +3;
+                                }else if(content >=6){
+
+                                    content =9;
+                                }
+                            }
+
+                            char c = Character.forDigit((content),10);
+                            try {
+                                map.setCellContents(p,c);
+                            } catch (InvalidContentCharacterException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                    }
+
+
+                    else if ("Sense".equals(command)) {
 
 
                         Position p1 = sensedCell(p, a.getDirection(), state.get(currentState).get(1));
@@ -667,21 +761,20 @@ public class BrainImpl implements Brain {
 
                     } else if ("Move".equals(command)) {
 
-                        System.out.println("hihi");
                         int dir = a.getDirection();
-                      //  System.out.print(dir);
 
                         Position pos = getAdjacentCell(p,dir);
 
                         if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){ // maybe have a method in map that returns a boolean if a cell has ant
 
+                            System.out.println(Integer.parseInt(state.get(currentState).get(2)));
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                         }else{
 
 
                             try {
-                                System.out.println(pos.getX()+" " + pos.getY());
+
                                 map.clearAnt(p);
                                 map.setAntAtCell(pos, a);// takes in an ant obj, it shouldnt should it maybe clear ant method?
                             } catch (CellAlreadyOccupiedException e) {
@@ -697,13 +790,44 @@ public class BrainImpl implements Brain {
                                 } catch (AntNotFoundException e) {
                                     e.printStackTrace();
                                 }
+                                if(map.getCellContents(pos) == '.'){
+
+                                    try {
+                                        map.setCellContents(pos,'3');
+                                    } catch (InvalidContentCharacterException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }else if( Character.isDigit(map.getCellContents(pos))){
+                                    int content = Character.getNumericValue(map.getCellContents(pos));
+                                    if(a.hasFood()){
+                                        if(content<5) {
+                                            content = content + 4;
+                                        }else if(content >= 6){
+                                            content = 9;
+                                        }
+                                    }else{
+                                        System.out.println("hi");
+                                        if(content <5){
+                                            content = content +3;
+                                        }else if(content >=6){
+
+                                            content =9;
+                                        }
+                                    }
+
+                                    char c = Character.forDigit((content),10);
+                                    try {
+                                        map.setCellContents(pos,c);
+                                    } catch (InvalidContentCharacterException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
 
                             }
-                             // need to kill here?
-
-
                         }
-
 
                         }else if("Flip".equals(command)){
 

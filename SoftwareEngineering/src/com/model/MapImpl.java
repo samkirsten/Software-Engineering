@@ -269,8 +269,7 @@ public class MapImpl implements Map{
             else if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()-1][pos.getY()].getAnt() == null){
-
+            if(map[pos.getX()-1][pos.getY()].getAnt() == null) {
             }
             else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;

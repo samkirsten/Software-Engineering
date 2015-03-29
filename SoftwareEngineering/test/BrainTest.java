@@ -3,6 +3,7 @@
  */
 
 import com.model.*;
+import com.model.exceptions.AntNotFoundException;
 import com.model.exceptions.CellAlreadyOccupiedException;
 import com.model.exceptions.InvalidContentCharacterException;
 import org.junit.Test;
@@ -138,9 +139,12 @@ public class BrainTest {
 
 
         Colony c = new ColonyImpl(Colour.BLACK);
-        Brain b8 = new BrainImpl(null,c);
-        Ant a = new AntImpl(1,Colour.BLACK,null);
+        Map m = new MapImpl();
+        Brain b8 = new BrainImpl(m,c);
+        Position p = new Position(1,1);
+        Ant a = new AntImpl(1,Colour.BLACK,p);
 
+        m.generateMap();
 
         c.addAnt(a);
 
@@ -640,115 +644,438 @@ public class BrainTest {
         MapImpl m11 = new MapImpl();
         BrainImpl b21 = new BrainImpl(m11,c);
 
-        Position p11 = new Position(1,1); // original
-        Position  p12 = new Position(2,1);// goes right
-        Position p13 = new Position(0,1); // left
-        Position p14 = new Position(2,0); // top right
-        Position p15 = new Position(1,0); // top left
-        Position p16 = new Position(2,2); // bottom right
-        Position p17 = new Position(1,2); // bottom left
-
-        AntImpl a19 = new AntImpl(1,Colour.RED,p11);
+        Position p11 = new Position(3,3); // original
+        Position  p12 = new Position(4,3);// goes right
+        Position p13 = new Position(2,3); // left
+        Position p14 = new Position(4,2); // top right
+        Position p15 = new Position(3,2); // top left
+        Position p16 = new Position(4,4); // bottom right
+        Position p17 = new Position(3,4); // bottom left
 
         m11.generateMap();
-        c.addAnt(a19);
-        b21.loadBrain(new File("brains/file27.txt"));
-
-//        m11.setAntAtCell(p11,a19);
-//        a19.setDirection(0);
-//
-//        b21.step(1);
-//
-//        assertEquals(null, m11.getAntAtCell(p11));
-//        assertEquals(a19,m11.getAntAtCell(p12));
-//        assertEquals(0,a19.getState());
-
         try {
+            m11.setCellContents(p12,'.');
             m11.setCellContents(p13,'.');
+            m11.setCellContents(p14,'.');
+            m11.setCellContents(p15,'.');
+            m11.setCellContents(p16,'.');
+            m11.setCellContents(p17,'.');
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
+        b21.loadBrain(new File("brains/file27.txt"));
+
+        AntImpl a19 = new AntImpl(1,Colour.RED,p11);
+
+
+        c.addAnt(a19);
+
 
         m11.setAntAtCell(p11,a19);
-        a19.setDirection(3);
+        a19.setDirection(0);
+      //  System.out.println(a19.getDirection());
+
+        b21.step(1);
+
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a19,m11.getAntAtCell(p12));
+        assertEquals(0,a19.getState());
+
+        try {
+            c.remove(a19.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        m11.clearAnt(a19.getPosition());
+
+        assertEquals(null,m11.getAntAtCell(p12));
+
+
+
+        Ant a = new AntImpl(1,Colour.RED, p11);
+        c.addAnt(a);
+        m11.setAntAtCell(p11,a19);
+        a.setDirection(3);
+
 
         b21.step(1);
 
 
-        assertEquals(0,a19.getState());
+        assertEquals(0,a.getState());
+        assertEquals(a,m11.getAntAtCell(p13));
         assertEquals(null, m11.getAntAtCell(p11));
-        assertEquals(a19,m11.getAntAtCell(p13));
 
 
-//
-//        m11.setAntAtCell(p11 , 0);
-//        a19.setDirection(5);
-//
-//        b21.step(1);
-//
-//        assertEquals(0, m11.getAntAtCell(p11));
-//        assertEquals(1,m11.getAntAtCell(p14));
-//
-//        m11.setAntAtCell(p11 , 0);
-//        a19.setDirection(4);
-//
-//        b21.step(1);
-//
-//        assertEquals(0, m11.getAntAtCell(p11));
-//        assertEquals(1,m11.getAntAtCell(p15));
-//
-//        m11.setAntAtCell(p11 , 0);
-//        a19.setDirection(1);
-//
-//        b21.step(1);
-//
-//        assertEquals(0, m11.getAntAtCell(p11));
-//        assertEquals(1,m11.getAntAtCell(p16));
-//
-//        m11.setAntAtCell(p11 , 0);
-//        a19.setDirection(2);
-//
-//        b21.step(1);
-//
-//        assertEquals(0, m11.getAntAtCell(p11));
-//        assertEquals(1,m11.getAntAtCell(p17));
-//
+        m11.clearAnt(a.getPosition());
+        try {
+            c.remove(a.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        assertEquals(null,m11.getAntAtCell(p13));
+
+
+        Ant a1 = new AntImpl(1, Colour.RED, p11);
+        c.addAnt(a1);
+
+        m11.setAntAtCell(p11 , a1);
+        a1.setDirection(5);
+
+        b21.step(1);
+
+        assertEquals(0,a1.getState());
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a1,m11.getAntAtCell(p14));
+
+        m11.clearAnt(a1.getPosition());
+        try {
+            c.remove(a1.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(null,m11.getAntAtCell(p14));
+
+
+        Ant a2 = new AntImpl(1,Colour.RED,p11);
+
+        c.addAnt(a2);
+
+        m11.setAntAtCell(p11 , a2);
+        a2.setDirection(4);
+
+        b21.step(1);
+
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a2,m11.getAntAtCell(p15));
+        assertEquals(0,a2.getState());
+
+        m11.clearAnt(a2.getPosition());
+        try {
+            c.remove(a2.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(null,m11.getAntAtCell(p15));
+
+
+
+        Ant a3 = new AntImpl(1,Colour.RED, p11);
+        c.addAnt(a3);
+
+        m11.setAntAtCell(p11 , a3);
+        a3.setDirection(1);
+
+        b21.step(1);
+
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a3,m11.getAntAtCell(p16));
+        assertEquals(0,a3.getState());
+
+        m11.clearAnt(a3.getPosition());
+
+        try {
+            c.remove(a3.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(null,m11.getAntAtCell(p16));
+
+
+        Ant a4 = new AntImpl(1,Colour.RED,p11);
+
+        c.addAnt(a4);
+        m11.setAntAtCell(p11 , a4);
+        a4.setDirection(2);
+
+        b21.step(1);
+
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a4,m11.getAntAtCell(p17));
+        assertEquals(0,a4.getState());
+
+        m11.clearAnt(p17);
+        try {
+            c.remove(a4.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(null,m11.getAntAtCell(p17));
+
 //        //////
 //        //////
 //
 //        /// checking if rocky or occupied if it is do nothing change state
-//
-//        m11.setAntAtCell(p11 , 0);
-//        a19.setDirection(0);
-//
-//        m11.setCellContents(p12, '#' );
-//        b21.step(1);
-//
-//        assertEquals(1, m11.getAntAtCell(p11));
-//        assertEquals(10, a19.getState()); // make sure in correct state
-//
-//
-//        // occupied cell
-//
-//        AntImpl a20 = new AntImpl();
-//        a20.setID(2);
-//
-//        m11.setCellContents(p12, '#');
-//        m11.setAntAtCell(p11 , 1);
-//        m11.setAntAtCell(p12, 2);
-//        a19.setDirection(0);
-//
-//        b21.step(1);
-//
-//        assertEquals(1, m11.getAntAtCell(p11));
-//        assertEquals(11, a19.getState()); // make sure in correct state
 
+        Ant a5 = new AntImpl(1,Colour.RED,p11);
+        c.addAnt(a5);
+        m11.setAntAtCell(p11 , a5);
+        a5.setDirection(0);
+
+        try {
+            m11.setCellContents(p12, '#');
+        } catch (InvalidContentCharacterException e) {
+            e.printStackTrace();
+        }
+        b21.step(1);
+
+        assertEquals(a5, m11.getAntAtCell(p11));
+        assertEquals(null,m11.getAntAtCell(p12));
+        assertEquals(1, a5.getState()); // make sure in correct state
+
+        m11.clearAnt(a5.getPosition());
+        try {
+            c.remove(a5.getID());
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(null, m11.getAntAtCell(p11));
+
+
+        // occupied cell
+
+        Ant a6 = new AntImpl(1,Colour.RED,p11);
+        Ant a7 = new AntImpl(2,Colour.RED,p12);
+
+        c.addAnt(a6);
+        c.addAnt(a7);
+        m11.setAntAtCell(p11 , a6);
+        m11.setAntAtCell(p12, a7);
+        a6.setDirection(0);
+
+        b21.step(1);
+
+        assertEquals(a7,m11.getAntAtCell(p12));
+        assertEquals(a6, m11.getAntAtCell(p11));
+        assertEquals(1, a6.getState()); // make sure in correct state
+
+
+    }
+
+    @Test
+    public void testKillAntMove(){
+
+        Colony red = new ColonyImpl(Colour.RED);
+        Colony black = new ColonyImpl(Colour.BLACK);
+
+        Map m = new MapImpl();
+        Brain b = new BrainImpl(m,red);
+        Brain b1 = new BrainImpl(m,black);
+
+        m.generateMap();
+
+        Position p11 = new Position(3,3); // original
+        Position p12 = new Position(4,3);// goes right
+        Position p13 = new Position(2,3); // left
+        Position p14 = new Position(4,2); // top right
+        Position p15 = new Position(3,2); // top left
+        Position p16 = new Position(4,4); // bottom right
+        Position p17 = new Position(3,4); // bottom left
+
+        Ant a = new AntImpl(1,Colour.RED,p17);
+        Ant a1 = new AntImpl(2,Colour.BLACK,p12);
+        Ant a2 = new AntImpl(3,Colour.BLACK,p13);
+        Ant a3 = new AntImpl(4,Colour.BLACK,p14);
+        Ant a4 = new AntImpl(5,Colour.BLACK,p15);
+        Ant a5 = new AntImpl(6,Colour.BLACK,p16);
+
+        red.addAnt(a);
+        black.addAnt(a1);
+        black.addAnt(a2);
+        black.addAnt(a3);
+        black.addAnt(a4);
+        black.addAnt(a5);
+
+       // a.setHasFood(true);
+
+        a.setDirection(5);
+
+        try {
+            m.setCellContents(p11,'8');
+        } catch (InvalidContentCharacterException e) {
+            e.printStackTrace();
+        }
+
+        b.loadBrain(new File("brains/file28.txt"));
+
+        try {
+            m.setAntAtCell(p17,a);
+            m.setAntAtCell(p12,a1);
+            m.setAntAtCell(p13,a2);
+            m.setAntAtCell(p14,a3);
+            m.setAntAtCell(p15,a4);
+            m.setAntAtCell(p16,a5);
+        } catch (CellAlreadyOccupiedException e) {
+            e.printStackTrace();
+        }
+        assertEquals('8',m.getCellContents(p11));
+        b.step(a.getID());
+
+        assertEquals(false,red.isAntAlive(1));
+        System.out.println(m.getCellContents(p11));
+        assertEquals('9', m.getCellContents(p11));
 
 
 
     }
-//
-//    // flip hard cause its random?
+
+    @Test
+
+    public void testKillRestingAnt(){
+
+
+        Colony red = new ColonyImpl(Colour.RED);
+        Colony black = new ColonyImpl(Colour.BLACK);
+
+        Map m = new MapImpl();
+        Brain b = new BrainImpl(m,red);
+        Brain b1 = new BrainImpl(m,black);
+
+        m.generateMap();
+
+        Position p11 = new Position(3,3); // original
+        Position p12 = new Position(4,3);// goes right
+        Position p13 = new Position(2,3); // left
+        Position p14 = new Position(4,2); // top right
+        Position p15 = new Position(3,2); // top left
+        Position p16 = new Position(4,4); // bottom right
+        Position p17 = new Position(3,4); // bottom left
+
+        Ant a = new AntImpl(1,Colour.RED,p11);
+        Ant a1 = new AntImpl(2,Colour.BLACK,p12);
+        Ant a2 = new AntImpl(3,Colour.BLACK,p13);
+        Ant a3 = new AntImpl(4,Colour.BLACK,p14);
+        Ant a4 = new AntImpl(5,Colour.BLACK,p15);
+        Ant a5 = new AntImpl(6,Colour.BLACK,p16);
+
+        red.addAnt(a);
+        black.addAnt(a1);
+        black.addAnt(a2);
+        black.addAnt(a3);
+        black.addAnt(a4);
+        black.addAnt(a5);
+
+        // a.setHasFood(true);
+
+        a.setDirection(0);
+        a.startResting();
+
+        b.loadBrain(new File("brains/file29.txt"));
+
+        try {
+            m.setAntAtCell(p11,a);
+            m.setAntAtCell(p12,a1);
+            m.setAntAtCell(p13,a2);
+            m.setAntAtCell(p14,a3);
+            m.setAntAtCell(p15,a4);
+            m.setAntAtCell(p16,a5);
+        } catch (CellAlreadyOccupiedException e) {
+            e.printStackTrace();
+        }
+
+        b.step(a.getID());
+
+        assertEquals(false,red.isAntAlive(1));
+        System.out.println(m.getCellContents(p11));
+        assertEquals('3', m.getCellContents(p11));
+
+
+    }
+
+    @Test
+
+    public void testKillAntOtherOutCome(){
+
+
+        Colony red = new ColonyImpl(Colour.RED);
+        Colony black = new ColonyImpl(Colour.BLACK);
+
+        Map m = new MapImpl();
+        Brain b = new BrainImpl(m,red);
+        Brain b1 = new BrainImpl(m,black);
+
+        m.generateMap();
+
+        Position p11 = new Position(3,3); // original
+        Position p12 = new Position(4,3);// goes right
+        Position p13 = new Position(2,3); // left
+        Position p14 = new Position(4,2); // top right
+        Position p15 = new Position(3,2); // top left
+        Position p16 = new Position(4,4); // bottom right
+        Position p17 = new Position(3,4); // bottom left
+
+        Ant a = new AntImpl(1,Colour.RED,p11);
+        Ant a1 = new AntImpl(2,Colour.BLACK,p12);
+        Ant a2 = new AntImpl(3,Colour.BLACK,p13);
+        Ant a3 = new AntImpl(4,Colour.BLACK,p14);
+        Ant a4 = new AntImpl(5,Colour.BLACK,p15);
+        Ant a5 = new AntImpl(6,Colour.BLACK,p16);
+
+        red.addAnt(a);
+        black.addAnt(a1);
+        black.addAnt(a2);
+        black.addAnt(a3);
+        black.addAnt(a4);
+        black.addAnt(a5);
+
+        // a.setHasFood(true);
+
+        a.setDirection(0);
+
+
+        b.loadBrain(new File("brains/file29.txt"));
+
+        try {
+            m.setAntAtCell(p11,a);
+            m.setAntAtCell(p12,a1);
+            m.setAntAtCell(p13,a2);
+            m.setAntAtCell(p14,a3);
+            m.setAntAtCell(p15,a4);
+            m.setAntAtCell(p16,a5);
+        } catch (CellAlreadyOccupiedException e) {
+            e.printStackTrace();
+        }
+
+        b.step(a.getID());
+
+        assertEquals(false,red.isAntAlive(1));
+        System.out.println(m.getCellContents(p11));
+        assertEquals('3', m.getCellContents(p11));
+
+
+
+    }
+
+    @Test
+
+    public void testFlip(){
+
+        Colony c = new ColonyImpl(Colour.RED);
+        Map m = new MapImpl();
+        Brain b = new BrainImpl(m,c);
+        Position p = new Position(1,1);
+        Ant a = new AntImpl(1,Colour.RED,p);
+
+        m.generateMap();
+        c.addAnt(a);
+
+        try {
+            m.setAntAtCell(p,a);
+        } catch (CellAlreadyOccupiedException e) {
+            e.printStackTrace();
+        }
+
+        b.loadBrain(new File("brains/file30.txt"));
+
+        b.step(a.getID());
+
+        assertEquals(3,a.getState());
+        assertNotEquals(2,a.getState());
+
+    }
 
 
 
