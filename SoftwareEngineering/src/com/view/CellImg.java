@@ -1,14 +1,13 @@
 package com.view;
 
-import com.model.CellImpl;
-
+import com.model.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 
 public class CellImg {
 	
-	private CellImpl[][] map;
+	private Cell[][] map;
 	private int Border = 5;
 	private int s = 0;	// length of one side
 	private int t = 0;	// short side of triangle outside of each hex

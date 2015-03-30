@@ -1,7 +1,6 @@
 package com.view;
 
 import com.model.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import javax.swing.border.*;
 public class GameGUI extends JFrame implements ActionListener {
 
     private static Cell[][] map;
+    private Map Map;
     private int currentRound = 0;
     private Game game;
     private CellImg ci = new CellImg(3,map);
@@ -170,8 +170,9 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
-    private void update(Game game){
-        map = game.getMap();
+    private void update(Game game) {
+        Map = game.getMap();
+        map = Map.getMap();
         menuPanel = new Graphic();
     }
 
