@@ -178,6 +178,37 @@ public class AntImpl implements Ant {
 //    public void markScent(com.model.Position pos, int marker) {
 //        //***** try in MAP class ? *****
 //    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AntImpl ant = (AntImpl) o;
+
+        if (ID != ant.ID) return false;
+        if (direction != ant.direction) return false;
+        if (hasFood != ant.hasFood) return false;
+        if (resting != ant.resting) return false;
+        if (state != ant.state) return false;
+        if (colour != ant.colour) return false;
+        if (position != null ? !position.equals(ant.position) : ant.position != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = ID;
+        result = 31 * result + (colour != null ? colour.hashCode() : 0);
+        result = 31 * result + state;
+        result = 31 * result + resting;
+        result = 31 * result + direction;
+        result = 31 * result + (hasFood ? 1 : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        return result;
+    }
 }
 
 

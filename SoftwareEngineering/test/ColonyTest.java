@@ -66,9 +66,7 @@ public class ColonyTest {
     public void test_GetAnt_with_position() throws AntNotFoundException{
 
         //go through the list and search
-
-//        com.model.AntImpl output1 = colony.getAnt( new com.model.Position(0,0));
-//        assertSame(ant1, output1);
+        assertEquals(ant1.getPosition(), colony.getAnt(1).getPosition());
 
     }
 

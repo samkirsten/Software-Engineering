@@ -19,6 +19,10 @@ public interface Game {
 
     public void nextRound();
 
+    public String getBlackPlayerName();
+
+    public String getRedPlayerName();
+
     public int getCurrentRound();
 
     public Colour getWinner();

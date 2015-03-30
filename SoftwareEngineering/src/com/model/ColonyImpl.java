@@ -200,7 +200,7 @@ public class ColonyImpl implements Colony {
     @Override
     public void reset() {
         food = 0;
-        antList = null ;
+        antList.clear();
         brain = null ;
     }
 }
