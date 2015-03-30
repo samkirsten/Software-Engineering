@@ -21,7 +21,13 @@ public interface Game {
 
     public int getCurrentRound();
 
+    public void start();
+
     public Colour getWinner();
+
+    public String getRedPlayerName();
+
+    public String getBlackPlayerName();
 
 
 

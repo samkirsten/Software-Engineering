@@ -1,5 +1,7 @@
 
 package com.model;
+import com.view.GameGUI;
+
 import java.io.File;
 import java.util.List;
 
@@ -11,26 +13,49 @@ public class GameImpl implements Game {
     int redFood = 0;
     int blackFood = 0;
     int currentRound = 0;
+    String redPlayerName;
+    String blackPlayerName;
+    GameGUI gui;
 
-    public GameImpl(File brain1, File brain2){
+    public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui){
         loadBrain(brain1,Colour.RED);
         loadBrain(brain2, Colour.BLACK);
         red = new ColonyImpl(Colour.RED);
         black = new ColonyImpl(Colour.BLACK);
+        redPlayerName = name1;
+        blackPlayerName = name2;
         map.generateMap();
         setup();
     }
 
-    public GameImpl(File brain1, File brain2, Map map){
+    public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui, Map map){
         loadBrain(brain1,Colour.RED);
         loadBrain(brain2,Colour.BLACK);
         red = new ColonyImpl(Colour.RED);
         black = new ColonyImpl(Colour.BLACK);
+        redPlayerName = name1;
+        blackPlayerName = name2;
         this.map = map;
         map.clearMap();
         setup();
     }
 
+    public String getBlackPlayerName() {
+        return blackPlayerName;
+    }
+
+    public String getRedPlayerName() {
+        return redPlayerName;
+    }
+
+    @Override
+    public void start(){
+        for(int i=0;i<Game.NUMBER_OF_ROUNDS;i++){
+            nextRound();
+            if(i % 100 == 0)
+                gui.update(game);
+        }
+    }
 
 
 

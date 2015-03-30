@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface Tournament {
 
-    public List<List<File>> createFixtures(List<File> brains);
+    public List<Game> createFixtures(HashMap<String,File> brains);
 
     public void updateScores(Game game);
 
-    public HashMap<File,Integer> getResults();
+    public HashMap<String,Integer> getResults();
 }
