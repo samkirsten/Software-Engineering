@@ -15,8 +15,6 @@ public interface Game {
 
     public Map getMap();
 
-    public void setup();
-
     public void nextRound();
 
     public String getBlackPlayerName();
