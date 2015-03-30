@@ -1374,41 +1374,19 @@ public class BrainImpl implements Brain {
     }
 
 
-
-//    public static void main(String args[]) throws com.model.com.model.exceptions.CellAlreadyOccupiedException {
+//
+//    public static void main(String args[]) throws InterruptedException {
 //
 //
+//        for(int i=0;i<300000;i++){
 //
-//        com.model.MapImpl m1 = new com.model.MapImpl();
-//        com.model.Colony c = new com.model.ColonyImpl(com.model.Colour.RED);
-//        com.model.BrainImpl b11 = new com.model.BrainImpl(m1,c);
-//        com.model.AntImpl a4 = new com.model.AntImpl();
-//        b11.loadBrain(new File("brains/file18.txt"));
+//            Thread.sleep(0,1);
+//            System.out.println(i);
+//            if(i==300000-1){
 //
-//
-//        for(int x = 0; x < b11.instructionGetter.size(); x++){
-//
-//            System.out.println(b11.instructionGetter.get(x));
-//
+//                System.out.println("finished");
+//            }
 //        }
-//        System.out.println(b11.state.get(0).get(0));
-//
-//        com.model.Position p1 = new com.model.Position(1,1);
-//        m1.generateMap();
-//        c.addAnt(a4);
-//        a4.setID(2);
-//
-//        m1.setAntAtCell(p1, a4);
-//
-//
-//
-//
-//       // m1.setCellScentMarker(p1,1);
-//
-//        b11.step(a4.getID()); // need to set file so it unmarks
-//
-//
-//        System.out.println(m1.getCellScentMarker(com.model.Colour.RED,p1));
 //
 //
 //
