@@ -36,17 +36,7 @@ public class ColonyTest {
         ant2 = new AntImpl(2,color,new Position(0,1));
         ant3 = new AntImpl(3,color,new Position(0,2));
 
-
-        ant1.setID(1);
-        ant1.setColour(color);
        // ant1.setPosition( new com.model.Position(0,0));
-
-        ant2.setID(2);
-        ant2.setColour(color);
-
-        ant3.setID(2);
-        ant3.setColour(color);
-
 
 
         colony.addAnt(ant1);
@@ -62,14 +52,14 @@ public class ColonyTest {
 
         //test if the output of getting ant with ID=1 is the same object with the original ANT
         Ant output1 = colony.getAnt(1);
-        assertSame(ant1, output1);
+        assertEquals(ant1, output1);
 
 
         Ant output2 = colony.getAnt(2);
-        assertSame(ant2, output2);
+        assertEquals(ant2, output2);
 
         Ant output3 = colony.getAnt(3);
-        assertSame(ant3, output3);
+        assertEquals(ant3, output3);
     }
 
     @Test
@@ -88,7 +78,7 @@ public class ColonyTest {
     public void test_is_ant_alive(){
 
         //for ant exist, is should return true
-        for (int i=0;i<3;i++){
+        for (int i=1;i<4;i++){
             assertTrue(colony.isAntAlive(i));
         }
 
@@ -122,7 +112,7 @@ public class ColonyTest {
         BrainImpl testBrain = new BrainImpl(testMap,testColony);
 
         testColony.setBrain(testBrain);
-        assertSame(testBrain, colony.getBrain());
+        assertEquals(testBrain, testColony.getBrain());
 
     }
 
@@ -134,14 +124,14 @@ public class ColonyTest {
         assertEquals(color , colony.getColonyColour());
     }
 
-//
-//    @Test
-//    public void test_remove() throws AntNotFoundException {
-//        //remove ant at 0,0 which is ant1, it should be deleted from the list
-//
-//        colony.remove(new Position(0,0));
-//        assertFalse(colony.isAntAlive(1));
-//
-//    }
+
+    @Test
+    public void test_remove() throws AntNotFoundException {
+        //remove ant at 0,0 which is ant1, it should be deleted from the list
+
+        colony.remove(1);
+        assertFalse(colony.isAntAlive(1));
+
+    }
 
 }

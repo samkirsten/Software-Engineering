@@ -68,7 +68,10 @@ public class AntImpl implements Ant {
      */
 
     public void setDirection(int direction) {
-        this.direction = direction ;
+        if (direction>=0 && direction<6){
+            this.direction = direction ;
+
+        }
     }
 
     /**

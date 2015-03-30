@@ -84,11 +84,11 @@ public class MapTest {
 
         Position p = new Position(5,5);
         m.setCellScentMarker(p,3);
-        assertEquals(m.getCellScentMarker(Colour.BLACK,p),3);
-        assertEquals(m.getCellScentMarker(Colour.RED,p),-1);
+        assertEquals(3,m.getCellScentMarker(Colour.BLACK,p));
+        assertEquals(-1,m.getCellScentMarker(Colour.RED,p));
         m.setCellScentMarker(p,8);
-        assertEquals(m.getCellScentMarker(Colour.BLACK,p),-1);
-        assertEquals(m.getCellScentMarker(Colour.RED,p),8);
+        assertEquals(-1,m.getCellScentMarker(Colour.BLACK,p));
+        assertEquals(8,m.getCellScentMarker(Colour.RED,p));
 
 
     }
@@ -117,13 +117,13 @@ public class MapTest {
         Ant ant4 = new AntImpl(1, Colour.RED,new Position(5,4));
 
         m.setAntAtCell(new Position(5,5),ant1);
-        assertEquals(m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK),0);
+        assertEquals(0,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
         m.setAntAtCell(new Position(4,5),ant2);
-        assertEquals(m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK),1);
+        assertEquals(1,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
         m.setAntAtCell(new Position(6,5),ant3);
-        assertEquals(m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK),2);
+        assertEquals(2,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
         m.setAntAtCell(new Position(5,4),ant4);
-        assertEquals(m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK),3);
+        assertEquals(3,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
 
     }
 }

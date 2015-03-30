@@ -33,7 +33,7 @@ public class AntTest {
         // for direction other than 0-6, input should not be set into direction
             testAnt.setDirection(6);
             int result = testAnt.getDirection();
-            assertFalse(6 == result);
+            assertNotEquals(6,result);
 
     }
 
@@ -62,7 +62,7 @@ public class AntTest {
         //test for the next 14 round, ant should be resting
             for (int i=1;i<15;i++){
                 testAnt.incrementRest();
-                assertEquals(14 - i, testAnt.getRemainingRest());
+                assertEquals(15 - i, testAnt.getRemainingRest());
                 assertTrue(testAnt.isResting());
             }
 
