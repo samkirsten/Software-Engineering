@@ -17,9 +17,9 @@ public class GameGUI extends JFrame implements ActionListener {
     private int currentRound = 0;
     private Game game;
     private CellImg ci = new CellImg(3,map);
-    private JButton b1, b2, b3, b4, b5, b6, startGame;
+    private JButton b1, b2, b3, b4, b5, b6;
     private JTextField t1,t2,t3,t4;
-    private JLabel l1, l2 , l3, l4, instruction, gameStatus;
+    private JLabel l1, l2 , l3, l4, instruction;
     private ArrayList<JButton> Blist = new ArrayList<>();
     private ArrayList<Integer> list = new ArrayList<>();
     private JPanel menuPanel, tablePanel, mapPanel, rankPanel,fixturePanel, loadPanel;
@@ -76,12 +76,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
     private void createMenuPanel(){
         menuPanel = new JPanel();
-        menuPanel.setLayout(new FlowLayout());
-        startGame = new JButton("start game");
-        gameStatus = new JLabel("No Brains Loaded");
-        menuPanel.add(startGame);
-        menuPanel.add(gameStatus);
-        menuPanel.setVisible(true);
 
         container.add(menuPanel, BorderLayout.NORTH);
     }
