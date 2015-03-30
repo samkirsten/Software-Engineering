@@ -15,7 +15,7 @@ public class CellImg {
 	private int r = 0;	// radious of inscribed circle( center to middle of each side) r = h / 2.
 	private int h = 0;	// height. Distance between center of two adjacent hexes.Distance between two opposite sides in a hex.
 	
-	public CellImg(int side,CellImpl[][] map){
+	public CellImg(int side,Cell[][] map){
 		setSide(side);
 		this.map = map;
 	}

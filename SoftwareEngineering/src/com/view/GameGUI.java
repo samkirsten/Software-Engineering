@@ -58,6 +58,8 @@ public class GameGUI extends JFrame implements ActionListener {
         container.add(menuPanel, BorderLayout.NORTH);
     }
 
+
+
     private void createtablePanel(){
         b1 = new JButton("null");b1.setEnabled(false);
         b2 = new JButton("null");b2.setEnabled(false);
@@ -162,36 +164,15 @@ public class GameGUI extends JFrame implements ActionListener {
     private void createmapPanel(){
         //mapPanel = new JPanel();
 
-        JPanel mapPanel = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D)g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                super.paintComponent(g2);
-                for (int j=0;j<150;j++) {
-                    for (int i=0;i<150;i++) {
-                        if(map[i][j].getContents() == '+'){
-                            ci.drawHex(i,j,g2,Color.RED);
-                        }else if(map[i][j].getContents() == '-'){
-                            ci.drawHex(i,j,g2,Color.BLACK);
-                        }else if(map[i][j].getContents() == '#'){
-                            ci.drawHex(i,j,g2,Color.gray);
-                        }else if(map[i][j].getContents() == '.'){
-                            ci.drawHex(i,j,g2,Color.WHITE);
-                        }else {
-                            ci.drawHex(i,j,g2,Color.GREEN);
-                        }
-                    }
-                }
-            }
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(610, 620);
-            }
-        };
+        mapPanel = new Graphic();
 
         container.add(mapPanel, BorderLayout.CENTER);
 
+    }
+
+    private void update(Game game){
+        map = game.getMap();
+        menuPanel = new Graphic();
     }
 
     public static void main(String[] args) {
@@ -227,16 +208,12 @@ public class GameGUI extends JFrame implements ActionListener {
         return m;
     }
 
-    class refreshMap extends JPanel implements Runnable {
+    class Graphic extends JPanel {
 
         @Override
-        public void run() {
-
-
-        }
-
-        public void paintComponent(Graphics g){
-            Graphics2D g2 = (Graphics2D) g;
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
             for (int j=0;j<150;j++) {
                 for (int i=0;i<150;i++) {
@@ -254,11 +231,10 @@ public class GameGUI extends JFrame implements ActionListener {
                 }
             }
         }
-
-
-
-    }
-
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(610, 620);
+        }
+    };
 }
-
 
