@@ -386,4 +386,15 @@ public class MapImpl implements Map{
     }
 
 
+    //For test
+    public int getArray(String name){
+        if(name == "food"){
+            return Foodblob.size();
+        }else if(name == "red"){
+            return REDHILL.size();
+        }
+        return BLACKHILL.size();
+    }
+
+
 }
