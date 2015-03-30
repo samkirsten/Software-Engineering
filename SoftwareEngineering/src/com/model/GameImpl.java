@@ -130,7 +130,7 @@ public class GameImpl implements Game {
 
         for(Position p : redHill){
 
-           redAnts.addAnt(new AntImpl(id,Colour.RED,p));
+           red.addAnt(new AntImpl(id,Colour.RED,p));
             id++;
         }
 
