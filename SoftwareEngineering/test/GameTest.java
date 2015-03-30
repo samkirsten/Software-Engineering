@@ -14,17 +14,17 @@ import static org.junit.Assert.assertTrue;
 */
 public class GameTest {
 
-    @Test
-    public void loadBrainTest(){
-        File brainFile = new File("brains/brain1.txt");
-        Colony c = new ColonyImpl(Colour.RED);
-        Map m  = new MapImpl();
-        File brainFile1 = new File("brains/brain1.txt");
-        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
-      //  game.getColony(Colour.RED);
-       // System.out.println(game.loadBrain(brainFile,Colour.RED));
-        assertTrue(game.loadBrain(brainFile, Colour.RED));
-    }
+//    @Test
+//    public void loadBrainTest(){
+//        File brainFile = new File("brains/brain1.txt");
+//        Colony c = new ColonyImpl(Colour.RED);
+//        Map m  = new MapImpl();
+//        File brainFile1 = new File("brains/brain1.txt");
+//        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
+//      //  game.getColony(Colour.RED);
+//       // System.out.println(game.loadBrain(brainFile,Colour.RED));
+//        assertTrue(game.loadBrain(brainFile, Colour.RED));
+//    }
 
     @Test
     public void testSetup(){
@@ -36,31 +36,19 @@ public class GameTest {
 
         m.generateMap();
 
-        List<Position> redHill = m.getAntHill(Colour.RED);
+
         List<Position> blackHill = m.getAntHill(Colour.BLACK);
-        System.out.println(redHill.size());
-
-
-
-        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
-
-        game.loadBrain(brainFile,Colour.RED);
 
 
 
 
-        System.out.println(redHill.size());
-        for(Position p: redHill){
-
-            try {
-                System.out.println(game.getColony(Colour.RED).getAnt(p));
-            } catch (AntNotFoundException e) {
-                e.printStackTrace();
-            }
-            // System.out.println(m.getAntAtCell(p));
+        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null);
 
 
-        }
+        List<Position> redHill = game.getMap().getAntHill(Colour.RED);
+
+
+    
 
 //
 //        for(Position p: redHill){
