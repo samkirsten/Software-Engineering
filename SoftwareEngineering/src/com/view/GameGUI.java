@@ -198,7 +198,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
-    private void update(Game game) {
+    public void updateGUI(Game game) {
         Map = game.getMap();
         map = Map.getMap();
         menuPanel = new Graphic();

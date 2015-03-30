@@ -53,7 +53,7 @@ public class GameImpl implements Game {
         for(int i=0;i<Game.NUMBER_OF_ROUNDS;i++){
             nextRound();
             if(i % 100 == 0)
-                gui.update(game);
+                gui.updateGUI(this);
         }
     }
 
