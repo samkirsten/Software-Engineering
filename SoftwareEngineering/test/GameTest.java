@@ -36,36 +36,44 @@ public class GameTest {
 
         m.generateMap();
 
+<<<<<<< HEAD
+=======
+
+        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null);
+        List<Position> redHill = game.getMap().getAntHill(Colour.RED);
+        List<Position> blackHill = m.getAntHill(Colour.BLACK);
+>>>>>>> origin/master
 
         List<Position> blackHill = m.getAntHill(Colour.BLACK);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 
 
         Game game = new GameImpl(brainFile,"1",brainFile1,"2",null);
 
+<<<<<<< HEAD
 
         List<Position> redHill = game.getMap().getAntHill(Colour.RED);
+=======
+        for(Position p: redHill){
 
+
+            try {
+
+                assertTrue(game.getMap().getAntAtCell(p).equals(game.getColony(Colour.RED).getAnt(p)));
+
+            } catch (AntNotFoundException e) {
+                e.printStackTrace();
+            }
+>>>>>>> origin/master
+
+            //i++;
 
     
-
-//
-//        for(Position p: redHill){
-//
-//
-//            System.out.println(m.getAntAtCell(p));
-//            try {
-//
-//                assertTrue(m.getAntAtCell(p).equals(game.getColony(Colour.RED).getAnt(p)));
-//
-//            } catch (AntNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            //i++;
-//
-//        }
 
 
 

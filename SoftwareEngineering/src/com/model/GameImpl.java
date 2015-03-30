@@ -1,5 +1,6 @@
 
 package com.model;
+import com.model.exceptions.CellAlreadyOccupiedException;
 import com.view.GameGUI;
 
 import java.io.File;
@@ -120,27 +121,41 @@ public class GameImpl implements Game {
         List<Position> redHill = map.getAntHill(Colour.RED);
         List<Position> blackHill = map.getAntHill(Colour.BLACK);
 
-        Colony redAnts = getColony(Colour.RED);
-        Colony blackAnts = getColony(Colour.BLACK);
-        redAnts.reset();
-        blackAnts.reset();
+        red.reset();
+        black.reset();
 
         int id = 0;
 
 
         for(Position p : redHill){
+<<<<<<< HEAD
 
            red.addAnt(new AntImpl(id,Colour.RED,p));
+=======
+            Ant ant = new AntImpl(id,Colour.RED,p);
+            red.addAnt(ant);
+            try {
+                map.setAntAtCell(p,ant);
+            } catch (CellAlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
+>>>>>>> origin/master
             id++;
         }
 
         for(Position p : blackHill){
-            blackAnts.addAnt(new AntImpl(id,Colour.BLACK,p));
+            Ant ant = new AntImpl(id,Colour.BLACK,p);
+            black.addAnt(ant);
+            try {
+                map.setAntAtCell(p,ant);
+            } catch (CellAlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
             id++;
         }
     }
 
-    public void setup(){
+    private void setup(){
         currentRound = 0;
         map.clearMap();
 
