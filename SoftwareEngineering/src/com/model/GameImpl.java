@@ -128,10 +128,10 @@ public class GameImpl implements Game {
 
 
         for(Position p : redHill){
-<<<<<<< HEAD
+
 
            red.addAnt(new AntImpl(id,Colour.RED,p));
-=======
+
             Ant ant = new AntImpl(id,Colour.RED,p);
             red.addAnt(ant);
             try {
@@ -139,7 +139,7 @@ public class GameImpl implements Game {
             } catch (CellAlreadyOccupiedException e) {
                 e.printStackTrace();
             }
->>>>>>> origin/master
+
             id++;
         }
 
