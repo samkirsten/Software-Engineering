@@ -16,6 +16,7 @@ public class MapTest {
         assertEquals(127,m.getArray("red"));
         assertEquals(127,m.getArray("black"));
         assertEquals(275,m.getArray("food"));
+        assertEquals(460,m.getArray("rocky"));
     }
 
     @Test // this test is wrong

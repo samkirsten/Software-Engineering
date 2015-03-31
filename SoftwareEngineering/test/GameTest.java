@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 import com.model.*;
 import com.model.exceptions.AntNotFoundException;
 import com.view.GameGUI;
@@ -10,15 +14,55 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
+<<<<<<< Updated upstream
  * Created by Jacob on 26/03/2015.
  */
 public class GameTest {
 
     // making loadBrain private?
+=======
+* Created by Jacob on 26/03/2015.
+*/
+public class GameTest {
+
+    // making loadBrain private?
+=======
+//import com.model.*;
+//import com.model.exceptions.AntNotFoundException;
+//import com.view.GameGUI;
+//import org.junit.Test;
+//
+//import java.io.File;
+//import java.util.List;
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertTrue;
+//
+///**
+//* Created by Jacob on 26/03/2015.
+//*/
+//public class GameTest {
+//
+////    @Test
+////    public void loadBrainTest(){
+//<<<<<<< Updated upstream
+////        File brainFile = new File("brains/brain1.txt");
+////        Colony c = new ColonyImpl(Colour.RED);
+////        Map m  = new MapImpl();
+////        File brainFile1 = new File("brains/brain1.txt");
+////        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
+////      //  game.getColony(Colour.RED);
+////       // System.out.println(game.loadBrain(brainFile,Colour.RED));
+////        assertTrue(game.loadBrain(brainFile, Colour.RED));
+////    }
+//
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 //    @Test
 //    public void loadBrainTest(){
 //        File brainFile = new File("brains/brain1.txt");
 //        Colony c = new ColonyImpl(Colour.RED);
+<<<<<<< Updated upstream
 //        Map m  = new MapImpl();
 //        File brainFile1 = new File("brains/brain1.txt");
 //        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
@@ -26,6 +70,54 @@ public class GameTest {
 //       // System.out.println(game.loadBrain(brainFile,Colour.RED));
 //        assertTrue(game.loadBrain(brainFile, Colour.RED));
 //    }
+=======
+//        Map m = new MapImpl();
+//        File brainFile1 = new File("brains/brain1.txt");
+//
+//        m.generateMap();
+//
+//
+//        Game game = new GameImpl(brainFile, "1", brainFile1, "2", null);
+//        List<Position> redHill = game.getMap().getAntHill(Colour.RED);
+//        List<Position> blackHill = m.getAntHill(Colour.BLACK);
+//=======
+////        Game game = new GameImpl();
+////        File brainFile = new File("brains/brain1.txt");
+////        assertTrue(game.loadBrain(new File("brains/brain1.txt"), Colour.RED));
+////
+////        assertEquals(game.getColony(Colour.RED).getBrain(),brainFile);
+////    }
+////
+////    @Test
+////    public void setColonyTest(){
+////        com.model.Game game = new GameImpl();
+////        com.model.Colony colony = new com.model.ColonyImpl(com.model.Colour.RED,new com.model.BrainImpl());
+////        com.model.Map map = new com.model.MapImpl();
+////        game.setColony(colony,map.getAnthill(com.model.Colour.RED));
+////        assertEquals(game.getColony(com.model.Colour.RED),colony);
+////    }
+//>>>>>>> Stashed changes
+//
+//
+//        for (Position p : redHill) {
+//
+//
+//            try {
+//
+//                assertTrue(game.getMap().getAntAtCell(p).equals(game.getColony(Colour.RED).getAnt(p)));
+//
+//            } catch (AntNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//            //i++;
+//
+//
+//        }
+//    }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
     @Test
     public void testSetup() {
@@ -131,3 +223,9 @@ public class GameTest {
 
 
 }
+<<<<<<< Updated upstream
+=======
+=======
+//}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

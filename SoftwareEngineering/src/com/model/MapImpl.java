@@ -12,6 +12,7 @@ public class MapImpl implements Map{
     private ArrayList<CellImpl> REDHILL = new ArrayList<>();
     private ArrayList<CellImpl> BLACKHILL = new ArrayList<>();
     private ArrayList<CellImpl> Foodblob = new ArrayList<>();
+    private ArrayList<CellImpl> Rocky = new ArrayList<>();
 
     public MapImpl(){
 
@@ -32,6 +33,7 @@ public class MapImpl implements Map{
             for(int x = 0; x < 150; x++){
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
                     map[x][y] = new CellImpl('#');                      // The edge of com.model.Map
+                    Rocky.add(map[x][y]);
                     spairMap[x][y] = new CellImpl();
                 }else{
                     map[x][y] = new CellImpl();
@@ -86,6 +88,7 @@ public class MapImpl implements Map{
             int Y = (ran.nextInt(149) + 1);
             if(map[X][Y].getContents() == '.'){
                 map[X][Y].setContents('#');
+                Rocky.add(map[X][Y]);
                 rock++;
             }
         }
@@ -259,37 +262,31 @@ public class MapImpl implements Map{
         int number = 0;
         if(pos.getY() % 2 == 1){
             if(map[pos.getX()][pos.getY()-1].getAnt() == null){
-                System.out.println("1");
             }
             else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()-1].getAnt() == null){
-                System.out.println("2");
             }
             else if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
-            if(map[pos.getX()-1][pos.getY()].getAnt() == null) {
-                System.out.println("3");
+            if(map[pos.getX()- 1][pos.getY()].getAnt() == null) {
             }
             else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()].getAnt() == null){
-                System.out.println("4");
             }
             else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()+1].getAnt() == null ){
-                System.out.println("5");
             }
             else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()+1].getAnt() == null){
-                System.out.println("6");
             }
             else if(map[pos.getX()+1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
@@ -299,37 +296,31 @@ public class MapImpl implements Map{
 
         if(pos.getY() % 2 == 0){
             if(map[pos.getX()-1][pos.getY()-1].getAnt() == null){
-                System.out.println("7");
             }
             else if(map[pos.getX()-1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()-1].getAnt() == null){
-                System.out.println("8");
             }
             else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()-1][pos.getY()].getAnt() == null){
-                System.out.println("9");
             }
             else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()].getAnt() == null){
-                System.out.println("10");
             }
             else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()-1][pos.getY()+1].getAnt() == null){
-                System.out.println("11");
             }
             else if(map[pos.getX()-1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()+1].getAnt() == null){
-                System.out.println("12");
             }
             else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
@@ -394,6 +385,8 @@ public class MapImpl implements Map{
             return Foodblob.size();
         }else if(name == "red"){
             return REDHILL.size();
+        }else if(name == "rocky"){
+            return Rocky.size();
         }
         return BLACKHILL.size();
     }
