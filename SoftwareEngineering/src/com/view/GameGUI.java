@@ -686,6 +686,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
                 if (isSingleGame && p1Ready && p2Ready) {
                     instruction.setText("Games is ready to start !");
+                    gameStatus.setText("Single Game is Ready.");
+
                     tab.setEnabledAt(1, true);
                     tab.setSelectedIndex(1);
                 } else {
@@ -698,11 +700,11 @@ public class GameGUI extends JFrame implements ActionListener {
                                 k++;
                             }
                         }
-
+                        gameStatus.setText("3 Player Tournament ready.");
                         tab.setEnabledAt(1, true);
 
                         tab.setSelectedIndex(1);
-                        controller.createFixtures(inputBrains, tournament);
+                        fixtures = controller.createFixtures(inputBrains, tournament);
 
                     } else {
                         if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
@@ -715,11 +717,12 @@ public class GameGUI extends JFrame implements ActionListener {
                                     k++;
                                 }
                             }
+                            gameStatus.setText("4 Player Tournament ready.");
 
                             tab.setEnabledAt(1, true);
 
                             tab.setSelectedIndex(1);
-                            controller.createFixtures(inputBrains, tournament);
+                            fixtures = controller.createFixtures(inputBrains, tournament);
 
                         } else {
                             instruction.setText("Please make sure all the brain is loaded!");
