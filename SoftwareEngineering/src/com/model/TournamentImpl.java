@@ -84,8 +84,32 @@ public class TournamentImpl implements Tournament {
                 }
             }
         }
-        else{
+
+        else if(brains.size() == 2){
+
             fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui));
+        }
+
+        /// think we need this
+
+        if(brains.size() == 2){
+
+            resultsTable.put(names.get(0),0);
+            resultsTable.put(names.get(1),0);
+        }
+        else if(brains.size() == 3){
+
+            resultsTable.put(names.get(0),0);
+            resultsTable.put(names.get(1),0);
+            resultsTable.put(names.get(2),0);
+
+        }else if(brains.size() == 4){
+
+
+            resultsTable.put(names.get(0),0);
+            resultsTable.put(names.get(1),0);
+            resultsTable.put(names.get(2),0);
+            resultsTable.put(names.get(3),0);
         }
 
         return fixtures;
@@ -95,16 +119,22 @@ public class TournamentImpl implements Tournament {
 
     @Override
     public void updateScores(Game game){
+
         Colour winner = game.getWinner();
+        int oldRedValue = resultsTable.get(game.getRedPlayerName());
+        int oldBlackValue = resultsTable.get(game.getBlackPlayerName());
+
         if(winner == null){
-            resultsTable.put(game.getRedPlayerName(),resultsTable.get(game.getRedPlayerName()) + 1);
-            resultsTable.put(game.getBlackPlayerName(),resultsTable.get(game.getBlackPlayerName())+1);
-        }
-        else if(winner == Colour.RED){
-            resultsTable.put(game.getRedPlayerName(),resultsTable.get(game.getRedPlayerName())+2);
+
+            resultsTable.replace(game.getRedPlayerName(),oldRedValue, oldRedValue + 1 );
+            resultsTable.replace(game.getBlackPlayerName(), oldBlackValue, oldBlackValue + 1);
+
+        } else if(winner == Colour.RED){
+
+            resultsTable.replace(game.getRedPlayerName(), oldRedValue, oldRedValue + 2);
         }
         else{
-            resultsTable.put(game.getBlackPlayerName(),resultsTable.get(game.getBlackPlayerName())+2);
+            resultsTable.replace(game.getRedPlayerName(),oldBlackValue, oldBlackValue + 2 );
         }
     }
 
