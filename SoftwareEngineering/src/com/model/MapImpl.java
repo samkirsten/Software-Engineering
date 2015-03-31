@@ -26,6 +26,14 @@ public class MapImpl implements Map{
         return result;
         
     }
+
+    public void emptyMap(){
+        for(int y = 0; y < 150; y++) {
+            for (int x = 0; x < 150; x++) {
+                map[x][y] = new CellImpl();
+            }
+        }
+    }
     
     @Override
     public void generateMap() {

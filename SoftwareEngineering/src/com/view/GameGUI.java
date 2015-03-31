@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GameGUI extends JFrame implements ActionListener {
 
-    private static Cell[][] map;
+    private static Cell[][] map = new CellImpl[150][150];
     private Map Map;
     private int currentRound = 0;
     private Game game;
@@ -60,21 +60,19 @@ public class GameGUI extends JFrame implements ActionListener {
     public GameGUI(Tournament t){
         super("Software Engineering");
 
+        Map maap = new MapImpl();
+        maap.emptyMap();
+        map = maap.getMap();
+
         tournament = t;
         controller = new ControllerImpl();
 
+
         CreateUI();
+
     }
 
-    public GameGUI(){
-        super("Software Engineering");
 
-        list.add(0);
-        list.add(1);
-        list.add(2);
-        list.add(4);
-        CreateUI();
-    }
 
     private void CreateUI(){
 
@@ -295,8 +293,7 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        Tournament t = new TournamentImpl();
-        new GameGUI(t);
+        new GameGUI(new TournamentImpl());
 
     }
 
@@ -305,7 +302,10 @@ public class GameGUI extends JFrame implements ActionListener {
         String n = e.getActionCommand();
 
         if(n == "start game"){
-            this.game.start();
+            System.out.println("Being pressed");
+            updateGUI(game);
+            controller.startGame(game);
+
         }
 
 
@@ -360,6 +360,8 @@ public class GameGUI extends JFrame implements ActionListener {
                             if(map[i][j].getAnt().getColour() == Colour.BLACK){
                                 ci.drawHex(i, j, g2, new Color(10, 30, 50));
                             }
+                        }else{
+
                         }
                     }catch (AntNotFoundException e){
                         e.printStackTrace();
@@ -470,6 +472,7 @@ public class GameGUI extends JFrame implements ActionListener {
         player2.setBounds(50, 60, 80, 30);
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
 
                 String name = n2.getText();
                 if (!playerNames.containsValue(name)){

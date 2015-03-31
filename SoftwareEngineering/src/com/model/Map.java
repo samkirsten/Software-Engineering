@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface Map {
 
+
+    public void emptyMap();
     /**
      * Generates a pseudo-random map which is 150x150 in size
      * With terrain and food
