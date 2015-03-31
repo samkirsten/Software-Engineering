@@ -15,17 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class GameTest {
 
     // making loadBrain private?
-//    @Test
-//    public void loadBrainTest(){
-//        File brainFile = new File("brains/brain1.txt");
-//        Colony c = new ColonyImpl(Colour.RED);
-//        Map m  = new MapImpl();
-//        File brainFile1 = new File("brains/brain1.txt");
-//        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
-//      //  game.getColony(Colour.RED);
-//       // System.out.println(game.loadBrain(brainFile,Colour.RED));
-//        assertTrue(game.loadBrain(brainFile, Colour.RED));
-//    }
+    @Test
+    public void loadBrainTest(){
+        File brainFile = new File("brains/brain1.txt");
+        Colony c = new ColonyImpl(Colour.RED);
+        Map m  = new MapImpl();
+        File brainFile1 = new File("brains/brain1.txt");
+        Game game = new GameImpl(brainFile,"1",brainFile1,"2",null,m);
+      //  game.getColony(Colour.RED);
+       // System.out.println(game.loadBrain(brainFile,Colour.RED));
+        assertTrue(game.loadBrain(brainFile, Colour.RED));
+    }
 
     @Test
     public void testSetup() {
