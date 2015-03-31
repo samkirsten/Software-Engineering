@@ -1,15 +1,15 @@
 package com.view;
 
 import com.model.*;
-<<<<<<< HEAD
+
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-=======
+
 import com.model.exceptions.AntNotFoundException;
 
->>>>>>> origin/master
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
