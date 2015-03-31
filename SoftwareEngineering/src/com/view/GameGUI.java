@@ -63,6 +63,7 @@ public class GameGUI extends JFrame implements ActionListener {
         tournament = t;
         controller = new ControllerImpl();
 
+        
         CreateUI();
     }
 
@@ -667,6 +668,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
 
 
+                
             }
         });
         gameButton.add(singleGameButton);
@@ -693,6 +695,7 @@ public class GameGUI extends JFrame implements ActionListener {
                                 Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                             }
                         }
+<<<<<<< Updated upstream
                     } else {
                         if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
                             for (int a = 0; a < playerNames.size() + 2; a++) {
@@ -716,8 +719,34 @@ public class GameGUI extends JFrame implements ActionListener {
 
                         }
                     }
+=======
+                            }else{
+                                if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                                    for (int a = 0; a < playerNames.size() + 2; a++) {
+                                        for (int b = a + 1; b < playerNames.size(); b++) {
+                                            System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
+                                            Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
 
+                                            Blist.get(k).setEnabled(true);
+                                            System.out.println(k);
+                                            k++;
+                                        }
+                                    }
 
+                                    tab.setEnabledAt(1, true);
+
+                                    tab.setSelectedIndex(1);
+                                    controller.createFixtures(inputBrains, tournament);
+
+                                } else {
+                                    instruction.setText("Please make sure all the brain is loaded!");
+                                    instruction.setForeground(Color.RED);
+>>>>>>> Stashed changes
+
+                                }
+                            }
+
+<<<<<<< Updated upstream
                 }
             }
         });
@@ -728,6 +757,18 @@ public class GameGUI extends JFrame implements ActionListener {
                         public void actionPerformed(ActionEvent event) {
                             //make fixtures
 
+=======
+
+                        }
+                    }
+
+                    JButton clear = new JButton("Clear All");
+                    clear.addActionListener(new ActionListener() {
+
+                        public void actionPerformed(ActionEvent event) {
+                            //make fixtures
+
+>>>>>>> Stashed changes
                             playerNames = new HashMap<Integer, String>();
                             inputBrains = new HashMap<String, File>();
                             playerNamesOrder = new ArrayList<String>();
@@ -761,11 +802,19 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadPanel.add(clear);
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                     setTitle("Please load your brains");
                     setSize(600, 400);
                     setLocationRelativeTo(null);
                     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 }
             }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 
