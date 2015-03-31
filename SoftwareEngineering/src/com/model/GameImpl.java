@@ -37,7 +37,7 @@ public class GameImpl implements Game {
         redPlayerName = name1;
         blackPlayerName = name2;
         this.map = map;
-        map.clearMap();
+       // map.clearMap();
         setup();
     }
 

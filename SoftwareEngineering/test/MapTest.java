@@ -24,12 +24,40 @@ public class MapTest {
         MapImpl m = new MapImpl();
         m.generateMap();
         Cell[][] m1 =  m.getMap();
+        Position p = new Position(1,1);
+        Position p1 = new Position(1,2);
+        Position p2= new Position(1,3);
+        Position p3 = new Position(1,4);
+        Ant a = new AntImpl(1,Colour.RED,p);
+        Ant a1 = new AntImpl(2,Colour.RED,p1);
+        Ant a2= new AntImpl(3,Colour.RED,p2);
+        Ant a3 = new AntImpl(4,Colour.RED,p3);
+        try {
+            m.setAntAtCell(p,a);
+            m.setAntAtCell(p1,a1);
+            m.setAntAtCell(p2,a2);
+            m.setAntAtCell(p3,a3);
+        } catch (CellAlreadyOccupiedException e) {
+            e.printStackTrace();
+        }
+
+
+        assertEquals(a,m.getAntAtCell(p));
+        assertEquals(a1,m.getAntAtCell(p1));
+        assertEquals(a2,m.getAntAtCell(p2));
+        assertEquals(a3,m.getAntAtCell(p3));
         m.clearMap();
+
+        assertEquals(null,m.getAntAtCell(p));
+        assertEquals(null,m.getAntAtCell(p1));
+        assertEquals(null,m.getAntAtCell(p2));
+        assertEquals(null,m.getAntAtCell(p3));
+
         Cell[][] m2 = m.getMap();
 
-        for(int a = 0; a < 150; a++){
+        for(int x = 0; x < 150; x++){
             for(int b = 0; b < 150; b++){
-                assertEquals(m1[a][b].getContents(),m2[a][b].getContents());
+                assertEquals(m1[x][b].getContents(),m2[x][b].getContents());
             }
         }
 
