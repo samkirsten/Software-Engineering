@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class MapTest {
 
-    @Test
+    @Test // should also test the rocky borders
     public void testGenerateMapTest(){
         MapImpl m = new MapImpl();
         m.generateMap();
@@ -18,7 +18,7 @@ public class MapTest {
         assertEquals(m.getArray("food"),275);
     }
 
-    @Test
+    @Test // this test is wrong
     public void testClearMap(){
         MapImpl m = new MapImpl();
         m.generateMap();
@@ -34,7 +34,7 @@ public class MapTest {
 
     }
 
-    @Test
+    @Test // should also check if a empty cell is rocky and should return false
     public void testSellIsRocky(){
         MapImpl m = new MapImpl();
         m.generateMap();
@@ -47,7 +47,7 @@ public class MapTest {
         assertTrue(map[5][5].isRocky());
     }
 
-    @Test
+    @Test  // also test up to 9  and test invalid contents
     public void testCellContent() throws InvalidContentCharacterException {
         MapImpl m = new MapImpl();
         m.generateMap();
