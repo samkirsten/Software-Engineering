@@ -694,6 +694,8 @@ public class GameGUI extends JFrame implements ActionListener {
                             for (int b = a + 1; b < playerNames.size(); b++) {
                                 System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
                                 Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
+                                Blist.get(k).setEnabled(true);
+                                k++;
                             }
                         }
 
