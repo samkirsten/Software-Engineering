@@ -90,6 +90,8 @@ public class GameGUI extends JFrame implements ActionListener {
         tab.addTab("Load Brain Page", loadPanel);
         tab.addTab("Game Page", container);
         setContentPane(tab);
+        tab.setEnabledAt(1,false);
+
 
 
     }
@@ -615,6 +617,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
                 if (isSingleGame && p1Ready && p2Ready){
                     instruction.setText("Games is ready to start !");
+                    tab.setEnabledAt(1,true);
                     tab.setSelectedIndex(1);
                 }else{
                     if (!isSingleGame && p1Ready&&p2Ready&&p3Ready&&p4Ready){
@@ -628,8 +631,10 @@ public class GameGUI extends JFrame implements ActionListener {
                             }
                         }
 
+                        tab.setEnabledAt(1,true);
 
                         tab.setSelectedIndex(1);
+                        controller.createFixtures(inputBrains,tournament );
 
                     }else{
                         instruction.setText("Please make sure all the brain is loaded!");
