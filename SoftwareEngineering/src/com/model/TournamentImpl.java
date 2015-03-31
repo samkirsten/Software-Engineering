@@ -126,15 +126,15 @@ public class TournamentImpl implements Tournament {
 
         if(winner == null){
 
-            resultsTable.replace(game.getRedPlayerName(),oldRedValue, oldRedValue + 1 );
-            resultsTable.replace(game.getBlackPlayerName(), oldBlackValue, oldBlackValue + 1);
+            resultsTable.put(game.getRedPlayerName(), oldRedValue + 1 );
+            resultsTable.put(game.getBlackPlayerName(), oldBlackValue + 1);
 
         } else if(winner == Colour.RED){
 
-            resultsTable.replace(game.getRedPlayerName(), oldRedValue, oldRedValue + 2);
+            resultsTable.put(game.getRedPlayerName(), oldRedValue + 2);
         }
         else{
-            resultsTable.replace(game.getRedPlayerName(),oldBlackValue, oldBlackValue + 2 );
+            resultsTable.put(game.getRedPlayerName(), oldBlackValue + 2 );
         }
     }
 
