@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GameGUI extends JFrame implements ActionListener {
 
@@ -34,10 +35,16 @@ public class GameGUI extends JFrame implements ActionListener {
     private JPanel menuPanel, tablePanel, mapPanel, rankPanel,fixturePanel, loadPanel;
     private Container container;
     private JTabbedPane tab;
+    private JDialog gameover;
+
+    private List<Game> loadedGames = new ArrayList<>();
 
     public HashMap<String,File> inputBrains;
     public ArrayList<String> playerNamesOrder;
     public HashMap<Integer,String> playerNames;
+
+    //fixtures list
+    private List<Game> fixtures = new ArrayList<>();
 
     //indicators for brain loading status
     private Boolean isSingleGame ;
@@ -101,7 +108,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private void createMenuPanel(){
         menuPanel = new JPanel();
         menuPanel.setLayout(new FlowLayout());
-        startGame = new JButton("start game");
+        startGame = makeButton("start game");
         gameStatus = new JLabel("No Brains Loaded");
         menuPanel.add(startGame);
         menuPanel.add(gameStatus);
@@ -109,6 +116,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
         container.add(menuPanel, BorderLayout.NORTH);
     }
+
 
 
 
@@ -125,7 +133,9 @@ public class GameGUI extends JFrame implements ActionListener {
         fixturePanel = new JPanel();
         fixturePanel.setBorder(new TitledBorder (new LineBorder (Color.black, 5),"Tournament Fixture"));
         fixturePanel.setLayout (new BoxLayout (fixturePanel, BoxLayout.Y_AXIS));
+
         //fixturePanel.add(makeButton("Setting up the Matches"));
+
         fixturePanel.add(b1);Blist.add(b1);
         fixturePanel.add(b2);Blist.add(b2);
         fixturePanel.add(b3);Blist.add(b3);
@@ -138,6 +148,13 @@ public class GameGUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(fixtures.size() >= 2){
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(0));
+                    loadedGames.add(fixtures.get(1));
+                    game = fixtures.get(0);
+                    updateGUI(loadedGames.get(0));
+                }
                 b1.setEnabled(false);
 
             }
@@ -146,6 +163,14 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if(fixtures.size() >= 4){
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(2));
+                    loadedGames.add(fixtures.get(3));
+                    game = fixtures.get(10);
+                    updateGUI(loadedGames.get(0));
+                }
                 b2.setEnabled(false);
 
             }
@@ -155,6 +180,13 @@ public class GameGUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(fixtures.size() >= 6){
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(4));
+                    loadedGames.add(fixtures.get(5));
+                    game = fixtures.get(10);
+                    updateGUI(loadedGames.get(0));
+                }
                 b3.setEnabled(false);
 
             }
@@ -163,6 +195,14 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if(fixtures.size() >= 8){
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(6));
+                    loadedGames.add(fixtures.get(7));
+                    game = fixtures.get(10);
+                    updateGUI(loadedGames.get(0));
+                }
                 b4.setEnabled(false);
 
             }
@@ -171,17 +211,28 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(fixtures.size() == 10) {
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(8));
+                    loadedGames.add(fixtures.get(9));
+                    game = fixtures.get(8);
+                    updateGUI(loadedGames.get(0));
+                }
                 b5.setEnabled(false);
-
             }
         });
         b6.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(fixtures.size() == 12){
+                        loadedGames.clear();
+                        loadedGames.add(fixtures.get(10));
+                        loadedGames.add(fixtures.get(11));
+                        game = fixtures.get(10);
+                        updateGUI(loadedGames.get(0));
+                }
                 b6.setEnabled(false);
-
-
             }
         });
 
@@ -224,6 +275,19 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
+    public void signalGameEnd(Game game){
+        loadedGames.remove(game);
+        controller.updateScores(game,tournament);
+        if(loadedGames.size()==1) {
+            JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
+            updateGUI(loadedGames.get(0));
+            this.game = loadedGames.get(0);
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Second round over, thanks for playing!");
+        }
+    }
+
     public void updateGUI(Game game) {
         Map = game.getMap();
         map = Map.getMap();
@@ -231,30 +295,19 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        MapImpl m = new MapImpl();
-        m.generateMap();
-        map = m.getMap();
-        new GameGUI();
+        Tournament t = new TournamentImpl();
+        new GameGUI(t);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int k = 0; String bu = "b";
         String n = e.getActionCommand();
 
-        if(n == "Setting up the Matches"){
-            for(int a = 0; a < list.size()-1;a++){
-                for(int b= a+1; b < list.size() ; b++){
-                    System.out.println(a + " " + b);
-                    Blist.get(k).setText(a + " vs " + b	);
-                    Blist.get(k).setEnabled(true);
-                    System.out.println(k);
-                    k++;
-                }
-            }
-
+        if(n == "start game"){
+            this.game.start();
         }
+
 
     }
 
@@ -317,7 +370,7 @@ public class GameGUI extends JFrame implements ActionListener {
         }
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(630, 653);
+            return new Dimension(730, 653);
         }
 
 
@@ -611,40 +664,38 @@ public class GameGUI extends JFrame implements ActionListener {
         makeFixtures.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-            //make fixtures
-                int k = 0; String bu = "b";
+                //make fixtures
+                int k = 0;
+                String bu = "b";
 
 
-                if (isSingleGame && p1Ready && p2Ready){
+                if (isSingleGame && p1Ready && p2Ready) {
                     instruction.setText("Games is ready to start !");
-                    tab.setEnabledAt(1,true);
+                    tab.setEnabledAt(1, true);
                     tab.setSelectedIndex(1);
-                }else{
-                    if (!isSingleGame && p1Ready&&p2Ready&&p3Ready&&p4Ready){
-                        for(int a = 0; a < playerNames.size()+2;a++){
-                            for(int b= a+1; b < playerNames.size() ; b++){
-                                System.out.println(playerNames.get(a+1) + " " + playerNames.get(b+1));
-                                Blist.get(k).setText(playerNames.get(a+1) + " vs " +  playerNames.get(b+1)	);
+                } else {
+                    if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                        for (int a = 0; a < playerNames.size() + 2; a++) {
+                            for (int b = a + 1; b < playerNames.size(); b++) {
+                                System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
+                                Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                                 Blist.get(k).setEnabled(true);
                                 System.out.println(k);
                                 k++;
                             }
                         }
 
-                        tab.setEnabledAt(1,true);
+                        tab.setEnabledAt(1, true);
 
                         tab.setSelectedIndex(1);
-                        controller.createFixtures(inputBrains,tournament );
+                        controller.createFixtures(inputBrains, tournament);
 
-                    }else{
+                    } else {
                         instruction.setText("Please make sure all the brain is loaded!");
                         instruction.setForeground(Color.RED);
 
                     }
                 }
-
-
-
 
 
             }

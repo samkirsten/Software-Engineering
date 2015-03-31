@@ -56,6 +56,8 @@ public class GameImpl implements Game {
             if(i % 100 == 0)
                 gui.updateGUI(this);
         }
+
+        gui.signalGameEnd(this);
     }
 
 

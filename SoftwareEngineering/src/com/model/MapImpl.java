@@ -121,20 +121,20 @@ public class MapImpl implements Map{
                         try {
                             BLACK.add(createPosition(x+i-(a/2),y-6+a));
                             BLACK.add(createPosition(x+i-(a/2),y+6-a));
+                            BLACKHILL.add(cell);
+                            BLACKHILL.add(cell1);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                        BLACKHILL.add(cell);
-                        BLACKHILL.add(cell1);
                     }else if(team == '+'){
                         try {
                             RED.add(createPosition(x+i-(a/2),y-6+a));
                             RED.add(createPosition(x+i-(a/2),y+6-a));
+                            REDHILL.add(cell);
+                            REDHILL.add(cell1);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                        REDHILL.add(cell);
-                        REDHILL.add(cell1);
                     }
                 }else{  // a == 6
                     cell = map[x+i-(a/2)][y-6+a];
@@ -142,17 +142,17 @@ public class MapImpl implements Map{
                     if(team == '-'){
                         try {
                             BLACK.add(createPosition(x+i-(a/2),y-6+a));
+                            BLACKHILL.add(cell);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                        BLACKHILL.add(cell);
                     }else if(team == '+'){
                         try {
                             RED.add(createPosition(x+i-(a/2),y-6+a));
+                            REDHILL.add(cell);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                        REDHILL.add(cell);
                     }
                 }
             }
