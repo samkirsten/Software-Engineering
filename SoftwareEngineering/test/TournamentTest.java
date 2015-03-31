@@ -35,8 +35,10 @@ public class TournamentTest {
        Tournament testT = new TournamentImpl();
 
        testList= testT.createFixtures(test);
-
+        //System.out.println();
        assertEquals("1",testList.get(0).getRedPlayerName());
+       assertEquals("2",testList.get(0).getBlackPlayerName());
+
 
 
 
