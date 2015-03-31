@@ -1,7 +1,8 @@
 package com.view;
 
+import com.controller.GameController;
 import com.model.*;
-
+import com.controller.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -45,14 +46,15 @@ public class GameGUI extends JFrame implements ActionListener {
     private Boolean p3Ready ;
     private Boolean p4Ready ;
 
+    private Tournament tournament;
+    private GameController controller;
+
 
     public GameGUI(Tournament t){
         super("Software Engineering");
 
-        list.add(0);
-        list.add(1);
-        list.add(2);
-        list.add(4);
+        tournament = t;
+        controller = new ControllerImpl();
 
         CreateUI();
     }
@@ -134,6 +136,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 b1.setEnabled(false);
 
             }
@@ -150,6 +153,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 b3.setEnabled(false);
 
             }
