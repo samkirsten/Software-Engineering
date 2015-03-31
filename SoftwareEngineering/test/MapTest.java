@@ -24,7 +24,7 @@ public class MapTest {
         MapImpl m = new MapImpl();
         m.generateMap();
         Cell[][] m1 =  m.getMap();
-<<<<<<< Updated upstream
+
         Position p = new Position(1,1);
         Position p1 = new Position(1,2);
         Position p2= new Position(1,3);
@@ -47,9 +47,7 @@ public class MapTest {
         assertEquals(a1,m.getAntAtCell(p1));
         assertEquals(a2,m.getAntAtCell(p2));
         assertEquals(a3,m.getAntAtCell(p3));
-=======
 
->>>>>>> Stashed changes
         m.clearMap();
 
         assertEquals(null,m.getAntAtCell(p));
