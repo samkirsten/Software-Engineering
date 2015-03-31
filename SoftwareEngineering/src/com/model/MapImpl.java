@@ -172,7 +172,7 @@ public class MapImpl implements Map{
         if(Case == 0){
             for(int a = 0; a < 5 ; a++){
                 for(int b = 0; b < 5; b++){
-                    map[x+b+(a/2)][y+a].setContents('9');
+                    map[x+b+(a/2)][y+a].setContents('5');
                     Foodblob.add(map[x+b+(a/2)][y+a]);
                 }
             }
@@ -185,7 +185,7 @@ public class MapImpl implements Map{
         if(Case == 1){  // left side
             for(int a = 0; a < 5; a ++) {
                 for (int b = 0; b < 5; b++) {
-                    if(map[x+b-(a/2)][y+a].getContents() != '.' || Foodblob.contains(map[x+b-(a/2)][y+a])){
+                    if(map[x+b-(a/2)][y+a].getContents() != '.' || Foodblob.contains(map[x+b-(a/2)][y+a]) || REDHILL.contains(map[x+b-(a/2)][y+a]) || BLACKHILL.contains(map[x+b-(a/2)][y+a])){
                         result = false;
                         break;
                     }
@@ -196,7 +196,7 @@ public class MapImpl implements Map{
         else if(Case == 0){
             for(int a = 0; a < 5; a ++) {
                 for (int b = 0; b < 5; b++) {
-                    if(map[x+b+(a/2)][y].getContents() != '.' || Foodblob.contains(map[x+b+(a/2)][y+a]) ){
+                    if(map[x+b+(a/2)][y].getContents() != '.' || Foodblob.contains(map[x+b+(a/2)][y+a])|| REDHILL.contains(map[x+b+(a/2)][y+a]) || BLACKHILL.contains(map[x+b+(a/2)][y+a]) ){
                         result = false;
                         break;
                     }
