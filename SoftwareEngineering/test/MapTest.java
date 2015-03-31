@@ -16,7 +16,7 @@ public class MapTest {
         assertEquals(127,m.getArray("red"));
         assertEquals(127,m.getArray("black"));
         assertEquals(275,m.getArray("food"));
-        assertEquals(460,m.getArray("rocky"));
+        assertEquals(610,m.getArray("rocky"));
     }
 
     @Test // this test is wrong
@@ -24,6 +24,7 @@ public class MapTest {
         MapImpl m = new MapImpl();
         m.generateMap();
         Cell[][] m1 =  m.getMap();
+<<<<<<< Updated upstream
         Position p = new Position(1,1);
         Position p1 = new Position(1,2);
         Position p2= new Position(1,3);
@@ -46,6 +47,9 @@ public class MapTest {
         assertEquals(a1,m.getAntAtCell(p1));
         assertEquals(a2,m.getAntAtCell(p2));
         assertEquals(a3,m.getAntAtCell(p3));
+=======
+
+>>>>>>> Stashed changes
         m.clearMap();
 
         assertEquals(null,m.getAntAtCell(p));
@@ -145,7 +149,7 @@ public class MapTest {
         Ant ant3 = new AntImpl(1, Colour.RED,new Position(6,5));
         Ant ant4 = new AntImpl(1, Colour.RED,new Position(5,4));
 
-        m.setAntAtCell(new Position(5,5),ant1);
+        m.setAntAtCell(new Position(5, 5), ant1);
         assertEquals(0, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
         m.setAntAtCell(new Position(4, 5), ant2);
         assertEquals(1, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
