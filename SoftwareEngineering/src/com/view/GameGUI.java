@@ -63,8 +63,10 @@ public class GameGUI extends JFrame implements ActionListener {
         Map maap = new MapImpl();
         maap.emptyMap();
         map = maap.getMap();
+        System.out.println("GUI HASH"+this.hashCode());
 
         tournament = t;
+        t.setGUI(this);
         controller = new ControllerImpl();
 
 
@@ -145,13 +147,14 @@ public class GameGUI extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                System.out.println(fixtures.size());
                 if(fixtures.size() >= 2){
+
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(0));
                     loadedGames.add(fixtures.get(1));
-                    game = fixtures.get(0);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                  //  updateGUI(loadedGames.get(0));
                 }
                 b1.setEnabled(false);
 
@@ -287,14 +290,23 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public void updateGUI(Game game) {
+        System.out.println("GETTING UPDATED");
         Map = game.getMap();
         map = Map.getMap();
-        menuPanel = new Graphic();
+        container.remove(mapPanel);
+        mapPanel = new Graphic();
+        mapPanel.revalidate();
+        mapPanel.repaint();
+        tab.revalidate();
+        tab.repaint();
+        container.add(mapPanel, BorderLayout.CENTER);
+        container.revalidate();
+        container.repaint();
     }
 
     public static void main(String[] args) {
-        new GameGUI(new TournamentImpl());
-
+        Tournament t = new TournamentImpl();
+        GameGUI gui = new GameGUI(t);
     }
 
     @Override
@@ -303,7 +315,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
         if(n == "start game"){
             System.out.println("Being pressed");
-            updateGUI(game);
             controller.startGame(game);
 
         }
@@ -319,8 +330,10 @@ public class GameGUI extends JFrame implements ActionListener {
 
     class Graphic extends JPanel {
 
+
+
         @Override
-        protected void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
@@ -355,10 +368,10 @@ public class GameGUI extends JFrame implements ActionListener {
                             ci.drawHex(i, j, g2, new Color(218, 255, 221));
                         } else if (map[i][j].getAnt() != null) {
                             if(map[i][j].getAnt().getColour() == Colour.RED){
-                                ci.drawHex(i, j, g2, new Color(252, 80, 0));
+                                ci.drawHex(i, j, g2, new Color(252, 227, 39));
                             }
                             if(map[i][j].getAnt().getColour() == Colour.BLACK){
-                                ci.drawHex(i, j, g2, new Color(10, 30, 50));
+                                ci.drawHex(i, j, g2, new Color(205, 97, 139));
                             }
                         }else{
 

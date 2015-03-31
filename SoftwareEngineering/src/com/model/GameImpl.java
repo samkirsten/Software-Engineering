@@ -19,24 +19,28 @@ public class GameImpl implements Game {
     GameGUI gui;
 
     public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui){
-        loadBrain(brain1,Colour.RED);
-        loadBrain(brain2, Colour.BLACK);
+
         red = new ColonyImpl(Colour.RED);
         black = new ColonyImpl(Colour.BLACK);
+        loadBrain(brain1,Colour.RED);
+        loadBrain(brain2, Colour.BLACK);
         redPlayerName = name1;
         blackPlayerName = name2;
+        this.gui = gui;
         map.generateMap();
         setup();
     }
 
     public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui, Map map){
-        loadBrain(brain1,Colour.RED);
-        loadBrain(brain2,Colour.BLACK);
+
         red = new ColonyImpl(Colour.RED);
         black = new ColonyImpl(Colour.BLACK);
+        loadBrain(brain1,Colour.RED);
+        loadBrain(brain2,Colour.BLACK);
         redPlayerName = name1;
         blackPlayerName = name2;
         this.map = map;
+        this.gui = gui;
         map.clearMap();
         setup();
     }
@@ -52,9 +56,18 @@ public class GameImpl implements Game {
     @Override
     public void start(){
         for(int i=0;i<Game.NUMBER_OF_ROUNDS;i++){
+       //     System.out.println("Current Round "+i);
             nextRound();
-            if(i % 100 == 0)
+            if(i % 1000 == 0) {
+                System.out.println("RED ANTS "+getColony(Colour.RED).getNumberOfAnts());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("RETURNED GUI"+gui.hashCode());
                 gui.updateGUI(this);
+            }
         }
 
         gui.signalGameEnd(this);
@@ -64,20 +77,21 @@ public class GameImpl implements Game {
 
     @Override
     public boolean loadBrain(File brain, Colour colour) {
-        red = new ColonyImpl(colour);
-        black = new ColonyImpl(colour);
 
 
-        Brain brainClass = new BrainImpl(map,getColony(colour));
+
+        Brain brainClass;
         boolean passed = true;
 
         if(colour == Colour.RED){
+            brainClass = new BrainImpl(map,red);
             passed = brainClass.loadBrain(brain);
             if(passed){
                 red.setBrain(brainClass);
             }
         }
         else{
+            brainClass = new BrainImpl(map,red);
             passed = brainClass.loadBrain(brain);
             if(passed){
                 black.setBrain(brainClass);
@@ -123,8 +137,7 @@ public class GameImpl implements Game {
         List<Position> redHill = map.getAntHill(Colour.RED);
         List<Position> blackHill = map.getAntHill(Colour.BLACK);
 
-        red.reset();
-        black.reset();
+
 
         int id = 0;
 

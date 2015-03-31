@@ -13,10 +13,12 @@ public class TournamentImpl implements Tournament {
     private List<Game> fixtures = new ArrayList<>();
     private GameGUI gui;
 
+
+
     @Override
     public List<Game> createFixtures(HashMap<String,File> brains) {
 
-
+        this.gui = gui;
         List<String> names = new ArrayList<>(brains.keySet());
         List<File> brainFiles = new ArrayList<>();
 
@@ -126,7 +128,7 @@ public class TournamentImpl implements Tournament {
 
         if(winner == null){
 
-            resultsTable.put(game.getRedPlayerName(), oldRedValue + 1 );
+            resultsTable.put(game.getRedPlayerName(), oldRedValue + 1);
             resultsTable.put(game.getBlackPlayerName(), oldBlackValue + 1);
 
         } else if(winner == Colour.RED){
@@ -134,7 +136,7 @@ public class TournamentImpl implements Tournament {
             resultsTable.put(game.getRedPlayerName(), oldRedValue + 2);
         }
         else{
-            resultsTable.put(game.getRedPlayerName(), oldBlackValue + 2 );
+            resultsTable.put(game.getRedPlayerName(), oldBlackValue + 2);
         }
     }
 
@@ -142,6 +144,11 @@ public class TournamentImpl implements Tournament {
     @Override
     public HashMap<String, Integer> getResults() {
         return resultsTable;
+    }
+
+    @Override
+    public void setGUI(GameGUI gui) {
+        this.gui = gui;
     }
 
 }

@@ -22,7 +22,7 @@ public class BrainImpl implements Brain {
     private File loadedFile;
     private int flipCounter =0;
 
-    public ArrayList<List<String>> state = new ArrayList<>();
+    public ArrayList<ArrayList<String>> state = new ArrayList<>();
 
 
 
@@ -535,6 +535,7 @@ public class BrainImpl implements Brain {
                     } catch (AntNotFoundException e) {
                         e.printStackTrace();
                     }
+                //    System.out.println(state.get(currentState));
                     String command = state.get(currentState).get(0);
 
 
@@ -767,7 +768,6 @@ public class BrainImpl implements Brain {
 
                         if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){ // maybe have a method in map that returns a boolean if a cell has ant
 
-                            System.out.println(Integer.parseInt(state.get(currentState).get(2)));
                             a.setState(Integer.parseInt(state.get(currentState).get(2)));
 
                         }else{
