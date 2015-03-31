@@ -17,15 +17,19 @@ public interface Game {
 
     public void nextRound();
 
-    public String getBlackPlayerName();
-
-    public String getRedPlayerName();
+//    public String getBlackPlayerName();
+//
+//    public String getRedPlayerName();
 
     public int getCurrentRound();
 
     public Colour getWinner();
 
     public void start();
+
+    public String getBlackPlayerName();
+
+    public String getRedPlayerName();
 
 
 

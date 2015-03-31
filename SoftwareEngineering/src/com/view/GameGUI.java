@@ -1,10 +1,11 @@
 package com.view;
 
 import com.model.*;
+import com.model.exceptions.AntNotFoundException;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,6 +38,17 @@ public class GameGUI extends JFrame implements ActionListener {
     private Boolean p3Ready ;
     private Boolean p4Ready ;
 
+
+    public GameGUI(Tournament t){
+        super("Software Engineering");
+
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(4);
+
+        CreateUI();
+    }
 
     public GameGUI(){
         super("Software Engineering");
@@ -211,6 +223,7 @@ public class GameGUI extends JFrame implements ActionListener {
         m.generateMap();
         map = m.getMap();
         new GameGUI();
+
     }
 
     @Override
@@ -248,23 +261,51 @@ public class GameGUI extends JFrame implements ActionListener {
             super.paintComponent(g2);
             for (int j=0;j<150;j++) {
                 for (int i=0;i<150;i++) {
-                    if(map[i][j].getContents() == '+'){
-                        ci.drawHex(i,j,g2,Color.RED);
-                    }else if(map[i][j].getContents() == '-'){
-                        ci.drawHex(i,j,g2,Color.BLACK);
-                    }else if(map[i][j].getContents() == '#'){
-                        ci.drawHex(i,j,g2,Color.gray);
-                    }else if(map[i][j].getContents() == '.'){
-                        ci.drawHex(i,j,g2,Color.WHITE);
-                    }else {
-                        ci.drawHex(i,j,g2,Color.GREEN);
+                    try {
+                        if (map[i][j].getContents() == '+') {
+                            ci.drawHex(i, j, g2, Color.RED);
+                        } else if (map[i][j].getContents() == '-') {
+                            ci.drawHex(i, j, g2, Color.BLACK);
+                        } else if (map[i][j].getContents() == '#') {
+                            ci.drawHex(i, j, g2, Color.gray);
+                        } else if (map[i][j].getContents() == '.') {
+                            ci.drawHex(i, j, g2, Color.WHITE);
+                        } else if (map[i][j].getContents() == '9') {
+                            ci.drawHex(i, j, g2, new Color(1, 138, 5));
+                        } else if (map[i][j].getContents() == '8') {
+                            ci.drawHex(i, j, g2, new Color(2, 171, 23));
+                        } else if (map[i][j].getContents() == '7') {
+                            ci.drawHex(i, j, g2, new Color(1, 208, 31));
+                        } else if (map[i][j].getContents() == '6') {
+                            ci.drawHex(i, j, g2, new Color(0, 238, 38));
+                        } else if (map[i][j].getContents() == '5') {
+                            ci.drawHex(i, j, g2, new Color(4, 255, 43));
+                        } else if (map[i][j].getContents() == '4') {
+                            ci.drawHex(i, j, g2, new Color(104, 255, 120));
+                        } else if (map[i][j].getContents() == '3') {
+                            ci.drawHex(i, j, g2, new Color(147, 255, 156));
+                        } else if (map[i][j].getContents() == '2') {
+                            ci.drawHex(i, j, g2, new Color(189, 255, 194));
+                        } else if (map[i][j].getContents() == '1') {
+                            ci.drawHex(i, j, g2, new Color(218, 255, 221));
+                        } else if (map[i][j].getAnt() != null) {
+                            if(map[i][j].getAnt().getColour() == Colour.RED){
+                                ci.drawHex(i, j, g2, new Color(252, 80, 0));
+                            }
+                            if(map[i][j].getAnt().getColour() == Colour.BLACK){
+                                ci.drawHex(i, j, g2, new Color(10, 30, 50));
+                            }
+                        }
+                    }catch (AntNotFoundException e){
+                        e.printStackTrace();
                     }
+
                 }
             }
         }
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(610, 620);
+            return new Dimension(630, 653);
         }
 
 

@@ -32,8 +32,10 @@ public class MapImpl implements Map{
             for(int x = 0; x < 150; x++){
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
                     map[x][y] = new CellImpl('#');                      // The edge of com.model.Map
+                    spairMap[x][y] = new CellImpl();
                 }else{
                     map[x][y] = new CellImpl();
+                    spairMap[x][y] = new CellImpl();
                 }
             }
         }   // Setting a map.
@@ -42,11 +44,11 @@ public class MapImpl implements Map{
 
         //div1
         int x = (ran.nextInt(66)+5)*2 - 1;
-        int div1 = (ran.nextInt(31)+5)*2 - 1;
+        int div1 = (ran.nextInt(30)+5)*2 - 1;
 
         //div2
         int x1 = (ran.nextInt(66)+5)*2 - 1;
-        int div2 = (ran.nextInt(31)+42)*2 - 1;
+        int div2 = (ran.nextInt(30)+42)*2 - 1;
 
         int color = ran.nextInt(2);
         if(color == 0){
@@ -67,7 +69,7 @@ public class MapImpl implements Map{
                 foodX = (ran.nextInt(71) + 1) * 2;
                 foodY = (ran.nextInt(71) + 1) * 2;
             }
-            if(food == 1){  // x , y  are odd
+            else if(food == 1){  // x , y  are odd
                 foodX = (ran.nextInt(71) + 2) * 2 + 1;
                 foodY = (ran.nextInt(71) + 1) * 2 + 1;
             }
@@ -90,7 +92,7 @@ public class MapImpl implements Map{
 
         for(int xx = 0; xx < 150; xx++) {
             for (int yy = 0; yy < 150; yy++) {
-                spairMap[xx][yy] = map[xx][yy];
+                spairMap[xx][yy].setContents(map[xx][yy].getContents());
             }
         }
 
@@ -159,7 +161,7 @@ public class MapImpl implements Map{
             for(int a = 0; a < 5 ; a++){
                 for(int b = 0; b < 5; b++){
                     map[x+b-(a/2)][y+a].setContents('5');
-                    Foodblob.add(map[x+b-(a/2)][y]);
+                    Foodblob.add(map[x+b-(a/2)][y+a]);
                 }
             }
         }
@@ -167,8 +169,8 @@ public class MapImpl implements Map{
         if(Case == 0){
             for(int a = 0; a < 5 ; a++){
                 for(int b = 0; b < 5; b++){
-                    map[x+b+(a/2)][y+a].setContents('5');
-                    Foodblob.add(map[x+b+(a/2)][y]);
+                    map[x+b+(a/2)][y+a].setContents('9');
+                    Foodblob.add(map[x+b+(a/2)][y+a]);
                 }
             }
         }
@@ -179,8 +181,8 @@ public class MapImpl implements Map{
 
         if(Case == 1){  // left side
             for(int a = 0; a < 5; a ++) {
-                for (int i = 0; i < 5; i++) {
-                    if(REDHILL.contains(map[x+i][y+(a/2)]) || BLACKHILL.contains(map[x+i][y+(a/2)]) || Foodblob.contains(map[x+i][y+(a/2)])){
+                for (int b = 0; b < 5; b++) {
+                    if(map[x+b-(a/2)][y+a].getContents() != '.' || Foodblob.contains(map[x+b-(a/2)][y+a])){
                         result = false;
                         break;
                     }
@@ -188,10 +190,10 @@ public class MapImpl implements Map{
             }
         }
 
-        if(Case == 0){
+        else if(Case == 0){
             for(int a = 0; a < 5; a ++) {
-                for (int i = 0; i < 5; i++) {
-                    if(REDHILL.contains(map[x+i][y+(a/2)]) || BLACKHILL.contains(map[x+i][y+(a/2)]) || Foodblob.contains(map[x+i][y+(a/2)])){
+                for (int b = 0; b < 5; b++) {
+                    if(map[x+b+(a/2)][y].getContents() != '.' || Foodblob.contains(map[x+b+(a/2)][y+a]) ){
                         result = false;
                         break;
                     }
@@ -222,22 +224,22 @@ public class MapImpl implements Map{
     public int getCellScentMarker(Colour colourOfQueryingAnt, Position pos) { // swapped it around
         int value = 0;
 
-        if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
+        if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
             value = map[pos.getX()][pos.getY()].getScentMark();
         }
 
-         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
 
             value = -1;
         }
 
-         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
+         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
 
                  value = -1;
 
         }
 
-         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
             value = map[pos.getX()][pos.getY()].getScentMark();
         }
         if(map[pos.getX()][pos.getY()].getScentMark() == 0){
@@ -255,39 +257,39 @@ public class MapImpl implements Map{
     @Override
     public int getAdjacentEnemyAnts(Position pos, Colour colour) {
         int number = 0;
-
         if(pos.getY() % 2 == 1){
             if(map[pos.getX()][pos.getY()-1].getAnt() == null){
-
+                System.out.println("1");
             }
             else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()-1].getAnt() == null){
-
+                System.out.println("2");
             }
             else if(map[pos.getX()+1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()-1][pos.getY()].getAnt() == null) {
+                System.out.println("3");
             }
             else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()].getAnt() == null){
-
+                System.out.println("4");
             }
             else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()+1].getAnt() == null ){
-
+                System.out.println("5");
             }
             else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()+1].getAnt() == null){
-
+                System.out.println("6");
             }
             else if(map[pos.getX()+1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
@@ -297,37 +299,37 @@ public class MapImpl implements Map{
 
         if(pos.getY() % 2 == 0){
             if(map[pos.getX()-1][pos.getY()-1].getAnt() == null){
-
+                System.out.println("7");
             }
             else if(map[pos.getX()-1][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()-1].getAnt() == null){
-
+                System.out.println("8");
             }
             else if(map[pos.getX()][pos.getY()-1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()-1][pos.getY()].getAnt() == null){
-
+                System.out.println("9");
             }
             else if(map[pos.getX()-1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()+1][pos.getY()].getAnt() == null){
-
+                System.out.println("10");
             }
             else if(map[pos.getX()+1][pos.getY()].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()-1][pos.getY()+1].getAnt() == null){
-
+                System.out.println("11");
             }
             else if(map[pos.getX()-1][pos.getY()+1].getAnt().getColour() == colour){
                 number++;
             }
             if(map[pos.getX()][pos.getY()+1].getAnt() == null){
-
+                System.out.println("12");
             }
             else if(map[pos.getX()][pos.getY()+1].getAnt().getColour() == colour){
                 number++;

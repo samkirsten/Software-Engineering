@@ -13,9 +13,9 @@ public class MapTest {
         MapImpl m = new MapImpl();
         m.generateMap();
 
-        assertEquals(m.getArray("red"),127);
-        assertEquals(m.getArray("black"),127);
-        assertEquals(m.getArray("food"),275);
+        assertEquals(127,m.getArray("red"));
+        assertEquals(127,m.getArray("black"));
+        assertEquals(275,m.getArray("food"));
     }
 
     @Test // this test is wrong
@@ -28,7 +28,7 @@ public class MapTest {
 
         for(int a = 0; a < 150; a++){
             for(int b = 0; b < 150; b++){
-                assertEquals(m1[a][b],m2[a][b]);
+                assertEquals(m1[a][b].getContents(),m2[a][b].getContents());
             }
         }
 
@@ -117,13 +117,13 @@ public class MapTest {
         Ant ant4 = new AntImpl(1, Colour.RED,new Position(5,4));
 
         m.setAntAtCell(new Position(5,5),ant1);
-        assertEquals(0,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
-        m.setAntAtCell(new Position(4,5),ant2);
-        assertEquals(1,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
+        assertEquals(0, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
+        m.setAntAtCell(new Position(4, 5), ant2);
+        assertEquals(1, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
         m.setAntAtCell(new Position(6,5),ant3);
-        assertEquals(2,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
+        assertEquals(2,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
         m.setAntAtCell(new Position(5,4),ant4);
-        assertEquals(3,m.getAdjacentEnemyAnts(new Position(5,5),Colour.BLACK));
+        assertEquals(3,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
 
     }
 }
