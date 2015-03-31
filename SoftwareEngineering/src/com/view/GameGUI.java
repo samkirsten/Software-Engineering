@@ -66,7 +66,6 @@ public class GameGUI extends JFrame implements ActionListener {
         list.add(1);
         list.add(2);
         list.add(4);
-
         CreateUI();
     }
 
@@ -88,8 +87,8 @@ public class GameGUI extends JFrame implements ActionListener {
         setResizable(false);
         setVisible(true);
 
-        tab.addTab("Game Page", container);
         tab.addTab("Load Brain Page", loadPanel);
+        tab.addTab("Game Page", container);
         setContentPane(tab);
 
 
@@ -124,7 +123,7 @@ public class GameGUI extends JFrame implements ActionListener {
         fixturePanel = new JPanel();
         fixturePanel.setBorder(new TitledBorder (new LineBorder (Color.black, 5),"Tournament Fixture"));
         fixturePanel.setLayout (new BoxLayout (fixturePanel, BoxLayout.Y_AXIS));
-        fixturePanel.add(makeButton("Setting up the Matches"));
+        //fixturePanel.add(makeButton("Setting up the Matches"));
         fixturePanel.add(b1);Blist.add(b1);
         fixturePanel.add(b2);Blist.add(b2);
         fixturePanel.add(b3);Blist.add(b3);
@@ -606,11 +605,69 @@ public class GameGUI extends JFrame implements ActionListener {
         gameButton.add(singleGameButton);
         gameButton.add(tournamentGameButton);
 
+        JButton makeFixtures = new JButton("Create Games");
+        makeFixtures.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+            //make fixtures
+                int k = 0; String bu = "b";
+
+
+                if (isSingleGame && p1Ready && p2Ready){
+                    instruction.setText("Games is ready to start !");
+                    tab.setSelectedIndex(1);
+                }else{
+                    if (!isSingleGame && p1Ready&&p2Ready&&p3Ready&&p4Ready){
+                        for(int a = 0; a < playerNames.size()+2;a++){
+                            for(int b= a+1; b < playerNames.size() ; b++){
+                                System.out.println(playerNames.get(a+1) + " " + playerNames.get(b+1));
+                                Blist.get(k).setText(playerNames.get(a+1) + " vs " +  playerNames.get(b+1)	);
+                                Blist.get(k).setEnabled(true);
+                                System.out.println(k);
+                                k++;
+                            }
+                        }
+
+
+                        tab.setSelectedIndex(1);
+
+                    }else{
+                        instruction.setText("Please make sure all the brain is loaded!");
+                        instruction.setForeground(Color.RED);
+
+                    }
+                }
+
+
+
+
+
+            }
+        });
+
+        JButton clear = new JButton("Clear All");
+        clear.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                //make fixtures
+
+                playerNames = new HashMap<Integer, String>();
+                inputBrains = new HashMap<String, File>();
+                playerNamesOrder = new ArrayList<String>();
+                p1BrainStatus.setText("Player 1's Brain : Not loaded");
+                p2BrainStatus.setText("Player 2's Brain : Not loaded");
+                p3BrainStatus.setText("Player 3's Brain : Not loaded");
+                p4BrainStatus.setText("Player 4's Brain : Not loaded");
+            }
+        });
+
+        JLabel blank = new JLabel("");
 
         loadPanel.add(singleGameButton, SwingConstants.CENTER);
         loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
 
         loadPanel.add(instruction);
+        loadPanel.add(blank);
         loadPanel.add(n1);
         loadPanel.add(player1);
         loadPanel.add(n2);
@@ -623,6 +680,8 @@ public class GameGUI extends JFrame implements ActionListener {
         loadPanel.add(p2BrainStatus);
         loadPanel.add(p3BrainStatus);
         loadPanel.add(p4BrainStatus);
+        loadPanel.add(makeFixtures);
+        loadPanel.add(clear);
 
 
 
