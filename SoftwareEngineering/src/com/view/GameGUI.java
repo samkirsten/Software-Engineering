@@ -567,11 +567,17 @@ public class GameGUI extends JFrame implements ActionListener {
                 p4BrainStatus.setEnabled(false);
 
                 //make new brain list
-                inputBrains = new HashMap<>();
+                inputBrains = new HashMap<String, File>();
+                playerNames = new HashMap<Integer, String>();
                 p1BrainStatus.setText("Player 1's Brain : Not loaded");
                 p2BrainStatus.setText("Player 2's Brain : Not loaded");
                 p3BrainStatus.setText("Player 3's Brain : Not loaded");
                 p4BrainStatus.setText("Player 4's Brain : Not loaded");
+                p1Ready = false;
+                p2Ready = false;
+                p3Ready = false;
+                p4Ready = false;
+
             }
         });
 
@@ -594,11 +600,17 @@ public class GameGUI extends JFrame implements ActionListener {
                 p4BrainStatus.setEnabled(true);
 
                 //make new brain list
-                inputBrains = new HashMap<>();
+                inputBrains = new HashMap<String, File>();
+                playerNames = new HashMap<Integer, String>();
                 p1BrainStatus.setText("Player 1's Brain : Not loaded");
                 p2BrainStatus.setText("Player 2's Brain : Not loaded");
                 p3BrainStatus.setText("Player 3's Brain : Not loaded");
                 p4BrainStatus.setText("Player 4's Brain : Not loaded");
+
+                p1Ready = false;
+                p2Ready = false;
+                p3Ready = false;
+                p4Ready = false;
 
 
 
@@ -620,7 +632,7 @@ public class GameGUI extends JFrame implements ActionListener {
                     tab.setEnabledAt(1,true);
                     tab.setSelectedIndex(1);
                 }else{
-                    if (!isSingleGame && p1Ready&&p2Ready&&p3Ready&&p4Ready){
+                    if (!isSingleGame && p1Ready&&p2Ready&&p3Ready){
                         for(int a = 0; a < playerNames.size()+2;a++){
                             for(int b= a+1; b < playerNames.size() ; b++){
                                 System.out.println(playerNames.get(a+1) + " " + playerNames.get(b+1));
