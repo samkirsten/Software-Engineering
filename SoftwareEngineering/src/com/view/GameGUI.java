@@ -1,16 +1,21 @@
 package com.view;
 
 import com.model.*;
+<<<<<<< HEAD
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+=======
 import com.model.exceptions.AntNotFoundException;
 
+>>>>>>> origin/master
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.*;
-import javax.swing.border.*;
 
 public class GameGUI extends JFrame implements ActionListener {
 
@@ -21,6 +26,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private CellImg ci = new CellImg(3,map);
     private JButton b1, b2, b3, b4, b5, b6, startGame;
     private JTextField t1,t2,t3,t4;
+    private JTextField n1,n2,n3,n4;
     private JLabel l1, l2 , l3, l4, instruction, gameStatus;
     private ArrayList<JButton> Blist = new ArrayList<>();
     private ArrayList<Integer> list = new ArrayList<>();
@@ -29,7 +35,8 @@ public class GameGUI extends JFrame implements ActionListener {
     private JTabbedPane tab;
 
     public HashMap<String,File> inputBrains;
-    public ArrayList<String> inputNames;
+    public ArrayList<String> playerNamesOrder;
+    public HashMap<Integer,String> playerNames;
 
     //indicators for brain loading status
     private Boolean isSingleGame ;
@@ -317,11 +324,25 @@ public class GameGUI extends JFrame implements ActionListener {
 
         //lists for storing input from user
         inputBrains = new HashMap<String,File>();
-        inputNames = new ArrayList<String>();
+        playerNamesOrder = new ArrayList<String>();
+
+        n1 = new JTextField();
+        n1.setText("player1");
+
+        n2 = new JTextField();
+        n2.setText("player2");
+
+        n3 = new JTextField();
+        n3.setText("player3");
+
+        n4 = new JTextField();
+        n4.setText("player4");
+
+        playerNames = new HashMap<Integer, String>();
 
 
         //a label for instructions
-        instruction = new JLabel("players, load brain for your ants ! ", SwingConstants.CENTER);
+        instruction = new JLabel("Players, enter your names and load brain for your ants ! ", SwingConstants.CENTER);
         final JLabel p1BrainStatus = new JLabel("Player 1's Brain : Not loaded",SwingConstants.CENTER);
         final JLabel p2BrainStatus = new JLabel("Player 2's Brain : Not loaded",SwingConstants.CENTER);
         final JLabel p3BrainStatus = new JLabel("Player 3's Brain : Not loaded",SwingConstants.CENTER);
@@ -339,146 +360,191 @@ public class GameGUI extends JFrame implements ActionListener {
         loadPanel.setLayout(new GridLayout(15, 1));
 
         //make new load brain button for player 1
-        JButton player1 = new JButton("Player 1");
+        final JButton player1 = new JButton("Load Player 1's Brain");
         player1.setPreferredSize(new Dimension(10, 10));
         player1.setBounds(50, 60, 80, 30);
         player1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("Brain 1");
+                String name = n1.getText();
+                if (!playerNames.containsValue(name)){
 
 
-                Map m = new MapImpl();
-                Colony c = new ColonyImpl(Colour.BLACK);
-                Brain brain = new BrainImpl(m, c);
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new File("."));
+                    chooser.setDialogTitle("Brain 1");
 
-                //checking 1.if brain is correct; 2.if brain is duplicated
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
-                    if (inputBrains.containsValue(chooser.getSelectedFile())) {
-                        p1BrainStatus.setText("Your brain is duplicated, retry ! ");
 
-                    } else {
-                        p1BrainStatus.setText("Player1 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                        inputBrains.put("player1", chooser.getSelectedFile());
-                        if (!inputNames.contains("player1")){
-                            inputNames.add("player1");
+                    Map m = new MapImpl();
+                    Colony c = new ColonyImpl(Colour.BLACK);
+                    Brain brain = new BrainImpl(m, c);
+
+
+                    //checking 1.if brain is correct; 2.if brain is duplicated
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
+                        if (inputBrains.containsValue(chooser.getSelectedFile())) {
+                            p1BrainStatus.setText("Your brain is duplicated, retry ! ");
+
+                        } else {
+                            p1BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                            inputBrains.put(name, chooser.getSelectedFile());
+                            if (!playerNamesOrder.contains(name)){
+                                playerNamesOrder.add(name);
+                            }
+                            p1Ready = true;
+                            playerNames.put(1,name);
+
                         }
-                        p1Ready = true;
+                    } else {
+                        p1BrainStatus.setText("Your Brain is not working, retry! ");
                     }
-                } else {
-                    p1BrainStatus.setText("Your Brain is not working, retry! ");
+                }else{
+                    p1BrainStatus.setText("Duplicated names, retry ! ");
+
                 }
+
 
             }
         });
 
         //load brain button for player 2
-        JButton player2 = new JButton("Player 2");
+        JButton player2 = new JButton("Load Player 2's Brain");
         player2.setPreferredSize(new Dimension(10, 10));
         player2.setBounds(50, 60, 80, 30);
         player2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("Brain 2");
+                String name = n2.getText();
+                if (!playerNames.containsValue(name)){
 
 
-                Map m = new MapImpl();
-                Colony c = new ColonyImpl(Colour.BLACK);
-                Brain brain = new BrainImpl(m, c);
-
-                //check if brain is syntatically correct
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new File("."));
+                    chooser.setDialogTitle("Brain 2");
 
 
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
-                    if (inputBrains.containsValue(chooser.getSelectedFile())) {
-                        p2BrainStatus.setText("Your brain is duplicated, retry ! ");
+                    Map m = new MapImpl();
+                    Colony c = new ColonyImpl(Colour.BLACK);
+                    Brain brain = new BrainImpl(m, c);
 
-                    } else {
-                        p2BrainStatus.setText("Player1 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                        inputBrains.put("player2", chooser.getSelectedFile());
-                        p2Ready = true;
-                        if (!inputNames.contains("player2")){
-                            inputNames.add("player2");
+
+                    //checking 1.if brain is correct; 2.if brain is duplicated
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
+                        if (inputBrains.containsValue(chooser.getSelectedFile())) {
+                            p2BrainStatus.setText("Your brain is duplicated, retry ! ");
+
+                        } else {
+                            p2BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                            inputBrains.put(name, chooser.getSelectedFile());
+                            if (!playerNamesOrder.contains(name)){
+                                playerNamesOrder.add(name);
+                            }
+                            p2Ready = true;
+                            playerNames.put(2,name);
+
                         }
+                    } else {
+                        p2BrainStatus.setText("Your Brain is not working, retry! ");
                     }
-                } else {
-                    p2BrainStatus.setText("Your Brain is not working, retry! ");
-                }
+                }else{
+                    p2BrainStatus.setText("Duplicated names, retry ! ");
 
+                }
 
             }
         });
 
 
-        final JButton player3 = new JButton("player3");
+        //load brain button for player 3
+        final JButton player3 = new JButton("Load Player 3's Brain");
+        player3.setPreferredSize(new Dimension(10, 10));
+        player3.setBounds(50, 60, 80, 30);
         player3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("Brain 3");
+                String name = n3.getText();
+                if (!playerNames.containsValue(name)){
 
-                Map m = new MapImpl();
-                Colony c = new ColonyImpl(Colour.BLACK);
-                Brain brain = new BrainImpl(m , c);
 
-                //check if brain is syntatically correct
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new File("."));
+                    chooser.setDialogTitle("Brain 3");
 
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
-                    if(inputBrains.containsValue(chooser.getSelectedFile())){
-                        p3BrainStatus.setText("Your brain is duplicated, retry ! ");
 
-                    }else {
-                        p3BrainStatus.setText("Player3 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                        inputBrains.put("player3", chooser.getSelectedFile());
-                        p3Ready = true;
-                        if (!inputNames.contains("player3")){
-                            inputNames.add("player3");
+                    Map m = new MapImpl();
+                    Colony c = new ColonyImpl(Colour.BLACK);
+                    Brain brain = new BrainImpl(m, c);
+
+
+                    //checking 1.if brain is correct; 2.if brain is duplicated
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
+                        if (inputBrains.containsValue(chooser.getSelectedFile())) {
+                            p3BrainStatus.setText("Your brain is duplicated, retry ! ");
+
+                        } else {
+                            p3BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                            inputBrains.put(name, chooser.getSelectedFile());
+                            if (!playerNamesOrder.contains(name)){
+                                playerNamesOrder.add(name);
+                            }
+                            p3Ready = true;
+                            playerNames.put(3,name);
+
                         }
+                    } else {
+                        p3BrainStatus.setText("Your Brain is not working, retry! ");
                     }
-                } else {
-                    p3BrainStatus.setText("Your Brain is not working, retry! ");
+                }else{
+                    p3BrainStatus.setText("Duplicated names, retry ! ");
+
                 }
-
-
-
 
             }
         });
 
-        final JButton player4 = new JButton("player4");
+
+        //load brain button for player 4
+        final JButton player4 = new JButton("Load Player 4's Brain");
+        player4.setPreferredSize(new Dimension(10, 10));
+        player4.setBounds(50, 60, 80, 30);
         player4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("Brain 4");
+                String name = n4.getText();
+                if (!playerNames.containsValue(name)){
 
 
-                Map m = new MapImpl();
-                Colony c = new ColonyImpl(Colour.BLACK);
-                Brain brain = new BrainImpl(m , c);
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new File("."));
+                    chooser.setDialogTitle("Brain 4");
 
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
-                    if(inputBrains.containsValue(chooser.getSelectedFile())){
-                        p4BrainStatus.setText("Your brain is duplicated, retry ! ");
 
-                    }else {
-                        p4BrainStatus.setText("Player3 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                        inputBrains.put("player3", chooser.getSelectedFile());
-                        p4Ready = true;
-                        if (!inputNames.contains("player4")){
-                            inputNames.add("player4");
+                    Map m = new MapImpl();
+                    Colony c = new ColonyImpl(Colour.BLACK);
+                    Brain brain = new BrainImpl(m, c);
+
+
+                    //checking 1.if brain is correct; 2.if brain is duplicated
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
+                        if (inputBrains.containsValue(chooser.getSelectedFile())) {
+                            p4BrainStatus.setText("Your brain is duplicated, retry ! ");
+
+                        } else {
+                            p4BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                            inputBrains.put(name, chooser.getSelectedFile());
+                            if (!playerNamesOrder.contains(name)){
+                                playerNamesOrder.add(name);
+                            }
+                            p4Ready = true;
+                            playerNames.put(4,name);
+                            System.out.println(chooser.getSelectedFile());
                         }
+                    } else {
+                        p4BrainStatus.setText("Your Brain is not working, retry! ");
                     }
-                } else {
-                    p4BrainStatus.setText("Your Brain is not working, retry! ");
+                }else{
+                    p4BrainStatus.setText("Duplicated names, retry ! ");
+
                 }
-
-
 
             }
         });
@@ -541,9 +607,13 @@ public class GameGUI extends JFrame implements ActionListener {
         loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
 
         loadPanel.add(instruction);
+        loadPanel.add(n1);
         loadPanel.add(player1);
+        loadPanel.add(n2);
         loadPanel.add(player2);
+        loadPanel.add(n3);
         loadPanel.add(player3);
+        loadPanel.add(n4);
         loadPanel.add(player4);
         loadPanel.add(p1BrainStatus);
         loadPanel.add(p2BrainStatus);
