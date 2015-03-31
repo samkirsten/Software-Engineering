@@ -1040,6 +1040,8 @@ public class BrainTest {
 
         b.step(a.getID());
 
+        System.out.println();
+
         assertEquals(false,red.isAntAlive(1));
         System.out.println(m.getCellContents(p11));
         assertEquals('3', m.getCellContents(p11));
