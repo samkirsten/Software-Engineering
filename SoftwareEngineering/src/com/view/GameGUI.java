@@ -696,6 +696,12 @@ public class GameGUI extends JFrame implements ActionListener {
                                 Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                             }
                         }
+
+                        tab.setEnabledAt(1, true);
+
+                        tab.setSelectedIndex(1);
+                        controller.createFixtures(inputBrains, tournament);
+
                     } else {
                         if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
                             for (int a = 0; a < playerNames.size() + 2; a++) {
