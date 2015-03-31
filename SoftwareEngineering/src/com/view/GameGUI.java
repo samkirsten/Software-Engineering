@@ -226,11 +226,11 @@ public class GameGUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(fixtures.size() == 12){
-                        loadedGames.clear();
-                        loadedGames.add(fixtures.get(10));
-                        loadedGames.add(fixtures.get(11));
-                        game = fixtures.get(10);
-                        updateGUI(loadedGames.get(0));
+                    loadedGames.clear();
+                    loadedGames.add(fixtures.get(10));
+                    loadedGames.add(fixtures.get(11));
+                    game = fixtures.get(10);
+                    updateGUI(loadedGames.get(0));
                 }
                 b6.setEnabled(false);
             }
@@ -685,87 +685,87 @@ public class GameGUI extends JFrame implements ActionListener {
                     instruction.setText("Games is ready to start !");
                     tab.setEnabledAt(1, true);
                     tab.setSelectedIndex(1);
-<<<<<<< HEAD
-                }else{
-                    if (!isSingleGame && p1Ready&&p2Ready&&p3Ready){
-                        for(int a = 0; a < playerNames.size()+2;a++){
-                            for(int b= a+1; b < playerNames.size() ; b++){
-                                System.out.println(playerNames.get(a+1) + " " + playerNames.get(b+1));
-                                Blist.get(k).setText(playerNames.get(a+1) + " vs " +  playerNames.get(b+1)	);
-=======
                 } else {
-                    if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                    if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
                         for (int a = 0; a < playerNames.size() + 2; a++) {
                             for (int b = a + 1; b < playerNames.size(); b++) {
                                 System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
                                 Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
->>>>>>> origin/master
-                                Blist.get(k).setEnabled(true);
-                                System.out.println(k);
-                                k++;
                             }
                         }
-
-                        tab.setEnabledAt(1, true);
-
-                        tab.setSelectedIndex(1);
-                        controller.createFixtures(inputBrains, tournament);
-
                     } else {
-                        instruction.setText("Please make sure all the brain is loaded!");
-                        instruction.setForeground(Color.RED);
+                        if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                            for (int a = 0; a < playerNames.size() + 2; a++) {
+                                for (int b = a + 1; b < playerNames.size(); b++) {
+                                    System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
+                                    Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
+                                    Blist.get(k).setEnabled(true);
+                                    System.out.println(k);
+                                    k++;
+                                }
+                            }
 
+                            tab.setEnabledAt(1, true);
+
+                            tab.setSelectedIndex(1);
+                            controller.createFixtures(inputBrains, tournament);
+
+                        } else {
+                            instruction.setText("Please make sure all the brain is loaded!");
+                            instruction.setForeground(Color.RED);
+
+                        }
                     }
+
+
                 }
-
-
             }
         });
 
-        JButton clear = new JButton("Clear All");
-        clear.addActionListener(new ActionListener() {
+                    JButton clear = new JButton("Clear All");
+                    clear.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent event) {
-                //make fixtures
+                        public void actionPerformed(ActionEvent event) {
+                            //make fixtures
 
-                playerNames = new HashMap<Integer, String>();
-                inputBrains = new HashMap<String, File>();
-                playerNamesOrder = new ArrayList<String>();
-                p1BrainStatus.setText("Player 1's Brain : Not loaded");
-                p2BrainStatus.setText("Player 2's Brain : Not loaded");
-                p3BrainStatus.setText("Player 3's Brain : Not loaded");
-                p4BrainStatus.setText("Player 4's Brain : Not loaded");
+                            playerNames = new HashMap<Integer, String>();
+                            inputBrains = new HashMap<String, File>();
+                            playerNamesOrder = new ArrayList<String>();
+                            p1BrainStatus.setText("Player 1's Brain : Not loaded");
+                            p2BrainStatus.setText("Player 2's Brain : Not loaded");
+                            p3BrainStatus.setText("Player 3's Brain : Not loaded");
+                            p4BrainStatus.setText("Player 4's Brain : Not loaded");
+                        }
+                    });
+
+                    JLabel blank = new JLabel("");
+
+                    loadPanel.add(singleGameButton, SwingConstants.CENTER);
+                    loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
+
+                    loadPanel.add(instruction);
+                    loadPanel.add(blank);
+                    loadPanel.add(n1);
+                    loadPanel.add(player1);
+                    loadPanel.add(n2);
+                    loadPanel.add(player2);
+                    loadPanel.add(n3);
+                    loadPanel.add(player3);
+                    loadPanel.add(n4);
+                    loadPanel.add(player4);
+                    loadPanel.add(p1BrainStatus);
+                    loadPanel.add(p2BrainStatus);
+                    loadPanel.add(p3BrainStatus);
+                    loadPanel.add(p4BrainStatus);
+                    loadPanel.add(makeFixtures);
+                    loadPanel.add(clear);
+
+
+
+                    setTitle("Please load your brains");
+                    setSize(600, 400);
+                    setLocationRelativeTo(null);
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                }
             }
-        });
-
-        JLabel blank = new JLabel("");
-
-        loadPanel.add(singleGameButton, SwingConstants.CENTER);
-        loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
-
-        loadPanel.add(instruction);
-        loadPanel.add(blank);
-        loadPanel.add(n1);
-        loadPanel.add(player1);
-        loadPanel.add(n2);
-        loadPanel.add(player2);
-        loadPanel.add(n3);
-        loadPanel.add(player3);
-        loadPanel.add(n4);
-        loadPanel.add(player4);
-        loadPanel.add(p1BrainStatus);
-        loadPanel.add(p2BrainStatus);
-        loadPanel.add(p3BrainStatus);
-        loadPanel.add(p4BrainStatus);
-        loadPanel.add(makeFixtures);
-        loadPanel.add(clear);
-
-
-
-        setTitle("Please load your brains");
-        setSize(600, 400);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }
-}
 
