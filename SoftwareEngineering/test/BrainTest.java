@@ -685,9 +685,6 @@ public class BrainTest {
 
 
 
-        assertEquals(null, m11.getAntAtCell(p11));
-        assertEquals(a19,m11.getAntAtCell(p18));
-        assertEquals(0,a19.getState());
         try {
             c.remove(a19.getID());
         } catch (AntNotFoundException e) {
