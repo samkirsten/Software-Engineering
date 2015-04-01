@@ -319,8 +319,8 @@ public class GameGUI extends JFrame implements ActionListener {
         public void setMap(Cell[][] map){
             this.map = map;
             ci = new CellImg(3,map);
-            this.revalidate();
-            this.repaint();
+            if(this.getGraphics() != null)
+            this.paintComponent(this.getGraphics());
 
         }
 
