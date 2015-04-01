@@ -155,6 +155,7 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.add(fixtures.get(1));
                     game = loadedGames.get(0);
                   //  updateGUI(loadedGames.get(0));
+
                 }
                 b1.setEnabled(false);
 
@@ -297,8 +298,8 @@ public class GameGUI extends JFrame implements ActionListener {
         mapPanel = new Graphic();
         mapPanel.revalidate();
         mapPanel.repaint();
-        tab.revalidate();
-        tab.repaint();
+//        tab.revalidate();
+//        tab.repaint();
         container.add(mapPanel, BorderLayout.CENTER);
         container.revalidate();
         container.repaint();
