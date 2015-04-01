@@ -650,6 +650,7 @@ public class BrainTest {
         Position p15 = new Position(3,2); // top left
         Position p16 = new Position(4,4); // bottom right
         Position p17 = new Position(3,4); // bottom left
+        Position p18 = new Position(5,3);
 
         m11.generateMap();
         try {
@@ -659,6 +660,7 @@ public class BrainTest {
             m11.setCellContents(p15,'.');
             m11.setCellContents(p16,'.');
             m11.setCellContents(p17,'.');
+            m11.setCellContents(p18,'.');
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
@@ -672,14 +674,20 @@ public class BrainTest {
 
         m11.setAntAtCell(p11,a19);
         a19.setDirection(0);
-      //  System.out.println(a19.getDirection());
 
         b21.step(1);
+
 
         assertEquals(null, m11.getAntAtCell(p11));
         assertEquals(a19,m11.getAntAtCell(p12));
         assertEquals(0,a19.getState());
 
+
+
+
+        assertEquals(null, m11.getAntAtCell(p11));
+        assertEquals(a19,m11.getAntAtCell(p18));
+        assertEquals(0,a19.getState());
         try {
             c.remove(a19.getID());
         } catch (AntNotFoundException e) {

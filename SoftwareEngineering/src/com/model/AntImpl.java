@@ -116,7 +116,14 @@ public class AntImpl implements Ant {
      */
 
     public boolean isResting() {
-        return (resting != 0);
+
+        boolean rest = false;
+        if(resting>0&& resting<15){
+            return rest =true;
+        }
+
+        return rest;
+
     }
 
     /**
