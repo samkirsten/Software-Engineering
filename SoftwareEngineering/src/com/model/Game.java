@@ -1,5 +1,7 @@
 package com.model;
 
+import com.view.GameGUI;
+
 import java.io.File;
 
 public interface Game {
@@ -25,12 +27,14 @@ public interface Game {
 
     public Colour getWinner();
 
-    public void start();
 
     public String getBlackPlayerName();
 
     public String getRedPlayerName();
 
+    public GameGUI getGUI();
+
+    public void start();
 
 
 

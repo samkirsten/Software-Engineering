@@ -21,18 +21,17 @@ import java.util.List;
 
 public class GameGUI extends JFrame implements ActionListener {
 
-    private static Cell[][] map = new CellImpl[150][150];
     private Map Map;
     private int currentRound = 0;
     private Game game;
-    private CellImg ci = new CellImg(3,map);
     private JButton b1, b2, b3, b4, b5, b6, startGame;
     private JTextField t1,t2,t3,t4;
     private JTextField n1,n2,n3,n4;
     private JLabel l1, l2 , l3, l4, instruction, gameStatus;
     private ArrayList<JButton> Blist = new ArrayList<>();
     private ArrayList<Integer> list = new ArrayList<>();
-    private JPanel menuPanel, tablePanel, mapPanel, rankPanel,fixturePanel, loadPanel;
+    private JPanel menuPanel, tablePanel, rankPanel,fixturePanel, loadPanel;
+    private Graphic mapPanel;
     private Container container;
     private JTabbedPane tab;
     private JDialog gameover;
@@ -59,19 +58,10 @@ public class GameGUI extends JFrame implements ActionListener {
 
     public GameGUI(Tournament t){
         super("Software Engineering");
-
-        Map maap = new MapImpl();
-        maap.emptyMap();
-        map = maap.getMap();
-        System.out.println("GUI HASH"+this.hashCode());
-
         tournament = t;
         t.setGUI(this);
         controller = new ControllerImpl();
-
-
         CreateUI();
-
     }
 
 
@@ -271,7 +261,9 @@ public class GameGUI extends JFrame implements ActionListener {
         //mapPanel = new JPanel();
 
         mapPanel = new Graphic();
-
+        Map map = new MapImpl();
+        map.emptyMap();
+        mapPanel.setMap(map.getMap());
         container.add(mapPanel, BorderLayout.CENTER);
 
     }
@@ -290,18 +282,8 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public void updateGUI(Game game) {
-        System.out.println("GETTING UPDATED");
-        Map = game.getMap();
-        map = Map.getMap();
-        container.remove(mapPanel);
-        mapPanel = new Graphic();
-        mapPanel.revalidate();
-        mapPanel.repaint();
-        tab.revalidate();
-        tab.repaint();
-        container.add(mapPanel, BorderLayout.CENTER);
-        container.revalidate();
-        container.repaint();
+        mapPanel.setMap(game.getMap().getMap());
+
     }
 
     public static void main(String[] args) {
@@ -314,9 +296,9 @@ public class GameGUI extends JFrame implements ActionListener {
         String n = e.getActionCommand();
 
         if(n == "start game"){
-            System.out.println("Being pressed");
-            controller.startGame(game);
-
+            RunnableGame g = new RunnableGame(game);
+            Thread t = new Thread(g);
+            t.start();
         }
 
 
@@ -330,13 +312,24 @@ public class GameGUI extends JFrame implements ActionListener {
 
     class Graphic extends JPanel {
 
+        private Cell[][] map = new CellImpl[150][150];
+        private CellImg ci = new CellImg(3,map);
+
+
+        public void setMap(Cell[][] map){
+            this.map = map;
+            ci = new CellImg(3,map);
+            this.revalidate();
+            this.repaint();
+
+        }
 
 
         @Override
         public void paintComponent(Graphics g) {
+            System.out.println("calling paint");
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            super.paintComponent(g2);
             for (int j=0;j<150;j++) {
                 for (int i=0;i<150;i++) {
                     try {
@@ -382,6 +375,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
                 }
             }
+
+
         }
         @Override
         public Dimension getPreferredSize() {

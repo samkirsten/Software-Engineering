@@ -45,6 +45,8 @@ public class GameImpl implements Game {
         setup();
     }
 
+    public GameGUI getGUI(){ return gui;}
+
     public String getBlackPlayerName() {
         return blackPlayerName;
     }
@@ -53,25 +55,6 @@ public class GameImpl implements Game {
         return redPlayerName;
     }
 
-    @Override
-    public void start(){
-        for(int i=0;i<Game.NUMBER_OF_ROUNDS;i++){
-       //     System.out.println("Current Round "+i);
-            nextRound();
-            if(i % 1000 == 0) {
-                System.out.println("RED ANTS "+getColony(Colour.RED).getNumberOfAnts());
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("RETURNED GUI"+gui.hashCode());
-                gui.updateGUI(this);
-            }
-        }
-
-        gui.signalGameEnd(this);
-    }
 
 
 
@@ -232,4 +215,8 @@ public class GameImpl implements Game {
     }
 
 
+    @Override
+    public void start() {
+
+    }
 }
