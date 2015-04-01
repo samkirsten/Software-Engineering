@@ -57,6 +57,7 @@ public class GameImpl implements Game {
     public void start(){
         for(int i=0;i<Game.NUMBER_OF_ROUNDS;i++){
        //     System.out.println("Current Round "+i);
+
             nextRound();
             if(i % 1000 == 0) {
                 System.out.println("RED ANTS "+getColony(Colour.RED).getNumberOfAnts());
