@@ -56,7 +56,6 @@ public class CellImg {
 		g2.setColor(col);
 		g2.fillPolygon(poly);
 		g2.drawPolygon(poly);
-        System.out.println("calling repaint");
     }
 
 }

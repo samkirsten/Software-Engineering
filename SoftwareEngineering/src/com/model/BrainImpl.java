@@ -474,8 +474,6 @@ public class BrainImpl implements Brain {
 
 
                 if(a.isResting()){
-                    int x =0;
-                    System.out.println("rest"+x++);
 
 
                     if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){
@@ -529,7 +527,6 @@ public class BrainImpl implements Brain {
 
                 }
                 else {
-                    System.out.println("moving");
 
                     int currentState = 0;
                     try {
@@ -768,7 +765,6 @@ public class BrainImpl implements Brain {
                         int dir = a.getDirection();
 
                         Position pos = getAdjacentCell(p,dir);
-                        System.out.println(pos.getX()+ " "+pos.getY());
 
                         if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){ // maybe have a method in map that returns a boolean if a cell has ant
 
@@ -778,7 +774,6 @@ public class BrainImpl implements Brain {
 
                            // System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
                             try {
-                                System.out.println("hihi");
                                 map.clearAnt(p);
                                 map.setAntAtCell(pos, a);// takes in an ant obj, it shouldnt should it maybe clear ant method?
 
@@ -812,7 +807,6 @@ public class BrainImpl implements Brain {
                                             content = 9;
                                         }
                                     }else{
-                                        System.out.println("hi");
                                         if(content <5){
                                             content = content +3;
                                         }else if(content >=6){

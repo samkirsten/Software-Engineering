@@ -9,6 +9,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.model.exceptions.AntNotFoundException;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 
 import java.awt.*;
@@ -144,7 +145,7 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.add(fixtures.get(0));
                     loadedGames.add(fixtures.get(1));
                     game = loadedGames.get(0);
-                  //  updateGUI(loadedGames.get(0));
+                    //  updateGUI(loadedGames.get(0));
                 }
                 b1.setEnabled(false);
 
@@ -263,6 +264,7 @@ public class GameGUI extends JFrame implements ActionListener {
         mapPanel = new Graphic();
         Map map = new MapImpl();
         map.emptyMap();
+        System.out.println("empty one "+map.hashCode());
         mapPanel.setMap(map.getMap());
         container.add(mapPanel, BorderLayout.CENTER);
 
@@ -282,6 +284,7 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public void updateGUI(Game game) {
+        System.out.println("UPDATE GUI PASSING "+game.getMap().hashCode());
         mapPanel.setMap(game.getMap().getMap());
 
     }
@@ -319,20 +322,29 @@ public class GameGUI extends JFrame implements ActionListener {
         public void setMap(Cell[][] map){
             this.map = map;
             ci = new CellImg(3,map);
-            if(this.getGraphics() != null)
-            this.paintComponent(this.getGraphics());
+            revalidate();
+            repaint();
 
         }
 
 
         @Override
         public void paintComponent(Graphics g) {
-            System.out.println("calling paint");
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            System.out.println(map.hashCode()+"paintcode");
             for (int j=0;j<150;j++) {
                 for (int i=0;i<150;i++) {
-                    try {
+                    try {if (map[i][j].getAnt() != null) {
+                        if(map[i][j].getAnt().getColour() == Colour.RED){
+                            System.out.println("Red ant is created ");
+                            ci.drawHex(i, j, g2, new Color(252, 227, 39));
+                        }
+                        if(map[i][j].getAnt().getColour() == Colour.BLACK){
+                            System.out.println("Black ant is created ");
+                            ci.drawHex(i, j, g2, new Color(205, 97, 139));
+                        }
+                    }else
                         if (map[i][j].getContents() == '+') {
                             ci.drawHex(i, j, g2, Color.RED);
                         } else if (map[i][j].getContents() == '-') {
@@ -352,23 +364,16 @@ public class GameGUI extends JFrame implements ActionListener {
                         } else if (map[i][j].getContents() == '5') {
                             ci.drawHex(i, j, g2, new Color(4, 255, 43));
                         } else if (map[i][j].getContents() == '4') {
-                            ci.drawHex(i, j, g2, new Color(104, 255, 120));
+                            //ci.drawHex(i, j, g2, new Color(104, 255, 120));
+                            ci.drawHex(i, j, g2, new Color(0, 0, 0));
                         } else if (map[i][j].getContents() == '3') {
                             ci.drawHex(i, j, g2, new Color(147, 255, 156));
                         } else if (map[i][j].getContents() == '2') {
                             ci.drawHex(i, j, g2, new Color(189, 255, 194));
                         } else if (map[i][j].getContents() == '1') {
                             ci.drawHex(i, j, g2, new Color(218, 255, 221));
-                        } else if (map[i][j].getAnt() != null) {
-                            if(map[i][j].getAnt().getColour() == Colour.RED){
-                                ci.drawHex(i, j, g2, new Color(252, 227, 39));
-                            }
-                            if(map[i][j].getAnt().getColour() == Colour.BLACK){
-                                ci.drawHex(i, j, g2, new Color(205, 97, 139));
-                            }
-                        }else{
-
                         }
+
                     }catch (AntNotFoundException e){
                         e.printStackTrace();
                     }
@@ -380,7 +385,7 @@ public class GameGUI extends JFrame implements ActionListener {
         }
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(730, 653);
+            return new Dimension(750, 753);
         }
 
 
@@ -449,10 +454,10 @@ public class GameGUI extends JFrame implements ActionListener {
                     //checking 1.if brain is correct
                     if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
 
-                            p1BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                            inputBrains.put(name, chooser.getSelectedFile());
-                            p1Ready = true;
-                            playerNames.put(1,name);
+                        p1BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                        inputBrains.put(name, chooser.getSelectedFile());
+                        p1Ready = true;
+                        playerNames.put(1,name);
 
                     } else {
                         p1BrainStatus.setText("Your Brain is not working, retry! ");
@@ -488,10 +493,10 @@ public class GameGUI extends JFrame implements ActionListener {
                     //checking if brain is correct
                     if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
 
-                            p2BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                            inputBrains.put(name, chooser.getSelectedFile());
-                            p2Ready = true;
-                            playerNames.put(2,name);
+                        p2BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                        inputBrains.put(name, chooser.getSelectedFile());
+                        p2Ready = true;
+                        playerNames.put(2,name);
 
 
                     } else {
@@ -527,10 +532,10 @@ public class GameGUI extends JFrame implements ActionListener {
                     //checking if brain is correct
                     if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
 
-                            p3BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                            inputBrains.put(name, chooser.getSelectedFile());
-                            p3Ready = true;
-                            playerNames.put(3,name);
+                        p3BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                        inputBrains.put(name, chooser.getSelectedFile());
+                        p3Ready = true;
+                        playerNames.put(3,name);
 
 
                     } else {
@@ -564,11 +569,11 @@ public class GameGUI extends JFrame implements ActionListener {
                     //checking if brain is correct
                     if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && brain.loadBrain(chooser.getSelectedFile())) {
 
-                            p4BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                            inputBrains.put(name, chooser.getSelectedFile());
-                            p4Ready = true;
-                            playerNames.put(4,name);
-                            System.out.println(chooser.getSelectedFile());
+                        p4BrainStatus.setText(name + " 's Brain : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                        inputBrains.put(name, chooser.getSelectedFile());
+                        p4Ready = true;
+                        playerNames.put(4,name);
+                        System.out.println(chooser.getSelectedFile());
 
                     } else {
                         p4BrainStatus.setText("Your Brain is not working, retry! ");
