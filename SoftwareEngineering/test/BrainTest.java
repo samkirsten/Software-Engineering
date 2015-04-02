@@ -682,6 +682,27 @@ public class BrainTest {
         assertEquals(a19,m11.getAntAtCell(p12));
         assertEquals(0,a19.getState());
 
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+        b21.step(1);
+
+        //making the ant move again
+        assertEquals(a19,m11.getAntAtCell(p18));
+        assertEquals(null, m11.getAntAtCell(p12));
+
+        assertEquals(0,a19.getState());
 
 
 
