@@ -9,7 +9,7 @@ Flip 6 8 1
 Flip 2 9 10
 Turn Left 1
 Turn Right 1
-PickUp 12 12
+PickUp 13 22
 Move 16 13
 Flip 2 14 15
 Turn Left 12
@@ -34,7 +34,7 @@ Sense Ahead 51 33 FoeHome
 Flip 2 34 35
 Turn Left 32
 Turn Right 32
-PickUp 37 37
+PickUp 38 32
 Move 41 38
 Flip 2 39 40
 Turn Left 22

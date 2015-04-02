@@ -332,19 +332,9 @@ public class GameGUI extends JFrame implements ActionListener {
         public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            System.out.println(map.hashCode()+"paintcode");
             for (int j=0;j<150;j++) {
                 for (int i=0;i<150;i++) {
-                    try {if (map[i][j].getAnt() != null) {
-                        if(map[i][j].getAnt().getColour() == Colour.RED){
-                            System.out.println("Red ant is created ");
-                            ci.drawHex(i, j, g2, new Color(252, 227, 39));
-                        }
-                        if(map[i][j].getAnt().getColour() == Colour.BLACK){
-                            System.out.println("Black ant is created ");
-                            ci.drawHex(i, j, g2, new Color(205, 97, 139));
-                        }
-                    }else
+
                         if (map[i][j].getContents() == '+') {
                             ci.drawHex(i, j, g2, Color.RED);
                         } else if (map[i][j].getContents() == '-') {
@@ -374,6 +364,14 @@ public class GameGUI extends JFrame implements ActionListener {
                             ci.drawHex(i, j, g2, new Color(218, 255, 221));
                         }
 
+                    try {if (map[i][j].getAnt() != null) {
+                        if(map[i][j].getAnt().getColour() == Colour.RED){
+                            ci.drawHex(i, j, g2, new Color(252, 227, 39));
+                        }
+                        if(map[i][j].getAnt().getColour() == Colour.BLACK){
+                            ci.drawHex(i, j, g2, new Color(205, 97, 139));
+                        }
+                    }
                     }catch (AntNotFoundException e){
                         e.printStackTrace();
                     }

@@ -446,6 +446,7 @@ public class BrainImpl implements Brain {
 
         Colour enemyColour;
 
+
         if(colony.getColonyColour() == Colour.RED){
 
 
@@ -666,7 +667,7 @@ public class BrainImpl implements Brain {
 
                         char contents = map.getCellContents(p);
 
-
+                        System.out.println("BEING CALLED");
 
                         if (a.hasFood() ||  contents == '.') {
 

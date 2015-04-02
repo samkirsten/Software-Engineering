@@ -27,13 +27,8 @@ public class RunnableGame implements Runnable {
             }
             game.getGUI().updateGUI(game);
             System.out.println(game.getWinner());
-<<<<<<< Updated upstream
-            game.getGUI().signalGameEnd(game);
-        }
-=======
 
         }
         game.getGUI().signalGameEnd(game);
->>>>>>> Stashed changes
     }
 }

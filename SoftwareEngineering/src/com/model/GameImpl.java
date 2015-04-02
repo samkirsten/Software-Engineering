@@ -1,5 +1,6 @@
 
 package com.model;
+import com.model.exceptions.AntNotFoundException;
 import com.model.exceptions.CellAlreadyOccupiedException;
 import com.view.GameGUI;
 
@@ -77,7 +78,7 @@ public class GameImpl implements Game {
             }
         }
         else{
-            brainClass = new BrainImpl(map,red);
+            brainClass = new BrainImpl(map,black);
             passed = brainClass.loadBrain(brain);
             if(passed){
                 black.setBrain(brainClass);
@@ -191,7 +192,7 @@ public class GameImpl implements Game {
         for(int i=0;i<red.getNumberOfAnts();i++){
             red.getBrain().step(i);
         }
-        for (int i=0;i<black.getNumberOfAnts();i++){
+        for (int i=red.getNumberOfAnts();i<black.getNumberOfAnts()+red.getNumberOfAnts();i++){
             black.getBrain().step(i);
         }
         currentRound++;
