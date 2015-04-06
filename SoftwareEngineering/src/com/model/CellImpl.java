@@ -2,21 +2,22 @@ package com.model;
 
 public class CellImpl implements Cell {
 
-    private char content = '.';
+    private Content content = Content.EMPTY;
     private int getScentMark = 0;
     private Ant ant = null;
+    private boolean dirty = false;
 
     public CellImpl() {                 // need to talk
 
     }
 
-    public CellImpl(char content){
+    public CellImpl(Content content){
         this.content = content;
     }
 
     @Override
     public boolean isRocky() {
-        if(content == '#'){
+        if(content == Content.ROCKY){
             return true;
         }
         return false;
@@ -28,7 +29,7 @@ public class CellImpl implements Cell {
     }
 
     @Override
-    public char getContents() {
+    public Content getContents() {
         return content;
     }
 
@@ -43,12 +44,16 @@ public class CellImpl implements Cell {
     }
 
     @Override
-    public void setContents(char content) {
+    public void setContents(Content content) {
         this.content = content;
     }
 
     @Override
     public void setAnt(Ant ant) {
         this.ant = ant;
+    }
+
+    public boolean isDirty(){
+        return dirty;
     }
 }

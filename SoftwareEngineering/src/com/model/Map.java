@@ -42,7 +42,7 @@ public interface Map {
      * @param pos the position of the cell
      * @return char representing the contents of the cell
      */
-    public char getCellContents(Position pos);
+    public Content getCellContents(Position pos);
 
     /**
      * Gets the scent marker of a cell at a given position.
@@ -92,7 +92,7 @@ public interface Map {
      * @param pos      the position of the cell
      * @param contents the character representing contents of the cell
      */
-    public void setCellContents(Position pos, char contents) throws InvalidContentCharacterException;
+    public void setCellContents(Position pos, Content contents) throws InvalidContentCharacterException;
 
     /**
      * Sets the scent marker of a cell

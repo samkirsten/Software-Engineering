@@ -47,7 +47,7 @@ public class MapImpl implements Map{
                 }
                 dirtyList.add(new Position(x,y));
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
-                    map[x][y] = new CellImpl('#');                      // The edge of com.model.Map
+                    map[x][y] = new CellImpl(Content.ROCKY);                      // The edge of com.model.Map
                     Rocky.add(map[x][y]);
                     spairMap[x][y] = new CellImpl();
                 }else{
@@ -101,8 +101,8 @@ public class MapImpl implements Map{
         while(rock != 14){
             int X = (ran.nextInt(149) + 1);
             int Y = (ran.nextInt(149) + 1);
-            if(map[X][Y].getContents() == '.'){
-                map[X][Y].setContents('#');
+            if(map[X][Y].getContents() == Content.EMPTY){
+                map[X][Y].setContents(Content.ROCKY);
                 Rocky.add(map[X][Y]);
                 rock++;
             }
@@ -118,12 +118,12 @@ public class MapImpl implements Map{
     }
 
     private void generateAntHill(int x,int y, Colour colour){
-        char team;
+        Content team;
         CellImpl cell, cell1;
         if(colour == Colour.BLACK){
-            team = '-';
+            team = Content.BLACKHILL;
         }else{
-            team = '+';
+            team = Content.REDHILL;
         }
         for(int a = 0; a < 7; a++){
             for(int i = 0; i < 7 + a; i++){
@@ -132,7 +132,7 @@ public class MapImpl implements Map{
                     cell.setContents(team);
                     cell1 = map[x+i-(a/2)][y+6-a];
                     cell1.setContents(team);
-                    if(team == '-'){
+                    if(team == Content.BLACKHILL){
                         try {
                             BLACK.add(createPosition(x+i-(a/2),y-6+a));
                             BLACK.add(createPosition(x+i-(a/2),y+6-a));
@@ -141,7 +141,7 @@ public class MapImpl implements Map{
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                    }else if(team == '+'){
+                    }else if(team == Content.REDHILL){
                         try {
                             RED.add(createPosition(x+i-(a/2),y-6+a));
                             RED.add(createPosition(x+i-(a/2),y+6-a));
@@ -154,14 +154,14 @@ public class MapImpl implements Map{
                 }else{  // a == 6
                     cell = map[x+i-(a/2)][y-6+a];
                     cell.setContents(team);
-                    if(team == '-'){
+                    if(team == Content.BLACKHILL){
                         try {
                             BLACK.add(createPosition(x+i-(a/2),y-6+a));
                             BLACKHILL.add(cell);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
-                    }else if(team == '+'){
+                    }else if(team == Content.REDHILL){
                         try {
                             RED.add(createPosition(x+i-(a/2),y-6+a));
                             REDHILL.add(cell);
@@ -178,7 +178,7 @@ public class MapImpl implements Map{
         if(Case == 1){
             for(int a = 0; a < 5 ; a++){
                 for(int b = 0; b < 5; b++){
-                    map[x+b-(a/2)][y+a].setContents('5');
+                    map[x+b-(a/2)][y+a].setContents(Content.FIVE);
                     Foodblob.add(map[x+b-(a/2)][y+a]);
                 }
             }
@@ -187,7 +187,7 @@ public class MapImpl implements Map{
         if(Case == 0){
             for(int a = 0; a < 5 ; a++){
                 for(int b = 0; b < 5; b++){
-                    map[x+b+(a/2)][y+a].setContents('5');
+                    map[x+b+(a/2)][y+a].setContents(Content.FIVE);
                     Foodblob.add(map[x+b+(a/2)][y+a]);
                 }
             }
@@ -200,7 +200,7 @@ public class MapImpl implements Map{
         if(Case == 1){  // left side
             for(int a = 0; a < 5; a ++) {
                 for (int b = 0; b < 5; b++) {
-                    if(map[x+b-(a/2)][y+a].getContents() != '.' || Foodblob.contains(map[x+b-(a/2)][y+a]) || REDHILL.contains(map[x+b-(a/2)][y+a]) || BLACKHILL.contains(map[x+b-(a/2)][y+a])){
+                    if(map[x+b-(a/2)][y+a].getContents() != Content.EMPTY || Foodblob.contains(map[x+b-(a/2)][y+a]) || REDHILL.contains(map[x+b-(a/2)][y+a]) || BLACKHILL.contains(map[x+b-(a/2)][y+a])){
                         result = false;
                         break;
                     }
@@ -211,7 +211,7 @@ public class MapImpl implements Map{
         else if(Case == 0){
             for(int a = 0; a < 5; a ++) {
                 for (int b = 0; b < 5; b++) {
-                    if(map[x+b+(a/2)][y].getContents() != '.' || Foodblob.contains(map[x+b+(a/2)][y+a])|| REDHILL.contains(map[x+b+(a/2)][y+a]) || BLACKHILL.contains(map[x+b+(a/2)][y+a]) ){
+                    if(map[x+b+(a/2)][y].getContents() != Content.EMPTY || Foodblob.contains(map[x+b+(a/2)][y+a])|| REDHILL.contains(map[x+b+(a/2)][y+a]) || BLACKHILL.contains(map[x+b+(a/2)][y+a]) ){
                         result = false;
                         break;
                     }
@@ -234,7 +234,7 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public char getCellContents(Position pos) {
+    public Content getCellContents(Position pos) {
         return map[pos.getX()][pos.getY()].getContents();
     }
 
@@ -242,22 +242,22 @@ public class MapImpl implements Map{
     public int getCellScentMarker(Colour colourOfQueryingAnt, Position pos) { // swapped it around
         int value = 0;
 
-        if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
+        if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
             value = map[pos.getX()][pos.getY()].getScentMark();
         }
 
-         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
 
             value = -1;
         }
 
-         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
+         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() < 7 ){
 
                  value = -1;
 
         }
 
-         if(colourOfQueryingAnt == Colour.RED && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
+         if(colourOfQueryingAnt == Colour.BLACK && map[pos.getX()][pos.getY()].getScentMark() > 6 ){
             value = map[pos.getX()][pos.getY()].getScentMark();
         }
         if(map[pos.getX()][pos.getY()].getScentMark() == 0){
@@ -368,8 +368,20 @@ public class MapImpl implements Map{
     }
 
     @Override
-    public void setCellContents(Position pos, char contents) throws InvalidContentCharacterException {
-        if(contents == '.' ||contents == '#' ||contents == '+' ||contents == '-' || contents == '0' || contents == '1' || contents == '2' ||contents == '3' ||contents == '4' ||contents == '5' || contents == '6' || contents == '7' || contents == '8' || contents == '9'){
+    public void setCellContents(Position pos, Content contents) throws InvalidContentCharacterException {
+        if(contents == Content.EMPTY ||
+                contents == Content.ROCKY ||
+                contents == Content.REDHILL ||
+                contents == Content.BLACKHILL ||
+                contents == Content.ONE ||
+                contents == Content.TWO ||
+                contents == Content.THREE ||
+                contents == Content.FOUR ||
+                contents == Content.FIVE ||
+                contents == Content.SIX ||
+                contents == Content.SEVEN ||
+                contents == Content.EIGHT ||
+                contents == Content.NINE){
             map[pos.getX()][pos.getY()].setContents(contents);
             setDirty(pos);
         }else{

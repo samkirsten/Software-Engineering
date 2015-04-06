@@ -165,36 +165,15 @@ public class GameImpl implements Game {
 
     }
 
-//
-//    @Override
-//    public Colour start() {
-//
-//        currentRound = 0;
-//        map.clearMap();
-//
-//        generateAnts();
-//
-//        for(int i = 0; i<Game.NUMBER_OF_ROUNDS;i++){
-//            next();
-//            currentRound++;
-//        }
-//
-//        redFood = red.getFoodInColony();
-//        blackFood = black.getFoodInColony();
-//
-//        return getWinner();
-//
-//
-//    }
-
     @Override
     public void nextRound() {
-        for(int i=0;i<red.getNumberOfAnts();i++){
+        for(int i=0;i<127;i++){
             red.getBrain().step(i);
         }
-        for (int i=red.getNumberOfAnts();i<black.getNumberOfAnts()+red.getNumberOfAnts();i++){
+        for (int i=127;i<254;i++){
             black.getBrain().step(i);
         }
+        this.getMap().getDirty().clear();
         currentRound++;
     }
 

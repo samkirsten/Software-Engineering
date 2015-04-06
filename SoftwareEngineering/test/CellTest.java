@@ -15,7 +15,7 @@ public class CellTest {
 
         assertFalse(c.isRocky());
 
-        c.setContents('#');
+        c.setContents(Content.ROCKY);
         assertTrue(c.isRocky());
     }
 
@@ -43,22 +43,22 @@ public class CellTest {
     @Test
     public void TestContent(){
         Cell c = new CellImpl();
-        c.setContents('#');
-        assertEquals(c.getContents(),'#');
-        c.setContents('+');
-        assertEquals(c.getContents(),'+');
-        c.setContents('-');
-        assertEquals(c.getContents(),'-');
-        c.setContents('1');
-        assertEquals(c.getContents(),'1');
-        c.setContents('2');
-        assertEquals(c.getContents(),'2');
-        c.setContents('3');
-        assertEquals(c.getContents(),'3');
-        c.setContents('4');
-        assertEquals(c.getContents(),'4');
-        c.setContents('5');
-        assertEquals(c.getContents(),'5');
+        c.setContents(Content.ROCKY);
+        assertEquals(c.getContents(), Content.ROCKY);
+        c.setContents(Content.REDHILL);
+        assertEquals(c.getContents(), Content.REDHILL);
+        c.setContents(Content.BLACKHILL);
+        assertEquals(c.getContents(), Content.BLACKHILL);
+        c.setContents(Content.ONE);
+        assertEquals(c.getContents(), Content.ONE);
+        c.setContents(Content.TWO);
+        assertEquals(c.getContents(), Content.TWO);
+        c.setContents(Content.THREE);
+        assertEquals(c.getContents(), Content.THREE);
+        c.setContents(Content.FOUR);
+        assertEquals(c.getContents(), Content.FOUR);
+        c.setContents(Content.FIVE);
+        assertEquals(c.getContents(), Content.FIVE);
 
     }
 }

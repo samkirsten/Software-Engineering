@@ -306,6 +306,7 @@ public class BrainTest {
 
         m1.setCellScentMarker(p1,7);
 
+
         b11.step(a4.getID()); // need to set file so it unmarks
 
         assertEquals(1, a4.getState());
@@ -379,9 +380,9 @@ public class BrainTest {
 
         c.addAnt(a7);
 
-        char testChar = '9';
+        Content testEnum = Content.NINE;
 
-        m3.setCellContents(p3, testChar);
+        m3.setCellContents(p3, testEnum);
 
         b13.loadBrain(new File("brains/file20.txt"));
 
@@ -390,8 +391,8 @@ public class BrainTest {
 
         b13.step(1); // should set state to 1 if there is food at cell
         assertEquals(1, a7.getState());
-        char ch = m3.getCellContents(p3);
-        assertEquals((char) 8, Character.getNumericValue(ch) );
+        Content con = m3.getCellContents(p3);
+        assertEquals(Content.EIGHT, con );
 
 
         /////////
@@ -407,9 +408,9 @@ public class BrainTest {
 
         col.addAnt(a8);
 
-        m4.setCellContents(p4, '.');
+        m4.setCellContents(p4, Content.EMPTY);
 
-        m4.setAntAtCell(p4,a8);
+        m4.setAntAtCell(p4, a8);
 
         b14.loadBrain(new File("brains/file21.txt"));
 
@@ -418,7 +419,7 @@ public class BrainTest {
 
 
         assertEquals(2, a8.getState());
-        assertEquals('.', m4.getCellContents(p4));
+        assertEquals(Content.EMPTY, m4.getCellContents(p4));
         // checks that it has gone to state 2 as there is no food
 //
 //        ////////
@@ -436,13 +437,13 @@ public class BrainTest {
         b15.loadBrain(new File("brains/file22.txt"));
 
 
-        m5.setCellContents(p4, '.');
-        m5.setAntAtCell(p5,a9);
+        m5.setCellContents(p4, Content.EMPTY);
+        m5.setAntAtCell(p5, a9);
         a9.setHasFood(true);
 
         b15.step(2);
 
-        assertEquals(('.'), m5.getCellContents(p4));
+        assertEquals((Content.EMPTY), m5.getCellContents(p4));
         assertEquals(2, a9.getState()); // checks that it has gone to state 2 as the ant is carrying food
 
     }
@@ -459,9 +460,9 @@ public class BrainTest {
 
         c.addAnt(a10);
 
-        m6.setAntAtCell(p6,a10);
+        m6.setAntAtCell(p6, a10);
 
-        m6.setCellContents(p6, '.');
+        m6.setCellContents(p6, Content.EMPTY);
 
         b16.loadBrain(new File("brains/file23.txt"));
 
@@ -470,7 +471,7 @@ public class BrainTest {
 
         b16.step(1);
 
-        assertEquals('1', m6.getCellContents(p6));
+        assertEquals(Content.ONE, m6.getCellContents(p6));
         assertEquals(1, a10.getState()); // should be changed to state 1
 
 //        ///////
@@ -490,12 +491,12 @@ public class BrainTest {
 
         a11.setHasFood(true);
 
-        m7.setCellContents(p7, '1');
+        m7.setCellContents(p7, Content.ONE);
         m7.setAntAtCell(p7, a10);
 
         b17.step(a11.getID());
 
-        assertEquals('2', m7.getCellContents(p7));
+        assertEquals(Content.TWO, m7.getCellContents(p7));
         assertEquals(1, a11.getState());
 
 //        //////
@@ -518,12 +519,12 @@ public class BrainTest {
 
         a12.setHasFood(false);
 
-        m8.setCellContents(p8, '.');
-        m8.setAntAtCell(p8,a12);
+        m8.setCellContents(p8, Content.EMPTY);
+        m8.setAntAtCell(p8, a12);
 
         b18.step(5);
 
-        assertEquals('.',m8.getCellContents(p8));
+        assertEquals(Content.EMPTY,m8.getCellContents(p8));
         assertEquals(2, a12.getState());
 //
     }
@@ -654,13 +655,13 @@ public class BrainTest {
 
         m11.generateMap();
         try {
-            m11.setCellContents(p12,'.');
-            m11.setCellContents(p13,'.');
-            m11.setCellContents(p14,'.');
-            m11.setCellContents(p15,'.');
-            m11.setCellContents(p16,'.');
-            m11.setCellContents(p17,'.');
-            m11.setCellContents(p18,'.');
+            m11.setCellContents(p12,Content.EMPTY);
+            m11.setCellContents(p13,Content.EMPTY);
+            m11.setCellContents(p14,Content.EMPTY);
+            m11.setCellContents(p15,Content.EMPTY);
+            m11.setCellContents(p16,Content.EMPTY);
+            m11.setCellContents(p17,Content.EMPTY);
+            m11.setCellContents(p18,Content.EMPTY);
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
@@ -841,7 +842,7 @@ public class BrainTest {
         a5.setDirection(0);
 
         try {
-            m11.setCellContents(p12, '#');
+            m11.setCellContents(p12, Content.ROCKY);
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
@@ -919,7 +920,7 @@ public class BrainTest {
         a.setDirection(5);
 
         try {
-            m.setCellContents(p11,'8');
+            m.setCellContents(p11,Content.EIGHT);
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
@@ -936,12 +937,21 @@ public class BrainTest {
         } catch (CellAlreadyOccupiedException e) {
             e.printStackTrace();
         }
-        assertEquals('8',m.getCellContents(p11));
+        assertEquals(Content.EIGHT,m.getCellContents(p11));
+
+        System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
+
         b.step(a.getID());
 
+
+        System.out.println(m.getAdjacentEnemyAnts(p11,Colour.BLACK));
         assertEquals(false,red.isAntAlive(1));
-        System.out.println(m.getCellContents(p11));
-        assertEquals('9', m.getCellContents(p11));
+
+
+        assertEquals(Content.NINE, m.getCellContents(p11));
+
+
+
 
 
 
@@ -1002,10 +1012,10 @@ public class BrainTest {
         }
 
         b.step(a.getID());
-
-        assertEquals(false,red.isAntAlive(1));
+        System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
+        assertEquals(false, red.isAntAlive(1));
         System.out.println(m.getCellContents(p11));
-        assertEquals('3', m.getCellContents(p11));
+        assertEquals(Content.THREE, m.getCellContents(p11));
 
 
     }
@@ -1070,7 +1080,7 @@ public class BrainTest {
 
         assertEquals(false,red.isAntAlive(1));
         System.out.println(m.getCellContents(p11));
-        assertEquals('3', m.getCellContents(p11));
+        assertEquals(Content.THREE, m.getCellContents(p11));
 
 
 
@@ -1099,8 +1109,8 @@ public class BrainTest {
 
         b.step(a.getID());
 
-        assertEquals(3,a.getState());
-        assertNotEquals(2,a.getState());
+        assertEquals(0,a.getState());
+        assertNotEquals(1,a.getState());
 
     }
 

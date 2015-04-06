@@ -72,9 +72,9 @@ public class MapTest {
         Cell[][] map = m.getMap();
 
         Position p = new Position(5,5);
-        map[5][5].setContents('.');
+        map[5][5].setContents(Content.EMPTY);
         assertFalse(map[5][5].isRocky());
-        map[5][5].setContents('#');
+        map[5][5].setContents(Content.ROCKY);
         assertTrue(map[5][5].isRocky());
     }
 
@@ -85,26 +85,26 @@ public class MapTest {
         Cell[][] map = m.getMap();
 
         Position p = new Position(5,5);
-        m.setCellContents(p,'.');
-        assertEquals(m.getCellContents(p), '.');
-        m.setCellContents(p,'+');
-        assertEquals( m.getCellContents(p),'+');
-        m.setCellContents(p,'-');
-        assertEquals( m.getCellContents(p),'-');
-        m.setCellContents(p,'1');
-        assertEquals( m.getCellContents(p),'1');
-        m.setCellContents(p,'2');
-        assertEquals( m.getCellContents(p),'2');
-        m.setCellContents(p,'3');
-        assertEquals( m.getCellContents(p),'3');
-        m.setCellContents(p,'4');
-        assertEquals( m.getCellContents(p),'4');
-        m.setCellContents(p,'5');
-        assertEquals( m.getCellContents(p),'5');
-        m.setCellContents(p,'6');
-        assertEquals( m.getCellContents(p),'6');
-        m.setCellContents(p,'7');
-        assertEquals( m.getCellContents(p),'7');
+        m.setCellContents(p,Content.EMPTY);
+        assertEquals(m.getCellContents(p), Content.EMPTY);
+        m.setCellContents(p,Content.REDHILL);
+        assertEquals( m.getCellContents(p),Content.REDHILL);
+        m.setCellContents(p,Content.BLACKHILL);
+        assertEquals( m.getCellContents(p),Content.BLACKHILL);
+        m.setCellContents(p,Content.ONE);
+        assertEquals( m.getCellContents(p),Content.ONE);
+        m.setCellContents(p,Content.TWO);
+        assertEquals( m.getCellContents(p),Content.TWO);
+        m.setCellContents(p,Content.THREE);
+        assertEquals( m.getCellContents(p),Content.THREE);
+        m.setCellContents(p,Content.FOUR);
+        assertEquals( m.getCellContents(p),Content.FOUR);
+        m.setCellContents(p,Content.FIVE);
+        assertEquals( m.getCellContents(p),Content.FIVE);
+        m.setCellContents(p,Content.SIX);
+        assertEquals( m.getCellContents(p),Content.SIX);
+        m.setCellContents(p,Content.SEVEN);
+        assertEquals( m.getCellContents(p),Content.SEVEN);
 
     }
 
@@ -146,15 +146,32 @@ public class MapTest {
         Ant ant2 = new AntImpl(1, Colour.RED,new Position(4,5));
         Ant ant3 = new AntImpl(1, Colour.RED,new Position(6,5));
         Ant ant4 = new AntImpl(1, Colour.RED,new Position(5,4));
+        Ant ant5 = new AntImpl(1, Colour.RED,new Position(6,4));
+        Ant ant6 = new AntImpl(1, Colour.RED,new Position(5,6));
+        Ant ant7 = new AntImpl(1, Colour.RED,new Position(5,6));
 
         m.setAntAtCell(new Position(5, 5), ant1);
         assertEquals(0, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
+
         m.setAntAtCell(new Position(4, 5), ant2);
         assertEquals(1, m.getAdjacentEnemyAnts(new Position(5, 5), Colour.RED));
+
         m.setAntAtCell(new Position(6,5),ant3);
         assertEquals(2,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
+
         m.setAntAtCell(new Position(5,4),ant4);
         assertEquals(3,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
+
+        m.setAntAtCell(new Position(6,4),ant5);
+        assertEquals(4,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
+
+        m.setAntAtCell(new Position(5,6),ant6);
+        assertEquals(5,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
+
+        m.setAntAtCell(new Position(6,6),ant7);
+        assertEquals(6,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
+
+
 
     }
 }

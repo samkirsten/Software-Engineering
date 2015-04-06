@@ -68,6 +68,7 @@ public class ColonyImpl implements Colony {
             Ant ant = antList.get(key);
             if (ant.getPosition() == pos){
                 result = ant ;
+                break;
             }
         }
 

@@ -27,7 +27,7 @@ public interface
      * if the cell contains food.
      * @return char representing contents of cell
      */
-    public char getContents();
+    public Content getContents();
 
     /**
     * Returns ant in the current com.model.Cell.
@@ -43,12 +43,14 @@ public interface
     /**
      * Set content on the cell
      */
-    public void setContents(char content);
+    public void setContents(Content content);
 
     /**
      * Set ant id on the cell
      * @param ant the ant to set at cell, null if removing ant from cell
      */
     public void setAnt(Ant ant);
+
+    public boolean isDirty();
 
 }
