@@ -13,7 +13,7 @@ public class MapImpl implements Map{
     private ArrayList<CellImpl> BLACKHILL = new ArrayList<>();
     private ArrayList<CellImpl> Foodblob = new ArrayList<>();
     private ArrayList<CellImpl> Rocky = new ArrayList<>();
-    public List<Position> dirtyList = new ArrayList<>();
+    public  List<Position> dirtyList = new ArrayList<>();
 
     public MapImpl(){
         emptyMap();
@@ -34,6 +34,7 @@ public class MapImpl implements Map{
             for (int x = 0; x < 150; x++) {
                 map[x][y] = new CellImpl();
 
+
             }
         }
     }
@@ -45,7 +46,8 @@ public class MapImpl implements Map{
                 if(x == 130 && y == 149){
                     map[x][y].setAnt(new AntImpl(1,Colour.BLACK,new Position(x,y)));
                 }
-                dirtyList.add(new Position(x,y));
+               // dirtyList.add(new Position(x,y));
+             //   map[x][y].setDirty();
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
                     map[x][y] = new CellImpl(Content.ROCKY);                      // The edge of com.model.Map
                     Rocky.add(map[x][y]);
@@ -362,7 +364,11 @@ public class MapImpl implements Map{
         }else{
             map[pos.getX()][pos.getY()].setAnt(ant);
             ant.setPosition(pos);
-            setDirty(pos);
+          //  setDirty(pos);
+
+            map[pos.getX()][pos.getX()].setDirty();
+
+
         }
 
     }
@@ -383,7 +389,8 @@ public class MapImpl implements Map{
                 contents == Content.EIGHT ||
                 contents == Content.NINE){
             map[pos.getX()][pos.getY()].setContents(contents);
-            setDirty(pos);
+           // setDirty(pos);
+            map[pos.getX()][pos.getY()].setDirty();
         }else{
             throw new InvalidContentCharacterException(contents + " is not available contents");
         }
@@ -393,7 +400,6 @@ public class MapImpl implements Map{
     public void setCellScentMarker(Position pos, int marker) {
 
         map[pos.getX()][pos.getY()].setScentMark(marker);
-        setDirty(pos);
     }
 
     @Override
@@ -405,6 +411,8 @@ public class MapImpl implements Map{
     public void clearAnt(Position pos){
 
         map[pos.getX()][pos.getY()].setAnt(null);
+       // setDirty(pos);
+        map[pos.getX()][pos.getY()].setDirty();
 
     }
 
@@ -417,6 +425,7 @@ public class MapImpl implements Map{
 
     @Override
     public List<Position> getDirty() {
+
         return dirtyList;
     }
 

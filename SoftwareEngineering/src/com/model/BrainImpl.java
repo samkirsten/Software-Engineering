@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class BrainImpl implements Brain {
@@ -654,6 +655,9 @@ public class BrainImpl implements Brain {
                                 }
                             }
                         }
+                        if( map.getAntHill(a.getColour()).contains(p)){
+                            colony.incrementFood();
+                        }
                         a.setHasFood(false);
                     }
 
@@ -735,7 +739,8 @@ public class BrainImpl implements Brain {
                         }
                     }
                 }else if(command instanceof Flip){
-                    int check = randomInt(((Int)state.get(currentState).get(1)).n);
+                    Random rand = new Random();
+                    int check = rand.nextInt(((Int)state.get(currentState).get(1)).n);
                     if(check == 0){
                         a.setState(((Int)state.get(currentState).get(2)).n);
                     }else{

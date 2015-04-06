@@ -17,31 +17,25 @@ public class RunnableGame implements Runnable {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < Game.NUMBER_OF_ROUNDS; i++) {
             game.nextRound();
-            System.out.println(i);
+           // game.getGUI().updateGUI(game);
+
             if (i % 1000 == 0) {
                 System.out.println("updating");
-                game.getGUI().updateGUI(game);
                 try {
-                    Thread.sleep(10);
+                    game.getGUI().updateGUI(game);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
             }
-            System.out.println(i);
+
         }     //
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
-            game.getGUI().updateGUI(game);
-
-
-<<<<<<< Updated upstream
-        }
-=======
         System.out.println(game.getWinner());
 
->>>>>>> Stashed changes
         game.getGUI().signalGameEnd(game);
     }
 }

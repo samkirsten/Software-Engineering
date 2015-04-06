@@ -53,4 +53,8 @@ public interface
 
     public boolean isDirty();
 
+    public void setClean();
+
+    public void setDirty();
+
 }

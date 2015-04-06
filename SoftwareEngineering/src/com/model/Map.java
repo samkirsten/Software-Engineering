@@ -4,6 +4,8 @@ package com.model;
 import com.model.exceptions.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The concrete map class implementation will have com.model.Cell getters and setters
@@ -108,6 +110,13 @@ public interface Map {
     public void clearAnt(Position p);
 
     public void setDirty(Position p);
+
+//    public void setClean();
+//
+//    public void setDirty();
+//
+//    public boolean isDirty();
+
 
     public List<Position> getDirty();
 }

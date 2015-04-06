@@ -5,7 +5,7 @@ public class CellImpl implements Cell {
     private Content content = Content.EMPTY;
     private int getScentMark = 0;
     private Ant ant = null;
-    private boolean dirty = false;
+    private boolean dirty = true;
 
     public CellImpl() {                 // need to talk
 
@@ -51,6 +51,17 @@ public class CellImpl implements Cell {
     @Override
     public void setAnt(Ant ant) {
         this.ant = ant;
+    }
+
+    public void setDirty(){
+
+        dirty = true;
+
+    }
+    public void setClean(){
+
+        dirty = false;
+
     }
 
     public boolean isDirty(){

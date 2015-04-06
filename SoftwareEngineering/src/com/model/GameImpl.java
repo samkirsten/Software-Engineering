@@ -173,7 +173,6 @@ public class GameImpl implements Game {
         for (int i=127;i<254;i++){
             black.getBrain().step(i);
         }
-        this.getMap().getDirty().clear();
         currentRound++;
     }
 

@@ -14,6 +14,7 @@ import com.model.exceptions.AntNotFoundException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,10 +32,12 @@ public class GameGUI extends JFrame implements ActionListener {
     private ArrayList<JButton> Blist = new ArrayList<>();
     private ArrayList<Integer> list = new ArrayList<>();
     private JPanel menuPanel, tablePanel, rankPanel, fixturePanel, loadPanel;
-    private Graphic mapPanel;
+    private JPanel mapPanel;
     private Container container;
     private JTabbedPane tab;
     private JDialog gameover;
+    private Graphic c;
+    private BufferedImage firstImage;
 
     private List<Game> loadedGames = new ArrayList<>();
 
@@ -62,6 +65,7 @@ public class GameGUI extends JFrame implements ActionListener {
         t.setGUI(this);
         controller = new ControllerImpl();
         CreateUI();
+        setSize(1000,1000);
     }
 
 
@@ -75,12 +79,12 @@ public class GameGUI extends JFrame implements ActionListener {
 
         createLoadPanel();
         createMenuPanel();
-        createtablePanel();
-        createmapPanel();
+        createTablePanel();
+        createMapPanel();
 
         pack();
 
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
 
         tab.addTab("Load Brain Page", loadPanel);
@@ -105,7 +109,7 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
-    private void createtablePanel() {
+    private void createTablePanel() {
         b1 = new JButton("null");
         b1.setEnabled(false);
         b2 = new JButton("null");
@@ -267,15 +271,18 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
-    private void createmapPanel() {
+
+
+    private void createMapPanel() {
         //mapPanel = new JPanel();
 
-        mapPanel = new Graphic();
+        mapPanel = new JPanel(new BorderLayout());
+        c = new Graphic();
+        mapPanel.add(c,BorderLayout.CENTER);
+        c.setVisible(true);
         Map map = new MapImpl();
-
         map.emptyMap();
-//        System.out.println("empty one " + map.hashCode());
-        mapPanel.setMap(map.getMap(), map);
+        c.setMap(map.getMap(),map,firstImage);
         container.add(mapPanel, BorderLayout.CENTER);
 
     }
@@ -285,22 +292,24 @@ public class GameGUI extends JFrame implements ActionListener {
         controller.updateScores(game, tournament);
         if (loadedGames.size() == 1) {
             JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
-            updateGUI(loadedGames.get(0));
-            this.game = loadedGames.get(0);
+//            updateGUI(loadedGames.get(0));
+//            this.game = loadedGames.get(0);
         } else {
             JOptionPane.showMessageDialog(this, "Second round over, thanks for playing!");
         }
     }
 
     public void updateGUI(Game game) {
-//        System.out.println("UPDATE GUI PASSING " + game.getMap().hashCode());
-        mapPanel.setMap(game.getMap().getMap(), game.getMap());
+        System.out.println("dirty :"+game.getMap().getDirty().size());
+
+        BufferedImage image = c.createBufferedImage();
+        c.setMap(game.getMap().getMap(), game.getMap(), image);
 
     }
 
     public static void main(String[] args) {
-        Tournament t = new TournamentImpl();
-        GameGUI gui = new GameGUI(t);
+      Tournament t = new TournamentImpl();
+      GameGUI gui = new GameGUI(t);
     }
 
     @Override
@@ -322,164 +331,201 @@ public class GameGUI extends JFrame implements ActionListener {
         return m;
     }
 
-    class Graphic extends JPanel {
-
+    class Graphic extends Canvas {
         private Cell[][] map = new CellImpl[150][150];
         private CellImg ci = new CellImg(3, map);
         private Map m;
-        int number = 0;
+        private BufferedImage image;
 
-
-        public void setMap(Cell[][] map, Map m) {
+        public void setMap(Cell[][] map, Map m,BufferedImage image) {
             this.map = map;
             this.m = m;
+            this.image = image;
+            System.out.println("being called");
             ci = new CellImg(3, map);
-            revalidate();
             repaint();
 
         }
 
+        public Graphic(){
+            setSize(750,753);
+        }
+
+        public BufferedImage createBufferedImage(){
+            int w = this.getWidth();
+            int h = this.getHeight();
+            int type = BufferedImage.TYPE_INT_RGB;
+            BufferedImage image1 = new BufferedImage(w,h,type);
+            image1.createGraphics();
+            image1 = image;
+            return image1;
+        }
 
         @Override
-        public void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            System.out.println(m.getDirty().size());
-//            if (number == 0) {
-//                for (int j = 0; j < 150; j++) {
-//                    for (int i = 0; i < 150; i++) {
+        public void paint(Graphics g){
+            Graphics2D g2;
+            g2 = (Graphics2D) g;
+            g2.drawImage(image,0,0,this);
+
+            for (int j = 0; j < 150; j++) {
+                    for (int i = 0; i < 150; i++) {
+
+
+                        if(map[i][j].isDirty()){
+                            Content checker = map[i][j].getContents();
+
+
+                            try {
+                                if (map[i][j].getAnt() != null) {
+
+                                    if (map[i][j].getAnt().getColour() == Colour.RED) {
+                                ci.drawHex(i, j, g2, new Color(252, 227, 39));
+                            }
+                            if (map[i][j].getAnt().getColour() == Colour.BLACK) {
+                                ci.drawHex(i, j, g2, new Color(205, 97, 139));
+                            }
+
+
+                        } else {
+
+                            switch (checker) {
+
+                                case REDHILL:
+                                    ci.drawHex(i, j, g2, Color.RED);
+                                    break;
+                                case BLACKHILL:
+                                    ci.drawHex(i,j, g2, Color.BLACK);
+                                    break;
+                                case ROCKY:
+                                    ci.drawHex(i,j, g2, Color.gray);
+                                    break;
+                                case NINE:
+                                    ci.drawHex(i,j, g2, new Color(1, 138, 5));
+                                    break;
+                                case EIGHT:
+                                    ci.drawHex(i,j, g2, new Color(2, 171, 23));
+                                    break;
+                                case SEVEN:
+                                    ci.drawHex(i,j, g2, new Color(1, 208, 31));
+                                    break;
+                                case SIX:
+                                    ci.drawHex(i,j,g2, new Color(0, 238, 38));
+                                    break;
+                                case FIVE:
+                                    ci.drawHex(i,j,g2, new Color(4, 255, 43));
+                                    break;
+                                case FOUR:
+                                    ci.drawHex(i,j, g2, new Color(0, 0, 0));
+                                    break;
+                                case THREE:
+                                    ci.drawHex(i,j, g2, new Color(147, 255, 156));
+                                    break;
+                                case TWO:
+                                    ci.drawHex(i,j, g2, new Color(189, 255, 194));
+                                    break;
+                                case ONE:
+                                    ci.drawHex(i,j, g2, new Color(0, 238, 38));
+                                    break;
+                                default:
+                                    ci.drawHex(i,j, g2, Color.WHITE);
+                                    break;
+
+                            }
+
+
+
+                            }
+                            } catch (AntNotFoundException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                            map[i][j].setClean();
+
+                        }
+
+                    }
+                }
+
+
+//            for (int i = 0; i < m.getDirty().size(); i++) {
 //
+//                Position p = m.getDirty().get(i);
+//                Content checker = map[p.getX()][p.getY()].getContents();
 //
-//                        if (map[i][j].getContents() == Content.REDHILL) {
-//                            ci.drawHex(i, j, g2, Color.RED);
-//                        } else if (map[i][j].getContents() == Content.BLACKHILL) {
-//                            ci.drawHex(i, j, g2, Color.BLACK);
-//                        } else if (map[i][j].getContents() == Content.ROCKY) {
-//                            ci.drawHex(i, j, g2, Color.gray);
-//                        } else if (map[i][j].getContents() == Content.NINE) {
-//                            ci.drawHex(i, j, g2, new Color(1, 138, 5));
-//                        } else if (map[i][j].getContents() == Content.EIGHT) {
-//                            ci.drawHex(i, j, g2, new Color(2, 171, 23));
-//                        } else if (map[i][j].getContents() == Content.SEVEN) {
-//                            ci.drawHex(i, j, g2, new Color(1, 208, 31));
-//                        } else if (map[i][j].getContents() == Content.SIX) {
-//                            ci.drawHex(i, j, g2, new Color(0, 238, 38));
-//                        } else if (map[i][j].getContents() == Content.FIVE) {
-//                            ci.drawHex(i, j, g2, new Color(4, 255, 43));
-//                        } else if (map[i][j].getContents() == Content.FOUR) {
-//                            //ci.drawHex(i, j, g2, new Color(104, 255, 120));
-//                            ci.drawHex(i, j, g2, new Color(0, 0, 0));
-//                        } else if (map[i][j].getContents() == Content.THREE) {
-//                            ci.drawHex(i, j, g2, new Color(147, 255, 156));
-//                        } else if (map[i][j].getContents() == Content.TWO) {
-//                            ci.drawHex(i, j, g2, new Color(189, 255, 194));
-//                        } else if (map[i][j].getContents() == Content.ONE) {
-//                            ci.drawHex(i, j, g2, new Color(18, 255, 221));
-//                        } else if (map[i][j].getContents() == Content.EMPTY) {
-//                            ci.drawHex(i, j, g2, Color.WHITE);
+//                try {
+//                    if (map[p.getX()][p.getY()].getAnt() != null) {
+//                        if (map[p.getX()][p.getY()].getAnt().getColour() == Colour.RED) {
+//                            ci.drawHex(p.getX(), p.getY(), g2, new Color(252, 227, 39));
+//                        }
+//                        if (map[p.getX()][p.getY()].getAnt().getColour() == Colour.BLACK) {
+//                            ci.drawHex(p.getX(), p.getY(), g2, new Color(205, 97, 139));
 //                        }
 //
-//                        try {
-//                            if (map[i][j].getAnt() != null) {
-//                                if (map[i][j].getAnt().getColour() == Colour.RED) {
-//                                    ci.drawHex(i, j, g2, new Color(252, 227, 39));
-//                                }
-//                                if (map[i][j].getAnt().getColour() == Colour.BLACK) {
-//                                    ci.drawHex(i, j, g2, new Color(205, 97, 139));
-//                                }
-//                            }
-//                        } catch (AntNotFoundException e) {
-//                            e.printStackTrace();
+//
+//                    } else {
+//
+//                        switch (checker) {
+//
+//                            case REDHILL:
+//                                ci.drawHex(p.getX(), p.getY(), g2, Color.RED);
+//                                break;
+//                            case BLACKHILL:
+//                                ci.drawHex(p.getX(), p.getY(), g2, Color.BLACK);
+//                                break;
+//                            case ROCKY:
+//                                ci.drawHex(p.getX(), p.getY(), g2, Color.gray);
+//                                break;
+//                            case NINE:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(1, 138, 5));
+//                                break;
+//                            case EIGHT:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(2, 171, 23));
+//                                break;
+//                            case SEVEN:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(1, 208, 31));
+//                                break;
+//                            case SIX:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 238, 38));
+//                                break;
+//                            case FIVE:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(4, 255, 43));
+//                                break;
+//                            case FOUR:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 0, 0));
+//                                break;
+//                            case THREE:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(147, 255, 156));
+//                                break;
+//                            case TWO:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(189, 255, 194));
+//                                break;
+//                            case ONE:
+//                                ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 238, 38));
+//                                break;
+//                            default:
+//                                ci.drawHex(p.getX(), p.getY(), g2, Color.WHITE);
+//                                break;
+//
 //                        }
 //
 //
 //                    }
+//                } catch (AntNotFoundException e) {
+//                    e.printStackTrace();
 //                }
-//                number++;
-//            } else {
-                if (m.getDirty().size() != 0)
-                    for (Position p : m.getDirty()) {
-
-                        Content checker = map[p.getX()][p.getY()].getContents();
-
-                        try {
-                            if (map[p.getX()][p.getY()].getAnt() != null) {
-                                if (map[p.getX()][p.getY()].getAnt().getColour() == Colour.RED) {
-                                    ci.drawHex(p.getX(), p.getY(), g2, new Color(252, 227, 39));
-                                }
-                                if (map[p.getX()][p.getY()].getAnt().getColour() == Colour.BLACK) {
-                                    ci.drawHex(p.getX(), p.getY(), g2, new Color(205, 97, 139));
-                                }
-
-
-                            } else {
-
-                                switch (checker) {
-
-                                    case REDHILL:
-                                        ci.drawHex(p.getX(), p.getY(), g2, Color.RED);
-                                        break;
-                                    case BLACKHILL:
-                                        ci.drawHex(p.getX(), p.getY(), g2, Color.BLACK);
-                                        break;
-                                    case ROCKY:
-                                        ci.drawHex(p.getX(), p.getY(), g2, Color.gray);
-                                        break;
-                                    case NINE:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(1, 138, 5));
-                                        break;
-                                    case EIGHT:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(2, 171, 23));
-                                        break;
-                                    case SEVEN:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(1, 208, 31));
-                                        break;
-                                    case SIX:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 238, 38));
-                                        break;
-                                    case FIVE:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(4, 255, 43));
-                                        break;
-                                    case FOUR:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 0, 0));
-                                        break;
-                                    case THREE:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(147, 255, 156));
-                                        break;
-                                    case TWO:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(189, 255, 194));
-                                        break;
-                                    case ONE:
-                                        ci.drawHex(p.getX(), p.getY(), g2, new Color(0, 238, 38));
-                                        break;
-                                    default:
-                                        ci.drawHex(p.getX(), p.getY(), g2, Color.WHITE);
-                                        break;
-
-                                }
-
-
-                            }
-                        } catch (AntNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                //     m.getDirty().clear();
-
-    //            }
-            }
-
-            @Override
-            public Dimension getPreferredSize () {
-                return new Dimension(750, 753);
-            }
-
+//
+//
+//            }
+            System.out.println("Before: "+m.getDirty().size());
+            m.getDirty().clear();
+            System.out.println("After: "+m.getDirty().size());
 
         }
 
-        ;
+    }
+
 
 
         private void createLoadPanel() {
