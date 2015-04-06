@@ -34,8 +34,19 @@ public class RunnableGame implements Runnable {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
+<<<<<<< HEAD
         System.out.println(game.getWinner());
 
+=======
+            game.getGUI().updateGUI(game);
+
+
+
+
+        System.out.println(game.getWinner());
+
+
+>>>>>>> origin/master
         game.getGUI().signalGameEnd(game);
     }
 }
