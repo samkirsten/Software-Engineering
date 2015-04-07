@@ -9,6 +9,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.model.exceptions.AntNotFoundException;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 
 import java.awt.*;
@@ -49,16 +50,23 @@ public class GameGUI extends JFrame implements ActionListener {
     private List<Game> fixtures = new ArrayList<>();
 
     //indicators for brain loading status
-    private Boolean isSingleGame;
+    private Boolean isSingleGame = true;
+    private Boolean isRandomWorld = true;
+
     private Boolean p1Ready;
     private Boolean p2Ready;
     private Boolean p3Ready;
     private Boolean p4Ready;
 
+    private File customizedWorldFile;
     private Tournament tournament;
     private GameController controller;
 
 
+    /**
+     * This constructor takes a tournament object, initialize a new controller and creates the GUI
+     * @param t
+     */
     public GameGUI(Tournament t) {
         super("Software Engineering");
         tournament = t;
@@ -68,7 +76,10 @@ public class GameGUI extends JFrame implements ActionListener {
         setSize(1000,1000);
     }
 
-
+    /**
+     * This method creates the container and main panels.
+     * It also put the panels that has been created into a Tab panel
+     */
     private void CreateUI() {
 
         container = getContentPane();
@@ -96,6 +107,9 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
+    /**
+     * This method creates the menu panel which contains the Start Game button
+     */
     private void createMenuPanel() {
         menuPanel = new JPanel();
         menuPanel.setLayout(new FlowLayout());
@@ -109,6 +123,9 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
+    /**
+     * This method creates the table panel which contains the tournament buttons and the result table
+     */
     private void createTablePanel() {
         b1 = new JButton("null");
         b1.setEnabled(false);
@@ -272,7 +289,9 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
-
+    /**
+     * This method creates the map panel which is where the game being displayed
+     */
     private void createMapPanel() {
         //mapPanel = new JPanel();
 
@@ -287,6 +306,10 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * This method triggers what happen when a
+     * @param game
+     */
     public void signalGameEnd(Game game) {
         loadedGames.remove(game);
         controller.updateScores(game, tournament);
@@ -598,7 +621,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p1BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p1BrainStatus.setText("Duplicated names, retry ! ");
+                    p1BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
 
                 }
 
@@ -636,7 +659,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p2BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p2BrainStatus.setText("Duplicated names, retry ! ");
+                    p2BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
 
                 }
 
@@ -673,7 +696,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p3BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p3BrainStatus.setText("Duplicated names, retry ! ");
+                    p3BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
 
                 }
 
@@ -710,16 +733,68 @@ public class GameGUI extends JFrame implements ActionListener {
                         p4BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p4BrainStatus.setText("Duplicated names, retry ! ");
+                    p4BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
 
                 }
 
             }
         });
 
+        final JLabel loadWorldText = new JLabel("No World Loaded");
+        //load world button
+        final JButton loadWorld = new JButton("Load Customized World");
+        loadWorld.setEnabled(false);
+        loadWorld.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new File("."));
+                chooser.setDialogTitle("Load Game World");
+
+
+                //checking if brain is correct
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+
+                    loadWorldText.setText(" New Game World : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    customizedWorldFile = chooser.getSelectedFile() ;
+                } else {
+                    loadWorldText.setText("Your world is not working, retry! ");
+                }
+            }
+
+
+        });
+
         //make radio buttons
         ButtonGroup gameButton = new ButtonGroup();
-        JRadioButton singleGameButton = new JRadioButton("Single Game Mode");
+        ButtonGroup worldButton = new ButtonGroup();
+
+        final JRadioButton singleGameButton = new JRadioButton("Single Game Mode");
+
+        final JRadioButton randomWorld = new JRadioButton("Random World");
+        randomWorld.setSelected(true);
+        randomWorld.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                isRandomWorld = true;
+                loadWorld.setEnabled(false);
+            }
+        });
+
+        final JRadioButton customWorld = new JRadioButton("Custom World");
+        customWorld.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                isRandomWorld = false;
+                loadWorld.setEnabled(true);
+            }
+        });
+
+        worldButton.add(randomWorld);
+        worldButton.add(customWorld);
+
+
         singleGameButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -741,6 +816,10 @@ public class GameGUI extends JFrame implements ActionListener {
                 p3Ready = false;
                 p4Ready = false;
 
+                randomWorld.setSelected(true);
+                customWorld.setEnabled(true);
+                loadWorld.setEnabled(false);
+
             }
         });
 
@@ -761,6 +840,7 @@ public class GameGUI extends JFrame implements ActionListener {
                 player4.setEnabled(true);
                 p3BrainStatus.setEnabled(true);
                 p4BrainStatus.setEnabled(true);
+                randomWorld.setSelected(true);
 
                 //make new brain list
                 inputBrains = new HashMap<String, File>();
@@ -774,6 +854,9 @@ public class GameGUI extends JFrame implements ActionListener {
                 p2Ready = false;
                 p3Ready = false;
                 p4Ready = false;
+
+                customWorld.setEnabled(false);
+                loadWorld.setEnabled(false);
 
 
             }
@@ -862,7 +945,12 @@ public class GameGUI extends JFrame implements ActionListener {
 
         loadPanel.add(singleGameButton, SwingConstants.CENTER);
         loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
-
+        loadPanel.add(blank);
+        loadPanel.add(blank);
+        loadPanel.add(customWorld);
+        loadPanel.add(randomWorld);
+        loadPanel.add(loadWorldText);
+        loadPanel.add(loadWorld);
         loadPanel.add(instruction);
         loadPanel.add(blank);
         loadPanel.add(n1);
