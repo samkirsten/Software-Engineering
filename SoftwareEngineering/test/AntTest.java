@@ -85,24 +85,7 @@ public class AntTest {
         testAnt.setHasFood(true);
         assertTrue(testAnt.hasFood);
     }
-//    @Test
-//    public void test_MarkScent(){
-//        com.model.Position testPos = new com.model.Position(1,1) ;
-//        com.model.Map testMap = new com.model.Map();
-//        com.model.Colour testColor = new com.model.Colour();
-//        com.model.AntImpl testAnt = new com.model.AntImpl(1,testColor,0,0,0,false);
-//
-//        //set marker in ANT class
-//            testAnt.markScent(testPos, 1);
-//
-//        //get marker in MAP class
-//            assertEquals(1, testMap.getCellScentMarker(testColor,testPos));
-//    }
-//
-//    @Test
-//    public void test_killEnemyAnt(){
-//
-//    }
+
 
 
 

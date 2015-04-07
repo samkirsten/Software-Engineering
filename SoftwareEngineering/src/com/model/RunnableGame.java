@@ -1,5 +1,8 @@
 package com.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by junho on 15. 4. 1..
  */
@@ -25,16 +28,6 @@ public class RunnableGame implements Runnable {
 //            }
 //            game.getGUI().updateGUI(game);
 //
-            if (i % 1000 == 0) {
-                System.out.println("updating");
-                try {
-                    game.getGUI().updateGUI(game);
-                    Thread.sleep(800);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
 
         }     //
         long endTime = System.currentTimeMillis();
