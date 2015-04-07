@@ -17,13 +17,19 @@ public class RunnableGame implements Runnable {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < Game.NUMBER_OF_ROUNDS; i++) {
             game.nextRound();
-           // game.getGUI().updateGUI(game);
-
+            System.out.println(i);
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            game.getGUI().updateGUI(game);
+//
             if (i % 1000 == 0) {
                 System.out.println("updating");
                 try {
                     game.getGUI().updateGUI(game);
-                    Thread.sleep(1000);
+                    Thread.sleep(800);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -34,19 +40,17 @@ public class RunnableGame implements Runnable {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
-<<<<<<< HEAD
-        System.out.println(game.getWinner());
 
-=======
-            game.getGUI().updateGUI(game);
+       // System.out.println(game.getWinner());
 
 
+         //   game.getGUI().updateGUI(game);
 
 
-        System.out.println(game.getWinner());
 
 
->>>>>>> origin/master
+        System.out.println("winner "+ game.getWinner());
+
         game.getGUI().signalGameEnd(game);
     }
 }
