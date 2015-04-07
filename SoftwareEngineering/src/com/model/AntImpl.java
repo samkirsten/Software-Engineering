@@ -14,6 +14,12 @@ public class AntImpl implements Ant {
     public Position position;
 
 
+    /**
+     * This is the constructor of the AntImpl Class
+     * @param ID
+     * @param colour
+     * @param position
+     */
     public AntImpl(int ID, Colour colour, Position position){
         this.ID = ID ;
         this. colour = colour ;
@@ -25,71 +31,69 @@ public class AntImpl implements Ant {
         hasFood = false ;
     }
 
+    /**
+     * This method returns the position of an Ant
+     * @return position
+     */
     public Position getPosition(){
         return position;
     }
 
+    /**
+     * This method set the position of an Ant
+     * @param position
+     */
     public void setPosition(Position position){
         this.position = position ;
     }
 
-    /***
+    /**
      * this method returns the ID of the ant
      * @return int, the ID of the ant
      */
-    //1-49 black, other is red
     public int getID() {
         return ID;
     }
 
-    /***
-     * set the ID of the ant
+    /**
+     * this method set the ID of the ant
      * @param id int
      */
-
     public void setID(int id) {
         ID = id ;
     }
 
     /**
-     * Gets the current direction that the ant is facing
-     *
+     * This method gets the current direction that the ant is facing
      * @return int representing current direction between 0 and 5 (inclusive)
      */
-
     public int getDirection() {
         return direction;
     }
 
     /**
-     * Sets the direction that the ant is facing
-     *
+     * This method sets the direction that the ant is facing
      * @param direction The direction to set the ant as facing towards, between 0 and 5 (inclusive)
      */
-
     public void setDirection(int direction) {
         if (direction>=0 && direction<6){
             this.direction = direction ;
-
         }
     }
 
     /**
-     * Gets the current brain state that the ant is in, used by the com.model.Brain to compute the ant's next move
-     *
+     * This method gets the current brain state that the ant is in, used by the Brain to compute the ant's next move
      * @return int representing the current brain state
      */
-
     public int getState() {
         return state ;
     }
+
     /**
-     * Set the current brain state of the ant, invoked by the brain in order to update the ant's
+     * This method set the current brain state of the ant, invoked by the brain in order to update the ant's
      * behaviour for the next turn
-     *
      * @param state an int representing the current state of the brain
      */
-
     public void setState(int state) {
         if (state <= 9999 && state >=0){
             this.state = state ;
@@ -97,11 +101,19 @@ public class AntImpl implements Ant {
 
     }
 
+    /**
+     * This method sets the colour of an Ant
+     * @param colour
+     */
     public void setColour(Colour colour) {
         this.colour = colour ;
     }
 
 
+    /**
+     * This method returns the Colour of an Ant
+     * @return colour
+     */
     public Colour getColour()
     {
         return colour ;
@@ -110,11 +122,9 @@ public class AntImpl implements Ant {
 
 
     /**
-     * Returns whether the ant is resting. After an ant performs an action, it rests for 14 turns.
-     *
-     * @return true if ant is resting, false otherwise (if 0)
+     * This method returns whether the ant is resting. After an ant performs an action, it rests for 14 turns.
+     * @return true if ant is resting, false otherwise
      */
-
     public boolean isResting() {
 
         boolean rest = false;
@@ -127,27 +137,24 @@ public class AntImpl implements Ant {
     }
 
     /**
-     * Sets rest to 1. Which begins the rest period which lasts 14 turns.
+     * This method sets rest to 1. Which begins the rest period which lasts 14 turns.
      */
     public void startResting() {
         resting = 1 ;
     }
 
     /**
-     * Returns the amount of rest that the ant still requires before its next move. An ant rests for 14 turns
-     *
+     * This method returns the amount of rest that the ant still requires before its next move. An ant rests for 14 turns
      * @return int representing number of turns that the ant still must rest for before its next movement
      */
-
     public int getRemainingRest() {
         return (15-resting) ;
     }
 
     /**
-     * Increments the ant's rest counter by 1. The counter ranges from 0-14, looping back after it has reached it's max
+     * This method increments the ant's rest counter by 1. The counter ranges from 0-14, looping back after it has reached it's max
      * range. An ant can only perform a movement on turn 0.
      */
-
     public void incrementRest() {
         if (resting < 15){
             resting ++;
@@ -161,32 +168,27 @@ public class AntImpl implements Ant {
 
 
     /**
-     * Returns whether the ant is currently carrying food
-     *
-     * @return true if carrying food, false otherwise.
+     * This method returns whether the ant is currently carrying food
+     * @return Boolean hasFood, true if carrying food, false otherwise.
      */
-
     public boolean hasFood() {
         return hasFood;
     }
 
-
+    /**
+     * This method sets if an Ant have food
+     * @param Boolean food
+     */
     public void setHasFood(Boolean food) {
         hasFood = food ;
     }
 
-    //    /**
-//     * Marks a scent at a cell when given a position and scent marker
-//     *
-//     * @param pos    the position of the cell
-//     * @param marker the scent marker
-//     */
-//
-//    public void markScent(com.model.Position pos, int marker) {
-//        //***** try in MAP class ? *****
-//    }
 
-
+    /**
+     * This method compares if the Ant input and the current Ant object has the same state
+     * @param o, the object to compare with
+     * @return true if all the states are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -205,6 +207,10 @@ public class AntImpl implements Ant {
         return true;
     }
 
+    /**
+     * This method returns the summary of the Ant states
+     * @return
+     */
     @Override
     public int hashCode() {
         int result = ID;

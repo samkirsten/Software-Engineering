@@ -36,6 +36,8 @@ public interface Game {
 
     public void start();
 
+    public boolean loadMap(File map);
+
 
 
 

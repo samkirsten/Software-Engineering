@@ -3,6 +3,7 @@ package com.model;
 
 import com.model.exceptions.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -119,6 +120,8 @@ public interface Map {
 
 
     public List<Position> getDirty();
+
+    public boolean loadMap(File map);
 }
 
 

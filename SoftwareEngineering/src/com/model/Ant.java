@@ -2,9 +2,17 @@ package com.model;
 
 public interface Ant {
 
-
+    /**
+     * this method returns the ID of the ant
+     * @return int, the ID of the ant
+     */
     public int getID();
 
+
+    /**
+     * this method set the ID of the ant
+     * @param id int
+     */
     public void setID(int id);
 
     /**
@@ -25,8 +33,18 @@ public interface Ant {
      */
     public int getState();
 
+
+    /**
+     * This method sets the colour of an Ant
+     * @param colour
+     */
     public void setColour(Colour colour);
 
+
+    /**
+     * This method returns the Colour of an Ant
+     * @return colour
+     */
     public Colour getColour();
 
 
@@ -48,13 +66,6 @@ public interface Ant {
      */
     public void startResting();
 
-//    /**
-//     * Marks a scent at a cell when given a position and scent marker
-//     * @param pos the position of the cell
-//     * @param marker the scent marker
-//     */
-//    public void markScent(com.model.Position pos, int marker);
-
     /**
      * Returns the amount of rest that the ant still requires before its next move. An ant rests for 14 turns
      * @return int representing number of turns that the ant still must rest for before its next movement
@@ -74,6 +85,7 @@ public interface Ant {
     public boolean hasFood();
 
     public void setHasFood(Boolean food);
+
     public Position getPosition();
 
     public void setPosition(Position position);

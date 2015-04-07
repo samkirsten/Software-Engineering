@@ -655,7 +655,7 @@ public class BrainImpl implements Brain {
                                 }
                             }
                         }
-                        if( map.getAntHill(a.getColour()).contains(p)){
+                        if(map.getAntHill(a.getColour()).contains(a.getPosition())){
                             colony.incrementFood();
                         }
                         a.setHasFood(false);

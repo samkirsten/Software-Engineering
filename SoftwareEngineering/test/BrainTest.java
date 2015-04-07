@@ -16,16 +16,10 @@ import static org.junit.Assert.*;
 public class BrainTest {
 
 
-
-
-    // need to create files to input
-
-    //think maybe each cell should contain a pos?
-    // clear ant from pos if its moved?
-
-
-
-    // test through each group of correct tokens
+    /**
+     * Testing that the instruction tokens  are seen as correct tokens
+     *
+     */
     @Test
     public void testInstructionToken(){
         Colony c = new ColonyImpl(null);
@@ -35,6 +29,10 @@ public class BrainTest {
         assertTrue(b.loadBrain(new File("brains/file.txt")));
     }
 
+    /**
+     * Testing that all direction tokens are  seen as correct tokens
+     *
+     */
     @Test
     public void testDirectionToken(){
 
@@ -46,6 +44,13 @@ public class BrainTest {
         assertTrue(b2.loadBrain(new File("brains/file1.txt")));
 
     }
+
+
+    /**
+     *
+     * Testing that all condition tokens are seen as correct tokens
+     *
+     */
 
     @Test
     public void testConditionsToken(){
@@ -59,6 +64,9 @@ public class BrainTest {
 
     }
 
+    /**
+     * Testing if all argument tokens are seen as correct tokens
+     */
     @Test
     public void testArgumentTokens(){
 
@@ -70,7 +78,10 @@ public class BrainTest {
         assertTrue(b4.loadBrain(new File("brains/file3.txt")));
     }
 
-    // Test a mix of all correct tokens
+    /**
+     * Test a mix of all correct tokens
+      */
+
     @Test
     public void testMixOfTokens(){
 
@@ -84,7 +95,10 @@ public class BrainTest {
 
     }
 
-    // test incorrect tokens mixed with correct tokens
+    /**
+     * Testing a mix of incorrect tokens
+     *
+     */
     @Test
     public void testFailTokens(){
 
@@ -117,6 +131,9 @@ public class BrainTest {
         assertFalse(b13.loadBrain(new File("brains/file9.txt"))); // need to check why this fails
     }
 
+    /**
+     * Testing a mix of correct and incorrect tokens together
+     */
     @Test
     public void testCorrectWrongTokens(){
 
@@ -132,7 +149,10 @@ public class BrainTest {
         assertFalse(b7.loadBrain(new File("brains/file15.txt")));
     }
 
-
+    /**
+     *
+     * Testing if an ant rests for the correct amount of time
+     */
     @Test
     public void testStepResting(){
 
@@ -202,6 +222,11 @@ public class BrainTest {
 
     }
 
+
+    /**
+     * Tests if the sensing of an ant works
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void testSenseTrue() throws CellAlreadyOccupiedException { /// breaks
 
@@ -229,7 +254,7 @@ public class BrainTest {
         b9.loadBrain(new File("brains/file16.txt"));
 
         int state = 1;
-        int state2 = 2;
+
         b9.step(a1.getID());
 
         // checks if its taken the correct state
@@ -239,13 +264,15 @@ public class BrainTest {
 
         assertEquals(0,a1.getState());
 
-        // should set cell details
-//        b9.step(2);
-//        assertEquals(4,a2.getState());
 
 
     }
 
+    /**
+     *
+     * Testing if an ant can mark a cell
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void testMark() throws CellAlreadyOccupiedException {
 
@@ -282,6 +309,10 @@ public class BrainTest {
 
     }
 
+    /**
+     * Testing if an ant can unmark a cell of same colour and number
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void testUnMark() throws CellAlreadyOccupiedException {
 
@@ -298,7 +329,7 @@ public class BrainTest {
 
         c.addAnt(a4);
 
-        // id colour pos
+
         m1.setAntAtCell(p1, a4);
 
 
@@ -307,18 +338,22 @@ public class BrainTest {
         m1.setCellScentMarker(p1,7);
 
 
-        b11.step(a4.getID()); // need to set file so it unmarks
+        b11.step(a4.getID());
 
         assertEquals(1, a4.getState());
 
 
-        assertEquals(0, m1.getCellScentMarker(Colour.BLACK, p1));  /// setScent should be int not char change this, jun needs to fix the get for default 0
+        assertEquals(0, m1.getCellScentMarker(Colour.BLACK, p1));
 
 
 
 
     }
 
+    /**
+     * Testing if an ant can unmark a scent of a different colour ant
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void testCantUnMarkOtherColour() throws CellAlreadyOccupiedException {
 
@@ -351,17 +386,21 @@ public class BrainTest {
 
         m2.setCellScentMarker(p2,1);
 
-        b12.step(a6.getID()); // attempt to unmark a6 marker should not do it
+        b12.step(a6.getID());
 
-        assertEquals(-1,m2.getCellScentMarker(Colour.RED,p2));
+        assertEquals(-1,m2.getCellScentMarker(Colour.RED,p2)); // returns -1 as it shows that it cannot unmark it
         assertEquals(1,a6.getState());
 
 
 
     }
 
+    /**
+     * Tests if an ant can pickup food
+     * @throws InvalidContentCharacterException
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
-
     public void testPickUpFood() throws InvalidContentCharacterException, CellAlreadyOccupiedException {
 
 
@@ -392,12 +431,10 @@ public class BrainTest {
         b13.step(1); // should set state to 1 if there is food at cell
         assertEquals(1, a7.getState());
         Content con = m3.getCellContents(p3);
-        assertEquals(Content.EIGHT, con );
+        assertEquals(Content.EIGHT, con ); // testing if it picks up the food changing it from nine to eight
 
 
-        /////////
-        /////////
-        ////////
+        // another test checking if it picks anything up if a cell is empty
         Colony col = new ColonyImpl(Colour.RED);
         Map m4 = new MapImpl();
         Brain b14 = new BrainImpl(m4,col);
@@ -421,11 +458,9 @@ public class BrainTest {
         assertEquals(2, a8.getState());
         assertEquals(Content.EMPTY, m4.getCellContents(p4));
         // checks that it has gone to state 2 as there is no food
-//
-//        ////////
-//        ////////
-//        ////////
 
+
+        // checks if it picks up food if it has food as it shouldn't
         Map m5 = new MapImpl();
         Colony col1 = new ColonyImpl(Colour.RED);
         Brain b15 = new BrainImpl(m5,col1);
@@ -448,9 +483,16 @@ public class BrainTest {
 
     }
 
+    /**
+     *
+     * Testing if an ant will drop food
+     * @throws CellAlreadyOccupiedException
+     * @throws InvalidContentCharacterException
+     */
     @Test
     public void testDrop() throws CellAlreadyOccupiedException, InvalidContentCharacterException {
 
+        //testing an ant dropping food into an empty cell
         Map m6 = new MapImpl();
         Colony c = new ColonyImpl(Colour.RED);
         Brain b16 = new BrainImpl(m6,c);
@@ -466,18 +508,16 @@ public class BrainTest {
 
         b16.loadBrain(new File("brains/file23.txt"));
 
-        a10.setHasFood(true); // should implement?
+        a10.setHasFood(true);
 
 
         b16.step(1);
 
         assertEquals(Content.ONE, m6.getCellContents(p6));
-        assertEquals(1, a10.getState()); // should be changed to state 1
+        assertEquals(1, a10.getState());
 
-//        ///////
-//        ///////
-//        ///////
 
+        // testing an ant dropping food into a cell with food already in it
         Map m7 = new MapImpl();
         Colony c2 = new ColonyImpl(Colour.RED);
         BrainImpl b17 = new BrainImpl(m7,c2);
@@ -499,14 +539,8 @@ public class BrainTest {
         assertEquals(Content.TWO, m7.getCellContents(p7));
         assertEquals(1, a11.getState());
 
-//        //////
-//        //////
-//        //////
-//        //////
 
-        // if no food then just change state
-
-
+        // testing if the ant will drop any food if it is not holding any food in the first place
         Map m8 = new MapImpl();
         Colony c3 = new ColonyImpl(Colour.RED);
         Brain b18 = new BrainImpl(m8,c3);
@@ -526,11 +560,14 @@ public class BrainTest {
 
         assertEquals(Content.EMPTY,m8.getCellContents(p8));
         assertEquals(2, a12.getState());
-//
+
     }
 
+    /**
+     * Testing if the ant turns left successfully
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
-
     public void testTurnLeft() throws CellAlreadyOccupiedException {
 
         Map m9 = new MapImpl();
@@ -549,41 +586,44 @@ public class BrainTest {
 
         b19.step(1);
 
-        assertEquals(5,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(5,a17.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a17.getState()); //  checks if its in the correct state
 
 
         b19.step(1);
 
-        assertEquals(4,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(4,a17.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a17.getState()); //  checks if its in the correct state
 
         b19.step(1);
 
-        assertEquals(3,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(3,a17.getDirection()); //checks if its in the correct direction
+        assertEquals(1, a17.getState()); //  checks if its in the correct state
 
         b19.step(1);
 
-        assertEquals(2,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(2,a17.getDirection());//checks if its in the correct direction
+        assertEquals(1, a17.getState()); // checks if its in the correct state
 
         b19.step(1);
 
-        assertEquals(1,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(1,a17.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a17.getState()); // checks if its in the correct state
 
 
         b19.step(1);
 
-        assertEquals(0,a17.getDirection());
-        assertEquals(1, a17.getState()); // checks in correct state
+        assertEquals(0,a17.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a17.getState()); // checks if its in the correct state
 
 
     }
 
+    /**
+     *  Testing if the ant turns right correctly
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
-
     public void testTurnRight() throws CellAlreadyOccupiedException {
 
 
@@ -604,40 +644,43 @@ public class BrainTest {
 
         b20.step(1);
 
-        assertEquals(1,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(1,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
 
         b20.step(1);
 
-        assertEquals(2,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(2,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
         b20.step(1);
 
-        assertEquals(3,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(3,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
         b20.step(1);
 
-        assertEquals(4,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(4,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
         b20.step(1);
 
-        assertEquals(5,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(5,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
 
         b20.step(1);
 
-        assertEquals(0,a18.getDirection());
-        assertEquals(1, a18.getState()); // checks in correct state
+        assertEquals(0,a18.getDirection()); // checks if its in the correct direction
+        assertEquals(1, a18.getState()); // checks if its in the correct state
 
     }
 
+    /**
+     * Tests if it moves into the correct cell
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
-
     public void testMove() throws CellAlreadyOccupiedException {
 
         Colony c = new ColonyImpl(Colour.RED);
@@ -654,6 +697,8 @@ public class BrainTest {
         Position p18 = new Position(5,3);
 
         m11.generateMap();
+
+
         try {
             m11.setCellContents(p12,Content.EMPTY);
             m11.setCellContents(p13,Content.EMPTY);
@@ -672,13 +717,14 @@ public class BrainTest {
 
         c.addAnt(a19);
 
-
+        //setting up the ant in the right cell and direction
         m11.setAntAtCell(p11,a19);
         a19.setDirection(0);
 
+
         b21.step(1);
 
-
+        //checks if the cell that the ant was previously in is set to null
         assertEquals(null, m11.getAntAtCell(p11));
         assertEquals(a19,m11.getAntAtCell(p12));
         assertEquals(0,a19.getState());
@@ -706,15 +752,15 @@ public class BrainTest {
         assertEquals(0,a19.getState());
 
 
-
+        //removing the ant that has moved to set up again
         try {
             c.remove(a19.getID());
         } catch (AntNotFoundException e) {
             e.printStackTrace();
         }
 
+        // checks if
         m11.clearAnt(a19.getPosition());
-
         assertEquals(null,m11.getAntAtCell(p12));
 
 

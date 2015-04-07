@@ -45,6 +45,9 @@
 
 package com.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by junho on 15. 4. 1..
  */
@@ -62,6 +65,7 @@ public class RunnableGame implements Runnable {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < Game.NUMBER_OF_ROUNDS; i++) {
             game.nextRound();
+<<<<<<< HEAD
 //            System.out.println(i);
             if (i % 500 == 0) {
                 game.getGUI().updateGUI(game);
@@ -71,6 +75,16 @@ public class RunnableGame implements Runnable {
                     e.printStackTrace();
                 }
 
+=======
+            System.out.println(i);
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            game.getGUI().updateGUI(game);
+//
+>>>>>>> origin/master
 
             }
 //            System.out.println(i);
@@ -78,11 +92,24 @@ public class RunnableGame implements Runnable {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
+<<<<<<< HEAD
         game.getGUI().updateGUI(game);
+=======
+
+       // System.out.println(game.getWinner());
 
 
-        System.out.println(game.getWinner());
+         //   game.getGUI().updateGUI(game);
 
+>>>>>>> origin/master
+
+
+
+<<<<<<< HEAD
+=======
+        System.out.println("winner "+ game.getWinner());
+
+>>>>>>> origin/master
         game.getGUI().signalGameEnd(game);
     }
 }

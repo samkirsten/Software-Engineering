@@ -14,49 +14,28 @@ public class ColonyImpl implements Colony {
     Brain brain ;
     int food ;
     int maxAnts ;
-//    int starting_id_index ;
 
-
+    /**
+     * The constructor of the ColonyImpl Class
+     * which takes a Colour that represents the colour of the Colony
+     *
+     * @param colour
+     */
     public ColonyImpl(Colour colour ){
 
         this.colour = colour ;
 
-
-        //this.brain = brain ;
-        //brain = new com.model.BrainImpl();
-
         food = 0 ;
         maxAnts = 49 ;
         antList = new HashMap<Integer,Ant>();
-        this.antList = antList ;
-
-
-
-//        //initialize ants
-//        if (colour == com.model.Colour.BLACK) {
-//            starting_id_index = 1 ;
-//        }else{
-//            starting_id_index = maxAnts +1 ;
-//        }
-
-//        //put ants into ant list
-//        for (int i = starting_id_index ; i <= (starting_id_index + maxAnts) ; i++){
-//
-//            //******need anthill for position D:*****
-//
-//            com.model.AntImpl ant = null;
-//            ant = new com.model.AntImpl(i, colour, new com.model.Position(1,1));
-//            antList.put(i ,ant);
-//                    }
 
     }
 
-
      /**
-     * Get an com.model.Ant object from the list of Ants stored in the given colony.
-     *
+     * Get an Ant object from the list of Ants stored in the given colony.
+      *
      * @param pos The cell position of the ant to be found
-     * @return The com.model.Ant at indicated position
+     * @return The Ant at indicated position
      */
     @Override
     public Ant getAnt(Position pos) throws AntNotFoundException {
@@ -72,20 +51,19 @@ public class ColonyImpl implements Colony {
             }
         }
 
-
         //if not found, throw exception, otherwise return the ant found
             if (result == null){
-                throw new AntNotFoundException("*** com.model.Ant not found ***");
+                throw new AntNotFoundException("*** Ant not found ***");
             }else {
                 return result;
             }
     }
 
     /**
-     * Get an com.model.Ant object from the list of Ants stored in the given colony.
+     * Get an Ant object from the list of Ants stored in the given colony.
      *
      * @param id the id of the ant to be found
-     * @return The com.model.Ant with given id
+     * @return The Ant object with given id
      */
     @Override
     public Ant getAnt(int id) throws AntNotFoundException {
@@ -93,7 +71,7 @@ public class ColonyImpl implements Colony {
 
         // if id not found , throw exception, otherwise return ant
         if (!found){
-            throw new AntNotFoundException("*** com.model.Ant not found ***");
+            throw new AntNotFoundException("*** Ant not found ***");
         }else{
             return antList.get(id) ;
         }
@@ -174,6 +152,11 @@ public class ColonyImpl implements Colony {
         return colour ;
     }
 
+    /**
+     * This method set the colony colour
+     *
+     * @param colour
+     */
     @Override
     public void setColonyColour(Colour colour) {
 
@@ -182,9 +165,9 @@ public class ColonyImpl implements Colony {
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.
      * When an ant is killed it turns into 3 particles of food.
-     * This method is invoked from the killEnemyAnt method in an com.model.Ant object
+     * This method is invoked from the killEnemyAnt method in an Ant object
      *
-     * @param p position of the ant to be killed
+     * @param id position of the ant to be killed
      */
     @Override
     public void remove(int id) throws AntNotFoundException {
@@ -193,11 +176,19 @@ public class ColonyImpl implements Colony {
 
     }
 
+    /**
+     * Thie method add an Ant into the ant list
+     *
+     * @param ant, that will be added into the list
+     */
     @Override
     public void addAnt(Ant ant) {
         antList.put(ant.getID(), ant) ;
     }
 
+    /**
+     * This method resets all the states of an Ant
+     */
     @Override
     public void reset() {
         food = 0;
