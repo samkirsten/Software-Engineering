@@ -196,6 +196,11 @@ public class GameImpl implements Game {
             return null;
     }
 
+    public boolean loadMap(File map){
+
+        return false;
+
+    }
 
 
 }

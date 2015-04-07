@@ -3,6 +3,9 @@ import com.model.*;
 import com.model.exceptions.CellAlreadyOccupiedException;
 import com.model.exceptions.InvalidContentCharacterException;
 import org.junit.Test;
+
+import java.io.File;
+
 import static org.junit.Assert.*;
 
 
@@ -10,7 +13,7 @@ public class MapTest {
 
     @Test // should also test the rocky borders
     public void testGenerateMapTest(){
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
 
         assertEquals(127,m.getArray("red"));
@@ -21,7 +24,7 @@ public class MapTest {
 
     @Test // this test is wrong
     public void testClearMap(){
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
         Cell[][] m1 =  m.getMap();
 
@@ -67,7 +70,7 @@ public class MapTest {
 
     @Test // should also check if a empty cell is rocky and should return false
     public void testSellIsRocky(){
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
         Cell[][] map = m.getMap();
 
@@ -80,7 +83,7 @@ public class MapTest {
 
     @Test
     public void testCellContent() throws InvalidContentCharacterException {
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
         Cell[][] map = m.getMap();
 
@@ -110,12 +113,12 @@ public class MapTest {
 
     @Test
     public void testCellScentMarker(){
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
 
         Position p = new Position(5,5);
         m.setCellScentMarker(p,3);
-        assertEquals(-1,m.getCellScentMarker(Colour.BLACK,p));
+        assertEquals(-1, m.getCellScentMarker(Colour.BLACK, p));
         assertEquals(3,m.getCellScentMarker(Colour.RED,p));
 
         m.setCellScentMarker(p,8);
@@ -127,7 +130,7 @@ public class MapTest {
 
     @Test
     public void testAntAtCell() throws CellAlreadyOccupiedException {
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
 
         assertNull(m.getAntAtCell(new Position(5,5)));
@@ -140,7 +143,7 @@ public class MapTest {
 
     @Test
     public void getAdjacentEnemyAnts() throws CellAlreadyOccupiedException {
-        MapImpl m = new MapImpl();
+        Map m = new MapImpl();
         m.generateMap();
 
         Ant ant1 = new AntImpl(1, Colour.BLACK,new Position(5,5));
@@ -173,6 +176,29 @@ public class MapTest {
         assertEquals(6,m.getAdjacentEnemyAnts(new Position(5,5),Colour.RED));
 
 
+    }
+
+
+    @Test
+    public void testLoadMap(){
+        
+
+        Map m = new MapImpl();
+        boolean testChecker;
+        testChecker = m.loadMap(new File("brains/brokenWorld.world"));
+        assertFalse(testChecker);
+
+
+        boolean testChecker1;
+        testChecker1 = m.loadMap(new File("brains/workingWorld.world"));
+        assertTrue(testChecker1);
 
     }
+
+
+
+
+
+
+
 }

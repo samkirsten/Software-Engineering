@@ -1,5 +1,6 @@
 package com.model;
 
+import java.io.File;
 import java.util.*;
 import com.model.exceptions.*;
 
@@ -440,6 +441,12 @@ public class MapImpl implements Map{
             return Rocky.size();
         }
         return BLACKHILL.size();
+    }
+
+    public boolean loadMap(File map){
+
+        return true;
+
     }
 
 
