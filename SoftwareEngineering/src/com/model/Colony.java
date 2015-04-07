@@ -5,16 +5,16 @@ import com.model.exceptions.AntNotFoundException;
 public interface Colony {
 
     /**
-     * Get an com.model.Ant object from the list of Ants stored in the given colony.
+     * Get an Ant object from the list of Ants stored in the given colony.
      * @param pos The cell position of the ant to be found
-     * @return The com.model.Ant at indicated position
+     * @return The Ant at indicated position
      */
     public Ant getAnt(Position pos) throws AntNotFoundException;
 
     /**
-     * Get an com.model.Ant object from the list of Ants stored in the given colony.
+     * Get an Ant object from the list of Ants stored in the given colony.
      * @param id the id of the ant to be found
-     * @return The com.model.Ant with given id
+     * @return The Ant with given id
      */
     public Ant getAnt(int id) throws AntNotFoundException;
 
@@ -64,19 +64,29 @@ public interface Colony {
      */
     public Colour getColonyColour();
 
-
+    /**
+     * Set the color of the colony
+     * @param colour
+     */
     public void setColonyColour(Colour colour);
 
     /**
      * Removes ant belonging to this objects colony by removing it from the list of ants.
      * When an ant is killed it turns into 3 particles of food.
-     * This method is invoked from the killEnemyAnt method in an com.model.Ant object
-     * @param p position of the ant to be killed
+     * This method is invoked from the killEnemyAnt method in an Ant object
+     * @param id position of the ant to be killed
      */
     public void remove(int id) throws AntNotFoundException;
 
+    /**
+     * Add an Ant to the ant list
+     * @param ant
+     */
     public void addAnt(Ant ant);
 
+    /**
+     * Resets the states of an ant
+     */
     public void reset();
 
 }
