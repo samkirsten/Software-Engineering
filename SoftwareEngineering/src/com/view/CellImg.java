@@ -7,16 +7,14 @@ import java.awt.Polygon;
 
 public class CellImg {
 	
-	private Cell[][] map;
 	private int Border = 5;
 	private int s = 0;	// length of one side
 	private int t = 0;	// short side of triangle outside of each hex
 	private int r = 0;	// radious of inscribed circle( center to middle of each side) r = h / 2.
 	private int h = 0;	// height. Distance between center of two adjacent hexes.Distance between two opposite sides in a hex.
-	
-	public CellImg(int side,Cell[][] map){
+    private Color color = Color.white;
+	public CellImg(int side){
 		setSide(side);
-		this.map = map;
 	}
 	
 	public void setBorders(int b){
@@ -53,9 +51,15 @@ public class CellImg {
 		int x = i * h + (j%2) * h/2;
 		int y = j * (s+t);
 		Polygon poly = genHex(x, y);
-		g2.setColor(col);
+        color = col;
+		g2.setColor(color);
 		g2.fillPolygon(poly);
 		g2.drawPolygon(poly);
     }
+
+    public void updateColor(Graphics2D g2, Color col){
+        color = col;
+    }
+
 
 }

@@ -43,10 +43,7 @@ public class MapImpl implements Map{
     public void generateMap() {
         for(int y = 0; y < 150; y++){
             for(int x = 0; x < 150; x++){
-                if(x == 130 && y == 149){
-                    map[x][y].setAnt(new AntImpl(1,Colour.BLACK,new Position(x,y)));
-                }
-               // dirtyList.add(new Position(x,y));
+                dirtyList.add(new Position(x,y));
              //   map[x][y].setDirty();
                 if( x == 0 || x == 149 || y == 0 || y == 149 ){
                     map[x][y] = new CellImpl(Content.ROCKY);                      // The edge of com.model.Map
@@ -122,6 +119,7 @@ public class MapImpl implements Map{
     private void generateAntHill(int x,int y, Colour colour){
         Content team;
         CellImpl cell, cell1;
+        int aa = 0;
         if(colour == Colour.BLACK){
             team = Content.BLACKHILL;
         }else{
@@ -140,6 +138,10 @@ public class MapImpl implements Map{
                             BLACK.add(createPosition(x+i-(a/2),y+6-a));
                             BLACKHILL.add(cell);
                             BLACKHILL.add(cell1);
+                            cell.setColonyCell(Content.BLACKHILL);
+                            cell1.setColonyCell(Content.BLACKHILL);
+                            System.out.println(aa++);
+                            System.out.println(aa++);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
@@ -149,6 +151,8 @@ public class MapImpl implements Map{
                             RED.add(createPosition(x+i-(a/2),y+6-a));
                             REDHILL.add(cell);
                             REDHILL.add(cell1);
+                            cell.setColonyCell(Content.REDHILL);
+                            cell1.setColonyCell(Content.REDHILL);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
@@ -160,6 +164,8 @@ public class MapImpl implements Map{
                         try {
                             BLACK.add(createPosition(x+i-(a/2),y-6+a));
                             BLACKHILL.add(cell);
+                            System.out.println(aa++);
+                            cell.setColonyCell(Content.BLACKHILL);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
@@ -167,6 +173,7 @@ public class MapImpl implements Map{
                         try {
                             RED.add(createPosition(x+i-(a/2),y-6+a));
                             REDHILL.add(cell);
+                            cell.setColonyCell(Content.REDHILL);
                         } catch (PositionOutOfBoundsException e) {
                             e.printStackTrace();
                         }
@@ -389,7 +396,7 @@ public class MapImpl implements Map{
                 contents == Content.EIGHT ||
                 contents == Content.NINE){
             map[pos.getX()][pos.getY()].setContents(contents);
-           // setDirty(pos);
+            setDirty(pos);
             map[pos.getX()][pos.getY()].setDirty();
         }else{
             throw new InvalidContentCharacterException(contents + " is not available contents");
@@ -411,7 +418,7 @@ public class MapImpl implements Map{
     public void clearAnt(Position pos){
 
         map[pos.getX()][pos.getY()].setAnt(null);
-       // setDirty(pos);
+        setDirty(pos);
         map[pos.getX()][pos.getY()].setDirty();
 
     }

@@ -51,10 +51,9 @@ public interface
      */
     public void setAnt(Ant ant);
 
-    public boolean isDirty();
+    public void setColonyCell(Content content);
 
-    public void setClean();
+    public Content isColonyCell();
 
-    public void setDirty();
 
 }

@@ -6,6 +6,7 @@ public class CellImpl implements Cell {
     private int getScentMark = 0;
     private Ant ant = null;
     private boolean dirty = true;
+    private Content colony = null;
 
     public CellImpl() {                 // need to talk
 
@@ -45,12 +46,22 @@ public class CellImpl implements Cell {
 
     @Override
     public void setContents(Content content) {
-        this.content = content;
+            this.content = content;
     }
 
     @Override
     public void setAnt(Ant ant) {
         this.ant = ant;
+    }
+
+    @Override
+    public void setColonyCell(Content content) {
+        colony = content;
+    }
+
+    @Override
+    public Content isColonyCell() {
+        return colony;
     }
 
     public void setDirty(){
