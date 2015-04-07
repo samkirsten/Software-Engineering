@@ -752,9 +752,11 @@ public class GameGUI extends JFrame implements ActionListener {
                 chooser.setCurrentDirectory(new File("."));
                 chooser.setDialogTitle("Load Game World");
 
+                Map testMap = new MapImpl();
+
 
                 //checking if brain is correct
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && testMap.loadMap(chooser.getSelectedFile())) {
 
                     loadWorldText.setText(" New Game World : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
                     customizedWorldFile = chooser.getSelectedFile() ;

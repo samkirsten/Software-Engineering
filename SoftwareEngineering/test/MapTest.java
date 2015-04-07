@@ -13,7 +13,7 @@ public class MapTest {
 
     @Test // should also test the rocky borders
     public void testGenerateMapTest(){
-        Map m = new MapImpl();
+        MapImpl  m = new MapImpl();
         m.generateMap();
 
         assertEquals(127,m.getArray("red"));
