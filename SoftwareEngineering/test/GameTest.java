@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class GameTest {
 
-    // making loadBrain private?
+
     @Test
     public void loadBrainTest(){
         File brainFile = new File("brains/brain1.txt");
@@ -119,16 +119,6 @@ public class GameTest {
             }
 
         }
-
-
-
-
-    }
-
-
-    @Test
-
-    public void testStart(){
 
 
 

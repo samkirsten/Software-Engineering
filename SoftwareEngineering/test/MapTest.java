@@ -78,7 +78,7 @@ public class MapTest {
         assertTrue(map[5][5].isRocky());
     }
 
-    @Test  // also test up to 9  and test invalid contents
+    @Test
     public void testCellContent() throws InvalidContentCharacterException {
         MapImpl m = new MapImpl();
         m.generateMap();
@@ -115,11 +115,12 @@ public class MapTest {
 
         Position p = new Position(5,5);
         m.setCellScentMarker(p,3);
-        assertEquals(3,m.getCellScentMarker(Colour.BLACK,p));
-        assertEquals(-1,m.getCellScentMarker(Colour.RED,p));
-        m.setCellScentMarker(p,8);
         assertEquals(-1,m.getCellScentMarker(Colour.BLACK,p));
-        assertEquals(8,m.getCellScentMarker(Colour.RED,p));
+        assertEquals(3,m.getCellScentMarker(Colour.RED,p));
+
+        m.setCellScentMarker(p,8);
+        assertEquals(8,m.getCellScentMarker(Colour.BLACK,p));
+        assertEquals(-1,m.getCellScentMarker(Colour.RED,p));
 
 
     }
