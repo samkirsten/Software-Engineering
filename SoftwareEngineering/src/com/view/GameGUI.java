@@ -58,7 +58,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private Boolean p3Ready;
     private Boolean p4Ready;
 
-    private File customizedWorldFile;
+    private File customizedWorldFile = null;
     private Tournament tournament;
     private GameController controller;
 
@@ -781,6 +781,8 @@ public class GameGUI extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 isRandomWorld = true;
                 loadWorld.setEnabled(false);
+                customizedWorldFile = null;
+                loadWorldText.setText("No World loaded");
             }
         });
 
@@ -875,53 +877,61 @@ public class GameGUI extends JFrame implements ActionListener {
                 String bu = "b";
 
 
-                if (isSingleGame && p1Ready && p2Ready) {
-                    instruction.setText("Games is ready to start !");
-                    gameStatus.setText("Single Game is Ready.");
+                if (isRandomWorld && (customizedWorldFile == null)) {
 
-                    tab.setEnabledAt(1, true);
-                    tab.setSelectedIndex(1);
-                } else {
-                    if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
-                        for (int a = 0; a < playerNames.size() + 2; a++) {
-                            for (int b = a + 1; b < playerNames.size(); b++) {
-                                System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
-                                Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
-                                Blist.get(k).setEnabled(true);
-                                k++;
-                            }
-                        }
-                        gameStatus.setText("3 Player Tournament ready.");
+
+                    if (isSingleGame && p1Ready && p2Ready) {
+                        instruction.setText("Games is ready to start !");
+                        gameStatus.setText("Single Game is Ready.");
+
                         tab.setEnabledAt(1, true);
-
                         tab.setSelectedIndex(1);
-                        fixtures = controller.createFixtures(inputBrains, tournament);
-
                     } else {
-                        if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                        if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
                             for (int a = 0; a < playerNames.size() + 2; a++) {
                                 for (int b = a + 1; b < playerNames.size(); b++) {
                                     System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
                                     Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                                     Blist.get(k).setEnabled(true);
-                                    System.out.println(k);
                                     k++;
                                 }
                             }
-                            gameStatus.setText("4 Player Tournament ready.");
-
+                            gameStatus.setText("3 Player Tournament ready.");
                             tab.setEnabledAt(1, true);
 
                             tab.setSelectedIndex(1);
                             fixtures = controller.createFixtures(inputBrains, tournament);
 
                         } else {
-                            instruction.setText("Please make sure all the brain is loaded!");
-                            instruction.setForeground(Color.RED);
+                            if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                                for (int a = 0; a < playerNames.size() + 2; a++) {
+                                    for (int b = a + 1; b < playerNames.size(); b++) {
+                                        System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
+                                        Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
+                                        Blist.get(k).setEnabled(true);
+                                        System.out.println(k);
+                                        k++;
+                                    }
+                                }
+                                gameStatus.setText("4 Player Tournament ready.");
 
+                                tab.setEnabledAt(1, true);
+
+                                tab.setSelectedIndex(1);
+                                fixtures = controller.createFixtures(inputBrains, tournament);
+
+                            } else {
+                                instruction.setText("Please make sure all the brain is loaded!");
+                                instruction.setForeground(Color.RED);
+
+                            }
                         }
-                    }
 
+
+                    }
+                } else {
+                    instruction.setText("Please load your world or set to random world!");
+                    instruction.setForeground(Color.RED);
 
                 }
             }
