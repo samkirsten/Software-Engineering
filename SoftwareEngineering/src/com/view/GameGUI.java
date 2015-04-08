@@ -72,7 +72,7 @@ public class GameGUI extends JFrame implements ActionListener {
         t.setGUI(this);
         controller = new ControllerImpl();
         CreateUI();
-        setSize(1000,1000);
+        setSize(1000, 1000);
     }
 
     /**
@@ -306,18 +306,30 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     /**
-     * This method triggers what happen when a
+     * This method triggers what happen when a game in a tournament ends
      * @param game
      */
     public void signalGameEnd(Game game) {
         loadedGames.remove(game);
         controller.updateScores(game, tournament);
-        if (loadedGames.size() == 1) {
-            JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
+
+        if (isSingleGame){
+            JOptionPane.showMessageDialog(this, "Gamer Over ! Winner is : " + game.getWinner());
+
+        }else{
+
+            if (loadedGames.size() == 1) {
+                JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
+                tournament.updateScores(game);
+                HashMap<String, Integer> result = tournament.getResults();
+                t1.setText(Integer.toString(result.get("player1")) );
+
 //            updateGUI(loadedGames.get(0));
 //            this.game = loadedGames.get(0);
-        } else {
-            JOptionPane.showMessageDialog(this, "Second round over, thanks for playing!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Second round over, thanks for playing!");
+            }
+
         }
     }
 
@@ -339,9 +351,17 @@ public class GameGUI extends JFrame implements ActionListener {
         String n = e.getActionCommand();
 
         if (n == "start game") {
-            RunnableGame g = new RunnableGame(game);
-            Thread t = new Thread(g);
-            t.start();
+
+//            if (isSingleGame){
+//                //run single game
+//
+//
+//            }else{
+                //run tournament game
+                RunnableGame g = new RunnableGame(game);
+                Thread t = new Thread(g);
+                t.start();
+//            }
         }
 
 
@@ -395,42 +415,20 @@ public class GameGUI extends JFrame implements ActionListener {
 //        }
 
 
+
         @Override
         public void paint(Graphics g){
             Graphics2D g2;
             g2 = (Graphics2D) g;
-<<<<<<< HEAD
             //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 //            g2.drawImage(image,0,0,this);
 
 
             for(int j = 0; j < 150; j++){
                 for(int i = 0; i < 150; i++){
-=======
-            g2.drawImage(image,0,0,this);
-
-            for (int j = 0; j < 150; j++) {
-                for (int i = 0; i < 150; i++) {
-
-
-                    if(map[i][j].isDirty()){
-                        Content checker = map[i][j].getContents();
-
-
-                        try {
-                            if (map[i][j].getAnt() != null) {
-
-                                if (map[i][j].getAnt().getColour() == Colour.RED) {
-                                    ci.drawHex(i, j, g2, new Color(252, 227, 39));
-                                }
-                                if (map[i][j].getAnt().getColour() == Colour.BLACK) {
-                                    ci.drawHex(i, j, g2, new Color(205, 97, 139));
-                                }
->>>>>>> origin/master
 
                     if(map[i][j].getContents() == Content.EMPTY){
 
-<<<<<<< HEAD
                         try {
 
                             if (map[i][j].getAnt() != null) {
@@ -499,53 +497,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
                                 break;
                         }
-=======
-                            } else {
-
-                                switch (checker) {
-
-                                    case REDHILL:
-                                        ci.drawHex(i, j, g2, Color.RED);
-                                        break;
-                                    case BLACKHILL:
-                                        ci.drawHex(i,j, g2, Color.BLACK);
-                                        break;
-                                    case ROCKY:
-                                        ci.drawHex(i,j, g2, Color.gray);
-                                        break;
-                                    case NINE:
-                                        ci.drawHex(i,j, g2, new Color(1, 138, 5));
-                                        break;
-                                    case EIGHT:
-                                        ci.drawHex(i,j, g2, new Color(2, 171, 23));
-                                        break;
-                                    case SEVEN:
-                                        ci.drawHex(i,j, g2, new Color(1, 208, 31));
-                                        break;
-                                    case SIX:
-                                        ci.drawHex(i,j,g2, new Color(0, 238, 38));
-                                        break;
-                                    case FIVE:
-                                        ci.drawHex(i,j,g2, new Color(4, 255, 43));
-                                        break;
-                                    case FOUR:
-                                        ci.drawHex(i,j, g2, new Color(0, 0, 0));
-                                        break;
-                                    case THREE:
-                                        ci.drawHex(i,j, g2, new Color(147, 255, 156));
-                                        break;
-                                    case TWO:
-                                        ci.drawHex(i,j, g2, new Color(189, 255, 194));
-                                        break;
-                                    case ONE:
-                                        ci.drawHex(i,j, g2, new Color(0, 238, 38));
-                                        break;
-                                    default:
-                                        ci.drawHex(i,j, g2, Color.WHITE);
-                                        break;
-
-                                }
->>>>>>> origin/master
 
 
 
@@ -557,33 +508,18 @@ public class GameGUI extends JFrame implements ActionListener {
                             if (map[i][j].isColonyCell() == Content.REDHILL) {
                                 ci.drawHex(i, j, g2, Color.RED);
                             }
-<<<<<<< HEAD
                             if (map[i][j].isColonyCell() == Content.BLACKHILL) {
                                 ci.drawHex(i, j, g2, Color.BLACK);
                             }
                         }
                     }
-=======
-                        } catch (AntNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                        map[i][j].setClean();
-
-                    }
-
-                }
-            }
-
->>>>>>> origin/master
 
                 }
             }
         }
 //
-        }
+    }
+
 
 
 
@@ -915,13 +851,16 @@ public class GameGUI extends JFrame implements ActionListener {
                 int k = 0;
                 String bu = "b";
 
-
-                if (isRandomWorld && (customizedWorldFile == null)) {
+                //check if world is loaded
+                if (isRandomWorld || ( !isRandomWorld && !(customizedWorldFile == null))) {
 
 
                     if (isSingleGame && p1Ready && p2Ready) {
                         instruction.setText("Games is ready to start !");
                         gameStatus.setText("Single Game is Ready.");
+
+                        fixtures = controller.createFixtures(inputBrains, tournament);
+                        game = fixtures.get(0);
 
                         tab.setEnabledAt(1, true);
                         tab.setSelectedIndex(1);
@@ -980,7 +919,6 @@ public class GameGUI extends JFrame implements ActionListener {
         clear.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                //make fixtures
 
                 playerNames = new HashMap<Integer, String>();
                 inputBrains = new HashMap<String, File>();
