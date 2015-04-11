@@ -116,6 +116,7 @@ public class AntImpl implements Ant {
      */
     public Colour getColour()
     {
+
         return colour ;
     }
 
