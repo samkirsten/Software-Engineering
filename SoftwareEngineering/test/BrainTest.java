@@ -759,12 +759,12 @@ public class BrainTest {
             e.printStackTrace();
         }
 
-        // checks if
+        //checks if the cell that the ant was previously in is set to null
         m11.clearAnt(a19.getPosition());
         assertEquals(null,m11.getAntAtCell(p12));
 
 
-
+        // create a new ant to move
         Ant a = new AntImpl(1,Colour.RED, p11);
         c.addAnt(a);
         m11.setAntAtCell(p11,a19);
@@ -773,7 +773,7 @@ public class BrainTest {
 
         b21.step(1);
 
-
+        // check cell the ant previously was in is null and if the ant is in the right state
         assertEquals(0,a.getState());
         assertEquals(a,m11.getAntAtCell(p13));
         assertEquals(null, m11.getAntAtCell(p11));
@@ -896,7 +896,7 @@ public class BrainTest {
 
         assertEquals(a5, m11.getAntAtCell(p11));
         assertEquals(null,m11.getAntAtCell(p12));
-        assertEquals(1, a5.getState()); // make sure in correct state
+        assertEquals(1, a5.getState());
 
         m11.clearAnt(a5.getPosition());
         try {
@@ -907,7 +907,7 @@ public class BrainTest {
         assertEquals(null, m11.getAntAtCell(p11));
 
 
-        // occupied cell
+        // checks if the ant will move into an occupied cell
 
         Ant a6 = new AntImpl(1,Colour.RED,p11);
         Ant a7 = new AntImpl(2,Colour.RED,p12);
@@ -922,11 +922,14 @@ public class BrainTest {
 
         assertEquals(a7,m11.getAntAtCell(p12));
         assertEquals(a6, m11.getAntAtCell(p11));
-        assertEquals(1, a6.getState()); // make sure in correct state
+        assertEquals(1, a6.getState());
 
 
     }
 
+    /**
+     * Testing if when a surrounded ant will be killed
+     */
     @Test
     public void testKillAntMove(){
 
@@ -939,14 +942,16 @@ public class BrainTest {
 
         m.generateMap();
 
-        Position p11 = new Position(3,3); // original
-        Position p12 = new Position(4,3);// goes right
-        Position p13 = new Position(2,3); // left
-        Position p14 = new Position(4,2); // top right
-        Position p15 = new Position(3,2); // top left
-        Position p16 = new Position(4,4); // bottom right
-        Position p17 = new Position(3,4); // bottom left
 
+        Position p11 = new Position(3,3); // original ant position
+        Position p12 = new Position(4,3);//  top right of the original pos
+        Position p13 = new Position(2,3); // left of the original pos
+        Position p14 = new Position(4,2); // top right of the original pos
+        Position p15 = new Position(3,2); // top left of the original pos
+        Position p16 = new Position(4,4); // bottom right of the original pos
+        Position p17 = new Position(3,4); // bottom left of the original pos
+
+        //creating and setting up so that once an ant moves it gets surrounded
         Ant a = new AntImpl(1,Colour.RED,p17);
         Ant a1 = new AntImpl(2,Colour.BLACK,p12);
         Ant a2 = new AntImpl(3,Colour.BLACK,p13);
@@ -961,12 +966,12 @@ public class BrainTest {
         black.addAnt(a4);
         black.addAnt(a5);
 
-       // a.setHasFood(true);
-
         a.setDirection(5);
 
+
+        // puts some food into the cell the ant will die in to check if the when the ant dies it will add food to the cell it dies in
         try {
-            m.setCellContents(p11,Content.EIGHT);
+            m.setCellContents(p11,Content.THREE);
         } catch (InvalidContentCharacterException e) {
             e.printStackTrace();
         }
@@ -980,33 +985,29 @@ public class BrainTest {
             m.setAntAtCell(p14,a3);
             m.setAntAtCell(p15,a4);
             m.setAntAtCell(p16,a5);
+
         } catch (CellAlreadyOccupiedException e) {
             e.printStackTrace();
         }
-        assertEquals(Content.EIGHT,m.getCellContents(p11));
 
-        System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
+        assertEquals(Content.THREE,m.getCellContents(p11));
 
         b.step(a.getID());
 
-
-        System.out.println(m.getAdjacentEnemyAnts(p11,Colour.BLACK));
+        // checks if the ant is died after moving
         assertEquals(false,red.isAntAlive(1));
 
-
-        assertEquals(Content.NINE, m.getCellContents(p11));
-
-
-
-
-
+        //checks if the content of the cell is  6 after the ant as died
+        assertEquals(Content.SIX, m.getCellContents(p11));
 
     }
 
+    /**
+     *
+     * Checks if a resting ant dies if it gets surrounded
+     */
     @Test
-
     public void testKillRestingAnt(){
-
 
         Colony red = new ColonyImpl(Colour.RED);
         Colony black = new ColonyImpl(Colour.BLACK);
@@ -1058,17 +1059,20 @@ public class BrainTest {
         }
 
         b.step(a.getID());
-        System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
+
         assertEquals(false, red.isAntAlive(1));
-        System.out.println(m.getCellContents(p11));
+
         assertEquals(Content.THREE, m.getCellContents(p11));
 
 
     }
 
-    @Test
 
-    public void testKillAntOtherOutCome(){
+    /**
+     * checks if the ant dies if it is idle or executing an instruction which isn't move and is surrounded
+     */
+    @Test
+    public void testKillingAnt(){
 
 
         Colony red = new ColonyImpl(Colour.RED);
@@ -1102,7 +1106,6 @@ public class BrainTest {
         black.addAnt(a4);
         black.addAnt(a5);
 
-        // a.setHasFood(true);
 
         a.setDirection(0);
 
@@ -1122,44 +1125,13 @@ public class BrainTest {
 
         b.step(a.getID());
 
-        System.out.println();
-
         assertEquals(false,red.isAntAlive(1));
-        System.out.println(m.getCellContents(p11));
+
         assertEquals(Content.THREE, m.getCellContents(p11));
 
 
 
     }
-
-    @Test
-
-    public void testFlip(){
-
-        Colony c = new ColonyImpl(Colour.RED);
-        Map m = new MapImpl();
-        Brain b = new BrainImpl(m,c);
-        Position p = new Position(1,1);
-        Ant a = new AntImpl(1,Colour.RED,p);
-
-        m.generateMap();
-        c.addAnt(a);
-
-        try {
-            m.setAntAtCell(p,a);
-        } catch (CellAlreadyOccupiedException e) {
-            e.printStackTrace();
-        }
-
-        b.loadBrain(new File("brains/file30.txt"));
-
-        b.step(a.getID());
-
-        assertEquals(0,a.getState());
-        assertNotEquals(1,a.getState());
-
-    }
-
 
 
 }

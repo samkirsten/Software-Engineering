@@ -64,7 +64,12 @@ public class RunnableGame implements Runnable {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             game.nextRound();
+<<<<<<< HEAD
             if (i % 1000 == 0) {
+=======
+//            System.out.println(i);
+            if (i % 500 == 0) {
+>>>>>>> origin/master
                 game.getGUI().updateGUI(game);
                 try {
                     Thread.sleep(100);
@@ -72,6 +77,17 @@ public class RunnableGame implements Runnable {
                     e.printStackTrace();
                 }
 
+<<<<<<< HEAD
+=======
+            System.out.println(i);
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            game.getGUI().updateGUI(game);
+//
+>>>>>>> origin/master
 
             }
         }     //
@@ -80,6 +96,7 @@ public class RunnableGame implements Runnable {
         System.out.println(totalTime);
         game.getGUI().updateGUI(game);
 
+<<<<<<< HEAD
 
         System.out.println(game.getWinner());
 
@@ -88,5 +105,15 @@ public class RunnableGame implements Runnable {
         } catch (AntNotFoundException e) {
             e.printStackTrace();
         }
+=======
+       // System.out.println(game.getWinner());
+
+
+         //   game.getGUI().updateGUI(game);
+
+        System.out.println("winner "+ game.getWinner());
+
+        game.getGUI().signalGameEnd(game);
+>>>>>>> origin/master
     }
 }
