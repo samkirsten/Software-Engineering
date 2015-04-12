@@ -41,8 +41,7 @@ public interface Game {
 
     public void setup();
 
-    public void setCustomMap(Map map);
-
+    
 
 
 

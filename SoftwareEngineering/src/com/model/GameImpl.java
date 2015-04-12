@@ -39,19 +39,9 @@ public class GameImpl implements Game {
         map.generateMap();
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * Create a new game object with the two brain files with the names of the players which the brain files belong to and the GUI object in which it will be played in and also the Map it will be playing on
-     * @param brain1
-     * @param name1
-     * @param brain2
-     * @param name2
-     * @param gui
-     * @param map
-     */
-    public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui, Map map){
->>>>>>> origin/master
+
+
+
 
 
     /**
@@ -210,6 +200,8 @@ public class GameImpl implements Game {
 
     }
 
+
+
     /**
      * Running all the ants through the step method in the brain to execute the next instruction
      */
@@ -243,7 +235,6 @@ public class GameImpl implements Game {
             return null;
     }
 
-<<<<<<< HEAD
     public String getWinnerName(){
         if (getWinner()==Colour.BLACK){
             return  getBlackPlayerName();
@@ -252,18 +243,15 @@ public class GameImpl implements Game {
         }
     }
 
-    public boolean loadMap(File world){
 
-=======
     /**
      * Checks if the custom map loaded in is syntactically correct or not
      * @param map
      * @return A boolean checking if a custom map is syntactically correct or not
      */
     public boolean loadMap(File map){
->>>>>>> origin/master
 
-        return this.getMap().loadMap(world);
+        return this.getMap().loadMap(map);
 
     }
 
