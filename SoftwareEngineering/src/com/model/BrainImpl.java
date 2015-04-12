@@ -691,7 +691,6 @@ public class BrainImpl implements Brain {
                         a.setState(((Int)state.get(currentState).get(2)).n);
 
                     }else{
-                        // System.out.println(a.getPosition().getX()+" "+a.getPosition().getY());
                         try {
                             map.clearAnt(p);
                             map.setAntAtCell(pos, a);
@@ -699,9 +698,8 @@ public class BrainImpl implements Brain {
                             e.printStackTrace();
                         }
                         a.setPosition(pos);
-                        a.setState(((Int)state.get(currentState).get(1)).n);
+                        a.setState(((Int) state.get(currentState).get(1)).n);
                         a.startResting();
-
                         if(map.getAdjacentEnemyAnts(pos, enemyColour) == 5 || map.getAdjacentEnemyAnts(pos, enemyColour) == 6){
                             try {
                                 colony.remove(a.getID());

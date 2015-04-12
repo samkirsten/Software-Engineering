@@ -25,7 +25,7 @@ public interface
      * Returns the contents of the com.model.Cell.
      * The return type is a char and can be later parsed to int
      * if the cell contains food.
-     * @return char representing contents of cell
+     * @return Content representing contents of cell
      */
     public Content getContents();
 
@@ -51,8 +51,16 @@ public interface
      */
     public void setAnt(Ant ant);
 
+    /**
+     *  Set anthill at this cell.
+     *  @param content one of Contents Enum(In particular, REDHILL and BLACKHILL)
+     */
     public void setColonyCell(Content content);
 
+    /**
+     *  get the content to check this cell belong to part of colony
+     *
+     */
     public Content isColonyCell();
 
 

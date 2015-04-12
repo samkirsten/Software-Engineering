@@ -13,7 +13,19 @@ public class TournamentImpl implements Tournament {
     private List<Game> fixtures = new ArrayList<>();
     private GameGUI gui;
 
+    public List<Game> createCustomFixuture(HashMap<String,File> brains){
+        List<String> names = new ArrayList<>(brains.keySet());
+        List<File> brainFiles = new ArrayList<>();
 
+        for(String name : names) {
+            File brainFile = brains.get(name);
+            brainFiles.add(brainFile);
+        }
+
+        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui));
+
+        return fixtures;
+    }
 
     @Override
     public List<Game> createFixtures(HashMap<String,File> brains) {
@@ -34,32 +46,33 @@ public class TournamentImpl implements Tournament {
                     case 0:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui,tempGame.getMap()));
+                       // fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui,new MapImpl(tempGame.getMap())));
+                        fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 1:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(2),names.get(2),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(2),names.get(2),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 2:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(3),names.get(3),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(3),names.get(3),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(3),names.get(3),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 3:
                         tempGame = new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(2),names.get(2),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(2),names.get(2),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(1),names.get(1),gui));
                         break;
                     case 4:
                         tempGame = new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(3),names.get(3),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(3),names.get(3),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(3),names.get(3),brainFiles.get(1),names.get(1),gui));
                         break;
                     case 5:
                         tempGame = new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(3),names.get(3),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(3),names.get(3),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(3),names.get(3),brainFiles.get(2),names.get(2),gui));
                         break;
                 }
             }
@@ -71,17 +84,17 @@ public class TournamentImpl implements Tournament {
                     case 0:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 1:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(2),names.get(2),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(2),names.get(2),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 2:
                         tempGame = new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(2),names.get(2),gui);
                         fixtures.add(tempGame);
-                        fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(2),names.get(2),gui,tempGame.getMap()));
+                        fixtures.add(new GameImpl(brainFiles.get(2),names.get(2),brainFiles.get(1),names.get(1),gui));
                         break;
                 }
             }

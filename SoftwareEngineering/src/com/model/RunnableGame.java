@@ -45,8 +45,7 @@
 
 package com.model;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.model.exceptions.AntNotFoundException;
 
 /**
  * Created by junho on 15. 4. 1..
@@ -63,11 +62,9 @@ public class RunnableGame implements Runnable {
     @Override
     public void run() {
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < Game.NUMBER_OF_ROUNDS; i++) {
+        for (int i = 0; i < 1000; i++) {
             game.nextRound();
-<<<<<<< HEAD
-//            System.out.println(i);
-            if (i % 500 == 0) {
+            if (i % 1000 == 0) {
                 game.getGUI().updateGUI(game);
                 try {
                     Thread.sleep(100);
@@ -75,41 +72,21 @@ public class RunnableGame implements Runnable {
                     e.printStackTrace();
                 }
 
-=======
-            System.out.println(i);
-//            try {
-//                Thread.sleep(200);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            game.getGUI().updateGUI(game);
-//
->>>>>>> origin/master
 
             }
-//            System.out.println(i);
         }     //
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
-<<<<<<< HEAD
         game.getGUI().updateGUI(game);
-=======
-
-       // System.out.println(game.getWinner());
 
 
-         //   game.getGUI().updateGUI(game);
+        System.out.println(game.getWinner());
 
->>>>>>> origin/master
-
-
-
-<<<<<<< HEAD
-=======
-        System.out.println("winner "+ game.getWinner());
-
->>>>>>> origin/master
-        game.getGUI().signalGameEnd(game);
+        try {
+            game.getGUI().signalGameEnd(game);
+        } catch (AntNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

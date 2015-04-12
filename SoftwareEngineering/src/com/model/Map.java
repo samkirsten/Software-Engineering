@@ -105,23 +105,30 @@ public interface Map {
      */
     public void setCellScentMarker(Position pos, int marker);
 
-
+    /**
+     * return current map as a 2D Cell array
+     *
+     */
     public Cell[][] getMap();
 
+    /**
+     *  clear Ant in the map.
+     *  This is for when game is over, make clear map for next game.
+     *  @param p the position of cell where want to be cleaned.
+     */
     public void clearAnt(Position p);
 
-    public void setDirty(Position p);
-
-//    public void setClean();
-//
-//    public void setDirty();
-//
-//    public boolean isDirty();
-
-
-    public List<Position> getDirty();
-
+    /**
+     *  If it is true, the map is loaded successfully
+     *
+     *  @param map the map file.
+     */
     public boolean loadMap(File map);
+
+    /**
+     *  This is when first game is finished, refresh to initial map.
+     */
+    public void getClearedMap();
 }
 
 

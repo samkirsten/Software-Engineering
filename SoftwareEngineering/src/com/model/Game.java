@@ -27,6 +27,7 @@ public interface Game {
 
     public Colour getWinner();
 
+    public String getWinnerName();
 
     public String getBlackPlayerName();
 
@@ -37,6 +38,10 @@ public interface Game {
     public void start();
 
     public boolean loadMap(File map);
+
+    public void setup();
+
+    public void setCustomMap(Map map);
 
 
 

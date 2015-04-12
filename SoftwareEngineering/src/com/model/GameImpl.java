@@ -29,22 +29,9 @@ public class GameImpl implements Game {
         blackPlayerName = name2;
         this.gui = gui;
         map.generateMap();
-        setup();
     }
 
-    public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui, Map map){
 
-        red = new ColonyImpl(Colour.RED);
-        black = new ColonyImpl(Colour.BLACK);
-        loadBrain(brain1,Colour.RED);
-        loadBrain(brain2,Colour.BLACK);
-        redPlayerName = name1;
-        blackPlayerName = name2;
-        this.map = map;
-        this.gui = gui;
-        map.clearMap();
-        setup();
-    }
 
     public GameGUI getGUI(){ return gui;}
 
@@ -157,7 +144,7 @@ public class GameImpl implements Game {
         }
     }
 
-    private void setup(){
+    public void setup(){
         currentRound = 0;
        // map.clearMap();
 
@@ -196,9 +183,18 @@ public class GameImpl implements Game {
             return null;
     }
 
-    public boolean loadMap(File map){
+    public String getWinnerName(){
+        if (getWinner()==Colour.BLACK){
+            return  getBlackPlayerName();
+        }else{
+            return getRedPlayerName();
+        }
+    }
 
-        return false;
+    public boolean loadMap(File world){
+
+
+        return this.getMap().loadMap(world);
 
     }
 

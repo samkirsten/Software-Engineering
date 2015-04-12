@@ -9,22 +9,17 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.model.exceptions.AntNotFoundException;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class GameGUI extends JFrame implements ActionListener {
-    private int a;
-    private Map Map;
-    private int currentRound = 0;
     private Game game;
     private JButton b1, b2, b3, b4, b5, b6, startGame;
     private JTextField t1, t2, t3, t4;
@@ -38,34 +33,34 @@ public class GameGUI extends JFrame implements ActionListener {
     private JTabbedPane tab;
     private JDialog gameover;
     private Graphic c;
+    Cell[][] map = new CellImpl[150][150];
 
     private List<Game> loadedGames = new ArrayList<>();
 
+    private  File customMap ;
     public HashMap<String, File> inputBrains;
     public ArrayList<String> playerNamesOrder;
     public HashMap<Integer, String> playerNames;
+
+    //new code*
+    public HashMap<String, Integer> result ;
 
     //fixtures list
     private List<Game> fixtures = new ArrayList<>();
 
     //indicators for brain loading status
-    private Boolean isSingleGame = true;
-    private Boolean isRandomWorld = true;
+    private Boolean isSingleGame;
+    private Boolean isRandomWorld;
 
     private Boolean p1Ready;
     private Boolean p2Ready;
     private Boolean p3Ready;
     private Boolean p4Ready;
 
-    private File customizedWorldFile = null;
     private Tournament tournament;
     private GameController controller;
 
 
-    /**
-     * This constructor takes a tournament object, initialize a new controller and creates the GUI
-     * @param t
-     */
     public GameGUI(Tournament t) {
         super("Software Engineering");
         tournament = t;
@@ -75,10 +70,7 @@ public class GameGUI extends JFrame implements ActionListener {
         setSize(1000,1000);
     }
 
-    /**
-     * This method creates the container and main panels.
-     * It also put the panels that has been created into a Tab panel
-     */
+
     private void CreateUI() {
 
         container = getContentPane();
@@ -106,13 +98,11 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
-    /**
-     * This method creates the menu panel which contains the Start Game button
-     */
     private void createMenuPanel() {
         menuPanel = new JPanel();
         menuPanel.setLayout(new FlowLayout());
         startGame = makeButton("start game");
+        startGame.setEnabled(false);
         gameStatus = new JLabel("No Brains Loaded");
         menuPanel.add(startGame);
         menuPanel.add(gameStatus);
@@ -122,9 +112,6 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
-    /**
-     * This method creates the table panel which contains the tournament buttons and the result table
-     */
     private void createTablePanel() {
         b1 = new JButton("null");
         b1.setEnabled(false);
@@ -171,7 +158,8 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.add(fixtures.get(0));
                     loadedGames.add(fixtures.get(1));
                     game = loadedGames.get(0);
-                    //  updateGUI(loadedGames.get(0));
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b1.setEnabled(false);
 
@@ -186,8 +174,9 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(2));
                     loadedGames.add(fixtures.get(3));
-                    game = fixtures.get(10);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b2.setEnabled(false);
 
@@ -202,8 +191,9 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(4));
                     loadedGames.add(fixtures.get(5));
-                    game = fixtures.get(10);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b3.setEnabled(false);
 
@@ -218,8 +208,9 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(6));
                     loadedGames.add(fixtures.get(7));
-                    game = fixtures.get(10);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b4.setEnabled(false);
 
@@ -233,8 +224,9 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(8));
                     loadedGames.add(fixtures.get(9));
-                    game = fixtures.get(8);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b5.setEnabled(false);
             }
@@ -247,8 +239,9 @@ public class GameGUI extends JFrame implements ActionListener {
                     loadedGames.clear();
                     loadedGames.add(fixtures.get(10));
                     loadedGames.add(fixtures.get(11));
-                    game = fixtures.get(10);
-                    updateGUI(loadedGames.get(0));
+                    game = loadedGames.get(0);
+                    game.setup();
+                    startGame.setEnabled(true);
                 }
                 b6.setEnabled(false);
             }
@@ -288,9 +281,7 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
 
-    /**
-     * This method creates the map panel which is where the game being displayed
-     */
+
     private void createMapPanel() {
         //mapPanel = new JPanel();
 
@@ -305,19 +296,67 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
-    /**
-     * This method triggers what happen when a
-     * @param game
-     */
-    public void signalGameEnd(Game game) {
+    public void displayResult(){
+        //new code
+
+        result = tournament.getResults();
+
+        String name = playerNames.get(1);
+        Integer score = result.get(name);
+        t1.setText(name+" 's score:" + score);
+
+        String name2 = playerNames.get(2);
+        Integer score2 = result.get(name2);
+        t2.setText(name2+" 's score:" + score2);
+
+
+        String name3 = playerNames.get(3);
+        Integer score3 = result.get(name3);
+        t3.setText(name3+" 's score:" + score3);
+
+
+
+
+        if (result.size() == 4){
+
+            String name4 = playerNames.get(4);
+            Integer score4 = result.get(name3);
+            t2.setText(name4+" 's score:" + score4);
+        }
+
+    }
+    public void signalGameEnd(Game game) throws AntNotFoundException {
         loadedGames.remove(game);
         controller.updateScores(game, tournament);
         if (loadedGames.size() == 1) {
-            JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
-//            updateGUI(loadedGames.get(0));
-//            this.game = loadedGames.get(0);
-        } else {
+                JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
+
+                displayResult();
+
+
+                Game nextGame = loadedGames.get(0);
+                nextGame.getMap().getClearedMap();
+                nextGame.setup();
+                this.game = nextGame;
+
+
+
+        }else if(isSingleGame == true){
+            if(game.getWinner() == null){
+                JOptionPane.showMessageDialog(this, "This game draw");
+                startGame.setEnabled(false);
+            }else{
+                String winner = game.getWinner().toString();
+                JOptionPane.showMessageDialog(this, "Game Ended ! Winner is: " +game.getWinnerName()+" ("+ winner+")");
+                startGame.setEnabled(false);
+            }
+
+        }
+        else {
             JOptionPane.showMessageDialog(this, "Second round over, thanks for playing!");
+            startGame.setEnabled(false);
+
+            displayResult();
         }
     }
 
@@ -339,6 +378,90 @@ public class GameGUI extends JFrame implements ActionListener {
         String n = e.getActionCommand();
 
         if (n == "start game") {
+
+
+//            Cell[][] cell = this.game.getMap().getMap();
+//            for(int y = 0; y < 150; y++){
+//                for(int x = 0; x < 150; x++){
+//                    if(x<149){
+//                        try {
+//                            if(cell[x][y].getAnt() != null){
+//                                System.out.print(".");
+//                            }else{
+//                                System.out.print("+");
+//                            }
+//                        } catch (AntNotFoundException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }else{
+//                        try {
+//                            if(cell[x][y].getAnt() != null){
+//                                System.out.println(".");
+//                            }else{
+//                                System.out.println("+");
+//                            }
+//                        } catch (AntNotFoundException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                }
+////            }
+//            Cell[][] cell = this.game.getMap().getMap();
+//            for(int y = 0; y < 150; y++){
+//                for(int x = 0; x < 150; x++){
+//                    if(x<149){
+//                        try {
+//                            if(cell[x][y].getContents() == Content.EMPTY){
+//                                System.out.print(".");
+//                            }else{
+//                                if(cell[x][y].getContents() == Content.BLACKHILL || cell[x][y].getContents() == Content.REDHILL ){
+//                                    System.out.print("+");
+//                                }
+//                                else if(cell[x][y].getContents() == Content.FIVE){
+//                                    System.out.print("5");
+//                                }
+//                                else if(cell[x][y].getContents() == Content.ROCKY){
+//                                    System.out.print("#");
+//                                }
+//                            }
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }else{
+//                        try {
+//                            if(cell[x][y].getContents() == Content.EMPTY){
+//                                System.out.println(".");
+//                            }else{
+//                                if(cell[x][y].getContents() == Content.BLACKHILL || cell[x][y].getContents() == Content.REDHILL ){
+//                                    System.out.println("+");
+//                                }
+//                                else if(cell[x][y].getContents() == Content.FIVE){
+//                                    System.out.println("5");
+//                                }
+//                                else if(cell[x][y].getContents() == Content.ROCKY){
+//                                    System.out.println("#");
+//                                }
+//                            }
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//            System.out.println("===========================");
+
+            if (isSingleGame){
+                loadedGames.clear();
+                loadedGames.add(fixtures.get(0));
+                //loadedGames.add(fixtures.get(1));
+                game = loadedGames.get(0);
+                if(isRandomWorld == false){
+                    game.setCustomMap(null);
+                }
+                game.setup();
+                startGame.setEnabled(true);
+            }
+
             RunnableGame g = new RunnableGame(game);
             Thread t = new Thread(g);
             t.start();
@@ -354,28 +477,13 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     class Graphic extends Canvas {
-        private Cell[][] map = new CellImpl[150][150];
-        private CellImg[][] hexagon = new CellImg[150][150];
         private CellImg ci = new CellImg(3);
         private Map m;
-        private BufferedImage image;
 
-        public void setMap(Cell[][] map, Map m,BufferedImage image) {
-            this.map = map;
+        public void setMap(Cell[][] map1, Map m) {
+            map = map1;
             this.m = m;
-            this.image = image;
-            System.out.println("being called");
-            ci = new CellImg(3);
             repaint();
-        }
-
-        public void setMap(Cell[][] map, Map m) {
-            this.map = map;
-            this.m = m;
-            System.out.println("being called");
-            repaint();
-
-
         }
 
         public Graphic(){
@@ -399,38 +507,13 @@ public class GameGUI extends JFrame implements ActionListener {
         public void paint(Graphics g){
             Graphics2D g2;
             g2 = (Graphics2D) g;
-<<<<<<< HEAD
-            //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//            g2.drawImage(image,0,0,this);
 
 
             for(int j = 0; j < 150; j++){
                 for(int i = 0; i < 150; i++){
-=======
-            g2.drawImage(image,0,0,this);
-
-            for (int j = 0; j < 150; j++) {
-                for (int i = 0; i < 150; i++) {
-
-
-                    if(map[i][j].isDirty()){
-                        Content checker = map[i][j].getContents();
-
-
-                        try {
-                            if (map[i][j].getAnt() != null) {
-
-                                if (map[i][j].getAnt().getColour() == Colour.RED) {
-                                    ci.drawHex(i, j, g2, new Color(252, 227, 39));
-                                }
-                                if (map[i][j].getAnt().getColour() == Colour.BLACK) {
-                                    ci.drawHex(i, j, g2, new Color(205, 97, 139));
-                                }
->>>>>>> origin/master
 
                     if(map[i][j].getContents() == Content.EMPTY){
 
-<<<<<<< HEAD
                         try {
 
                             if (map[i][j].getAnt() != null) {
@@ -445,15 +528,6 @@ public class GameGUI extends JFrame implements ActionListener {
                         } catch (AntNotFoundException e) {
                             e.printStackTrace();
                         }
-//                        if (map[i][j].isColonyCell() != null){
-//                            System.out.println(map[i][j].isColonyCell());
-//                            if(map[i][j].isColonyCell() == Content.REDHILL){
-//                                ci.drawHex(i, j, g2, Color.RED);
-//                            }
-//                            if(map[i][j].isColonyCell() == Content.BLACKHILL){
-//                                ci.drawHex(i, j, g2, Color.BLACK);
-//                            }
-//                        }
                     }else{
                         Content checker = map[i][j].getContents();
 
@@ -496,94 +570,29 @@ public class GameGUI extends JFrame implements ActionListener {
                                 ci.drawHex(i, j, g2, new Color(238, 13, 0));
                                 break;
                             default:
-
                                 break;
                         }
-=======
-                            } else {
-
-                                switch (checker) {
-
-                                    case REDHILL:
-                                        ci.drawHex(i, j, g2, Color.RED);
-                                        break;
-                                    case BLACKHILL:
-                                        ci.drawHex(i,j, g2, Color.BLACK);
-                                        break;
-                                    case ROCKY:
-                                        ci.drawHex(i,j, g2, Color.gray);
-                                        break;
-                                    case NINE:
-                                        ci.drawHex(i,j, g2, new Color(1, 138, 5));
-                                        break;
-                                    case EIGHT:
-                                        ci.drawHex(i,j, g2, new Color(2, 171, 23));
-                                        break;
-                                    case SEVEN:
-                                        ci.drawHex(i,j, g2, new Color(1, 208, 31));
-                                        break;
-                                    case SIX:
-                                        ci.drawHex(i,j,g2, new Color(0, 238, 38));
-                                        break;
-                                    case FIVE:
-                                        ci.drawHex(i,j,g2, new Color(4, 255, 43));
-                                        break;
-                                    case FOUR:
-                                        ci.drawHex(i,j, g2, new Color(0, 0, 0));
-                                        break;
-                                    case THREE:
-                                        ci.drawHex(i,j, g2, new Color(147, 255, 156));
-                                        break;
-                                    case TWO:
-                                        ci.drawHex(i,j, g2, new Color(189, 255, 194));
-                                        break;
-                                    case ONE:
-                                        ci.drawHex(i,j, g2, new Color(0, 238, 38));
-                                        break;
-                                    default:
-                                        ci.drawHex(i,j, g2, Color.WHITE);
-                                        break;
-
-                                }
->>>>>>> origin/master
 
 
 
                     }
-                    int temp = Content.getFoodValue(map[i][j].getContents());
-                    if(map[i][j].isColonyCell()!= null && map[i][j].getContents()!= null && (temp > 0 && temp < 10) ) {
-                        if (map[i][j].isColonyCell() != null) {
-                            System.out.println(map[i][j].isColonyCell());
-                            if (map[i][j].isColonyCell() == Content.REDHILL) {
-                                ci.drawHex(i, j, g2, Color.RED);
-                            }
-<<<<<<< HEAD
-                            if (map[i][j].isColonyCell() == Content.BLACKHILL) {
-                                ci.drawHex(i, j, g2, Color.BLACK);
-                            }
-                        }
-                    }
-=======
-                        } catch (AntNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                        map[i][j].setClean();
-
-                    }
-
-                }
-            }
-
->>>>>>> origin/master
+//                    int temp = Content.getFoodValue(map[i][j].getContents());
+//                    if(map[i][j].isColonyCell()!= null && map[i][j].getContents()!= null && (temp > 0 && temp < 10) ) {
+//                        if (map[i][j].isColonyCell() != null) {
+//                            if (map[i][j].isColonyCell() == Content.REDHILL) {
+//                                ci.drawHex(i, j, g2, Color.RED);
+//                            }
+//                            if (map[i][j].isColonyCell() == Content.BLACKHILL) {
+//                                ci.drawHex(i, j, g2, Color.BLACK);
+//                            }
+//                        }
+//                    }
 
                 }
             }
         }
 //
-        }
+    }
 
 
 
@@ -622,6 +631,8 @@ public class GameGUI extends JFrame implements ActionListener {
         final JLabel p2BrainStatus = new JLabel("Player 2's Brain : Not loaded", SwingConstants.CENTER);
         final JLabel p3BrainStatus = new JLabel("Player 3's Brain : Not loaded", SwingConstants.CENTER);
         final JLabel p4BrainStatus = new JLabel("Player 4's Brain : Not loaded", SwingConstants.CENTER);
+        final JLabel loadMapStatus = new JLabel("No Custom Map Loaded", SwingConstants.CENTER);
+
 
         //initialize booleans
         p1Ready = false;
@@ -634,10 +645,39 @@ public class GameGUI extends JFrame implements ActionListener {
         //getContentPane().add(menuPanel);
         loadPanel.setLayout(new GridLayout(15, 1));
 
+
+        //make load map BUTTON !!!!
+        final JButton loadMap = new JButton("Load Your Map Here");
+        loadMap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new File("."));
+                    chooser.setDialogTitle("Load Map");
+
+                    //checking 1.if brain is correct
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && game.loadMap(chooser.getSelectedFile()) ) {
+
+                        loadMapStatus.setText("Loaded Map : [ " + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                        customMap = chooser.getSelectedFile() ;
+                        Map m = new MapImpl();
+
+
+                    } else {
+                        loadMapStatus.setText("Your Map is not working, retry! ");
+                    }
+
+
+
+            }
+        });
+
+        loadMap.setEnabled(false);
+
+
         //make new load brain button for player 1
         final JButton player1 = new JButton("Load Player 1's Brain");
-        player1.setPreferredSize(new Dimension(10, 10));
-        player1.setBounds(50, 60, 80, 30);
         player1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String name = n1.getText();
@@ -660,7 +700,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p1BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p1BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
+                    p1BrainStatus.setText("Duplicated names, retry ! ");
 
                 }
 
@@ -698,7 +738,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p2BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p2BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
+                    p2BrainStatus.setText("Duplicated names, retry ! ");
 
                 }
 
@@ -735,7 +775,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         p3BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p3BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
+                    p3BrainStatus.setText("Duplicated names, retry ! ");
 
                 }
 
@@ -772,72 +812,47 @@ public class GameGUI extends JFrame implements ActionListener {
                         p4BrainStatus.setText("Your Brain is not working, retry! ");
                     }
                 } else {
-                    p4BrainStatus.setText("Duplicated player, retry or clear previous brains! ");
+                    p4BrainStatus.setText("Duplicated names, retry ! ");
 
                 }
 
             }
         });
 
-        final JLabel loadWorldText = new JLabel("No World Loaded");
-        //load world button
-        final JButton loadWorld = new JButton("Load Customized World");
-        loadWorld.setEnabled(false);
-        loadWorld.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
+        //make radio buttons GROUPS
+        ButtonGroup gameButtonsGroup = new ButtonGroup();
+        ButtonGroup mapButtonsGroup = new ButtonGroup();
 
 
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new File("."));
-                chooser.setDialogTitle("Load Game World");
-
-                Map testMap = new MapImpl();
-
-
-                //checking if brain is correct
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && testMap.loadMap(chooser.getSelectedFile())) {
-
-                    loadWorldText.setText(" New Game World : [" + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                    customizedWorldFile = chooser.getSelectedFile() ;
-                } else {
-                    loadWorldText.setText("Your world is not working, retry! ");
-                }
-            }
-
-
-        });
-
-        //make radio buttons
-        ButtonGroup gameButton = new ButtonGroup();
-        ButtonGroup worldButton = new ButtonGroup();
-
-        final JRadioButton singleGameButton = new JRadioButton("Single Game Mode");
-
-        final JRadioButton randomWorld = new JRadioButton("Random World");
-        randomWorld.setSelected(true);
-        randomWorld.addActionListener(new ActionListener() {
+        //load map radio buttons
+        JRadioButton randomMapButton = new JRadioButton("Random World");
+        randomMapButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
                 isRandomWorld = true;
-                loadWorld.setEnabled(false);
-                customizedWorldFile = null;
-                loadWorldText.setText("No World loaded");
+                loadMap.setEnabled(false);
+
             }
         });
 
-        final JRadioButton customWorld = new JRadioButton("Custom World");
-        customWorld.addActionListener(new ActionListener() {
+        JRadioButton customMapButton = new JRadioButton("Custom World");
+        customMapButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
                 isRandomWorld = false;
-                loadWorld.setEnabled(true);
+                loadMap.setEnabled(true);
+
+
             }
         });
 
-        worldButton.add(randomWorld);
-        worldButton.add(customWorld);
+        randomMapButton.setSelected(true);
+        isRandomWorld = true;
+        mapButtonsGroup.add(randomMapButton);
+        mapButtonsGroup.add(customMapButton);
 
 
+        JRadioButton singleGameButton = new JRadioButton("Single Game Mode");
         singleGameButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -859,10 +874,6 @@ public class GameGUI extends JFrame implements ActionListener {
                 p3Ready = false;
                 p4Ready = false;
 
-                randomWorld.setSelected(true);
-                customWorld.setEnabled(true);
-                loadWorld.setEnabled(false);
-
             }
         });
 
@@ -883,7 +894,6 @@ public class GameGUI extends JFrame implements ActionListener {
                 player4.setEnabled(true);
                 p3BrainStatus.setEnabled(true);
                 p4BrainStatus.setEnabled(true);
-                randomWorld.setSelected(true);
 
                 //make new brain list
                 inputBrains = new HashMap<String, File>();
@@ -898,14 +908,11 @@ public class GameGUI extends JFrame implements ActionListener {
                 p3Ready = false;
                 p4Ready = false;
 
-                customWorld.setEnabled(false);
-                loadWorld.setEnabled(false);
-
 
             }
         });
-        gameButton.add(singleGameButton);
-        gameButton.add(tournamentGameButton);
+        gameButtonsGroup.add(singleGameButton);
+        gameButtonsGroup.add(tournamentGameButton);
 
         JButton makeFixtures = new JButton("Create Games");
         makeFixtures.addActionListener(new ActionListener() {
@@ -915,16 +922,24 @@ public class GameGUI extends JFrame implements ActionListener {
                 int k = 0;
                 String bu = "b";
 
-
-                if (isRandomWorld && (customizedWorldFile == null)) {
+                if (isRandomWorld || (!isRandomWorld && customMap!=null)) {
 
 
                     if (isSingleGame && p1Ready && p2Ready) {
                         instruction.setText("Games is ready to start !");
                         gameStatus.setText("Single Game is Ready.");
 
+                        fixtures = controller.createFixtures(inputBrains, tournament);
+                        startGame.setEnabled(true);
+
                         tab.setEnabledAt(1, true);
                         tab.setSelectedIndex(1);
+
+                        if(isRandomWorld == true){
+
+                        }else{ // Custom map
+
+                        }
                     } else {
                         if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
                             for (int a = 0; a < playerNames.size() + 2; a++) {
@@ -968,8 +983,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 
                     }
-                } else {
-                    instruction.setText("Please load your world or set to random world!");
+                }else{
+                    instruction.setText("Please load your map or set it to random map !");
                     instruction.setForeground(Color.RED);
 
                 }
@@ -994,14 +1009,14 @@ public class GameGUI extends JFrame implements ActionListener {
 
         JLabel blank = new JLabel("");
 
-        loadPanel.add(singleGameButton, SwingConstants.CENTER);
-        loadPanel.add(tournamentGameButton, SwingConstants.CENTER);
-        loadPanel.add(blank);
-        loadPanel.add(blank);
-        loadPanel.add(customWorld);
-        loadPanel.add(randomWorld);
-        loadPanel.add(loadWorldText);
-        loadPanel.add(loadWorld);
+        loadPanel.add(randomMapButton);
+        loadPanel.add(customMapButton);
+        loadPanel.add(loadMapStatus);
+        loadPanel.add(loadMap);
+
+        loadPanel.add(singleGameButton);
+        loadPanel.add(tournamentGameButton);
+
         loadPanel.add(instruction);
         loadPanel.add(blank);
         loadPanel.add(n1);

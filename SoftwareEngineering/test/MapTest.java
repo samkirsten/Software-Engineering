@@ -11,6 +11,10 @@ import static org.junit.Assert.*;
 
 public class MapTest {
 
+    /**
+     * This test is to create map properly.
+     * such as number of two anthill, rock and food.
+     */
     @Test // should also test the rocky borders
     public void testGenerateMapTest(){
         MapImpl  m = new MapImpl();
@@ -22,6 +26,10 @@ public class MapTest {
         assertEquals(610,m.getArray("rocky"));
     }
 
+    /**
+     * When user cleared the map
+     * this test will give it refresh properly
+     */
     @Test // this test is wrong
     public void testClearMap(){
         Map m = new MapImpl();
@@ -68,19 +76,25 @@ public class MapTest {
 
     }
 
+    /**
+     *  This test is to check isRocky method is working properly by using setContent method
+     */
     @Test // should also check if a empty cell is rocky and should return false
-    public void testSellIsRocky(){
+    public void testCellIsRocky(){
         Map m = new MapImpl();
         m.generateMap();
         Cell[][] map = m.getMap();
 
-        Position p = new Position(5,5);
         map[5][5].setContents(Content.EMPTY);
         assertFalse(map[5][5].isRocky());
         map[5][5].setContents(Content.ROCKY);
         assertTrue(map[5][5].isRocky());
     }
 
+    /**
+     * This test is to check set Cell content method is working properly.
+     * @throws InvalidContentCharacterException
+     */
     @Test
     public void testCellContent() throws InvalidContentCharacterException {
         Map m = new MapImpl();
@@ -111,6 +125,11 @@ public class MapTest {
 
     }
 
+    /**
+     * This test is to check Cell ScenMarker return properly.
+     * if the team is different it should return -1
+     * else it will return their number.
+     */
     @Test
     public void testCellScentMarker(){
         Map m = new MapImpl();
@@ -128,6 +147,10 @@ public class MapTest {
 
     }
 
+    /**
+     * This test is to test When ant in a cell, it return the ant properly(Checking setAnt and getAnt method )
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void testAntAtCell() throws CellAlreadyOccupiedException {
         Map m = new MapImpl();
@@ -141,6 +164,11 @@ public class MapTest {
 
     }
 
+
+    /**
+     * This test is to test getAdjacentEnemyAnts method work properly.
+     * @throws CellAlreadyOccupiedException
+     */
     @Test
     public void getAdjacentEnemyAnts() throws CellAlreadyOccupiedException {
         Map m = new MapImpl();
@@ -178,7 +206,9 @@ public class MapTest {
 
     }
 
-
+    /**
+     * This test is to check the map has syntactically error or not.
+     */
     @Test
     public void testLoadMap(){
         
