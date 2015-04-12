@@ -10,7 +10,11 @@ public enum Content {
     REDHILL,BLACKHILL,ROCKY,EMPTY,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE;
 
 
-
+    /**
+     * Transforms the enum value to an integer value
+     * @param value
+     * @return The integer value of the enum representing the number of foods in a cell
+     */
     public static int getFoodValue(Content value){
         switch(value){
             case ONE:
@@ -46,6 +50,11 @@ public enum Content {
         }
     }
 
+    /**
+     * Converts an integer value back to its enum value
+     * @param i
+     * @return The enum value of the integer value representing the number of foods in a cell
+     */
     public static Content getFoodEnumValue(int i){
 
         switch(i){

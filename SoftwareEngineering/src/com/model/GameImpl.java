@@ -19,6 +19,14 @@ public class GameImpl implements Game {
     String blackPlayerName;
     GameGUI gui;
 
+    /**
+     *Create a new game object with the two brain files with the names of the players which the brain files belong to and the GUI object in which it will be played in
+     * @param brain1
+     * @param name1
+     * @param brain2
+     * @param name2
+     * @param gui
+     */
     public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui){
 
         red = new ColonyImpl(Colour.RED);
@@ -32,6 +40,15 @@ public class GameImpl implements Game {
         setup();
     }
 
+    /**
+     * Create a new game object with the two brain files with the names of the players which the brain files belong to and the GUI object in which it will be played in and also the Map it will be playing on
+     * @param brain1
+     * @param name1
+     * @param brain2
+     * @param name2
+     * @param gui
+     * @param map
+     */
     public GameImpl(File brain1, String name1, File brain2, String name2, GameGUI gui, Map map){
 
         red = new ColonyImpl(Colour.RED);
@@ -46,6 +63,10 @@ public class GameImpl implements Game {
         setup();
     }
 
+    /**
+     * Getting the GUI object
+     * @return A GUI object
+     */
     public GameGUI getGUI(){ return gui;}
 
     @Override
@@ -53,15 +74,29 @@ public class GameImpl implements Game {
 
     }
 
+    /**
+     * Get the name of the black colony player
+     * @return A string which represents the black colony player name
+     */
     public String getBlackPlayerName() {
         return blackPlayerName;
     }
 
+    /**
+     * Get the name of the red colony player
+     * @return A string which represents the red colony player name
+     */
     public String getRedPlayerName() {
         return redPlayerName;
     }
 
 
+    /**
+     * Checks if the brain is syntactically correct and setting the brain to its correct colony
+     * @param brain
+     * @param colour
+     * @return A boolean showing if the brain is syntactically correct
+     */
     @Override
     public boolean loadBrain(File brain, Colour colour) {
 
@@ -88,6 +123,11 @@ public class GameImpl implements Game {
         return passed;
     }
 
+    /**
+     * Get a colony of a specific colour
+     * @param colour
+     * @return  A colony object of a specific object
+     */
     @Override
     public Colony getColony(Colour colour) {
         if(colour==Colour.RED){
@@ -98,6 +138,12 @@ public class GameImpl implements Game {
         }
     }
 
+
+    /**
+     * Get a brain from a specific colony
+     * @param colour
+     * @return A brain object from a specific colony
+     */
     @Override
     public File getBrain(Colour colour) {
         if(colour==Colour.RED){
@@ -108,11 +154,19 @@ public class GameImpl implements Game {
         }
     }
 
+    /**
+     * Get the current round the game is in
+     * @return A integer representing the current round that the game is in
+     */
     @Override
     public int getCurrentRound(){
         return currentRound;
     }
 
+    /**
+     * Get the map the game is being played on
+     * @return A map object which the game is being played on
+     */
     @Override
     public Map getMap() {
         return map;
@@ -165,6 +219,9 @@ public class GameImpl implements Game {
 
     }
 
+    /**
+     * Running all the ants through the step method in the brain to execute the next instruction
+     */
     @Override
     public void nextRound() {
         for(int i=0;i<127;i++){
@@ -181,7 +238,6 @@ public class GameImpl implements Game {
      * R = Red win
      * B = Black win
      * D = Draw
-     *
      * @return R, B or D, depending on the outcome of the game.
      */
     @Override
@@ -196,6 +252,11 @@ public class GameImpl implements Game {
             return null;
     }
 
+    /**
+     * Checks if the custom map loaded in is syntactically correct or not
+     * @param map
+     * @return A boolean checking if a custom map is syntactically correct or not
+     */
     public boolean loadMap(File map){
 
         return false;
