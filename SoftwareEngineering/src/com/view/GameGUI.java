@@ -67,7 +67,7 @@ public class GameGUI extends JFrame implements ActionListener {
         t.setGUI(this);
         controller = new ControllerImpl();
         CreateUI();
-        setSize(1000, 1000);
+        setSize(1000,1000);
     }
 
 
@@ -296,7 +296,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
     }
 
-<<<<<<< HEAD
     public void displayResult(){
         //new code
 
@@ -330,15 +329,15 @@ public class GameGUI extends JFrame implements ActionListener {
         loadedGames.remove(game);
         controller.updateScores(game, tournament);
         if (loadedGames.size() == 1) {
-                JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
+            JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
 
-                displayResult();
+            displayResult();
 
 
-                Game nextGame = loadedGames.get(0);
-                nextGame.getMap().getClearedMap();
-                nextGame.setup();
-                this.game = nextGame;
+            Game nextGame = loadedGames.get(0);
+            nextGame.getMap().getClearedMap();
+            nextGame.setup();
+            this.game = nextGame;
 
 
 
@@ -358,33 +357,6 @@ public class GameGUI extends JFrame implements ActionListener {
             startGame.setEnabled(false);
 
             displayResult();
-=======
-    /**
-     * This method triggers what happen when a game in a tournament ends
-     * @param game
-     */
-    public void signalGameEnd(Game game) {
-        loadedGames.remove(game);
-        controller.updateScores(game, tournament);
-
-        if (isSingleGame){
-            JOptionPane.showMessageDialog(this, "Gamer Over ! Winner is : " + game.getWinner());
-
-        }else{
-
-            if (loadedGames.size() == 1) {
-                JOptionPane.showMessageDialog(this, "First round over, play second one? Click start game again.");
-                tournament.updateScores(game);
-                HashMap<String, Integer> result = tournament.getResults();
-                t1.setText(Integer.toString(result.get("player1")) );
-
-//            updateGUI(loadedGames.get(0));
-//            this.game = loadedGames.get(0);
-            } else {
-                JOptionPane.showMessageDialog(this, "Second round over, thanks for playing!");
-            }
-
->>>>>>> origin/master
         }
     }
 
@@ -407,85 +379,13 @@ public class GameGUI extends JFrame implements ActionListener {
 
         if (n == "start game") {
 
-<<<<<<< HEAD
-
-//            Cell[][] cell = this.game.getMap().getMap();
-//            for(int y = 0; y < 150; y++){
-//                for(int x = 0; x < 150; x++){
-//                    if(x<149){
-//                        try {
-//                            if(cell[x][y].getAnt() != null){
-//                                System.out.print(".");
-//                            }else{
-//                                System.out.print("+");
-//                            }
-//                        } catch (AntNotFoundException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }else{
-//                        try {
-//                            if(cell[x][y].getAnt() != null){
-//                                System.out.println(".");
-//                            }else{
-//                                System.out.println("+");
-//                            }
-//                        } catch (AntNotFoundException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                }
-////            }
-//            Cell[][] cell = this.game.getMap().getMap();
-//            for(int y = 0; y < 150; y++){
-//                for(int x = 0; x < 150; x++){
-//                    if(x<149){
-//                        try {
-//                            if(cell[x][y].getContents() == Content.EMPTY){
-//                                System.out.print(".");
-//                            }else{
-//                                if(cell[x][y].getContents() == Content.BLACKHILL || cell[x][y].getContents() == Content.REDHILL ){
-//                                    System.out.print("+");
-//                                }
-//                                else if(cell[x][y].getContents() == Content.FIVE){
-//                                    System.out.print("5");
-//                                }
-//                                else if(cell[x][y].getContents() == Content.ROCKY){
-//                                    System.out.print("#");
-//                                }
-//                            }
-//                        } catch (Exception e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }else{
-//                        try {
-//                            if(cell[x][y].getContents() == Content.EMPTY){
-//                                System.out.println(".");
-//                            }else{
-//                                if(cell[x][y].getContents() == Content.BLACKHILL || cell[x][y].getContents() == Content.REDHILL ){
-//                                    System.out.println("+");
-//                                }
-//                                else if(cell[x][y].getContents() == Content.FIVE){
-//                                    System.out.println("5");
-//                                }
-//                                else if(cell[x][y].getContents() == Content.ROCKY){
-//                                    System.out.println("#");
-//                                }
-//                            }
-//                        } catch (Exception e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }
-//            System.out.println("===========================");
-
             if (isSingleGame){
                 loadedGames.clear();
                 loadedGames.add(fixtures.get(0));
                 //loadedGames.add(fixtures.get(1));
                 game = loadedGames.get(0);
                 if(isRandomWorld == false){
-                    game.setCustomMap(null);
+                    game.loadMap(customMap);
                 }
                 game.setup();
                 startGame.setEnabled(true);
@@ -494,18 +394,6 @@ public class GameGUI extends JFrame implements ActionListener {
             RunnableGame g = new RunnableGame(game);
             Thread t = new Thread(g);
             t.start();
-=======
-//            if (isSingleGame){
-//                //run single game
-//
-//
-//            }else{
-                //run tournament game
-                RunnableGame g = new RunnableGame(game);
-                Thread t = new Thread(g);
-                t.start();
-//            }
->>>>>>> origin/master
         }
 
 
@@ -544,16 +432,10 @@ public class GameGUI extends JFrame implements ActionListener {
 //        }
 
 
-
         @Override
         public void paint(Graphics g){
             Graphics2D g2;
             g2 = (Graphics2D) g;
-<<<<<<< HEAD
-=======
-            //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//            g2.drawImage(image,0,0,this);
->>>>>>> origin/master
 
 
             for(int j = 0; j < 150; j++){
@@ -623,7 +505,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
 
                     }
-<<<<<<< HEAD
 //                    int temp = Content.getFoodValue(map[i][j].getContents());
 //                    if(map[i][j].isColonyCell()!= null && map[i][j].getContents()!= null && (temp > 0 && temp < 10) ) {
 //                        if (map[i][j].isColonyCell() != null) {
@@ -635,30 +516,12 @@ public class GameGUI extends JFrame implements ActionListener {
 //                            }
 //                        }
 //                    }
-=======
-                    int temp = Content.getFoodValue(map[i][j].getContents());
-                    if(map[i][j].isColonyCell()!= null && map[i][j].getContents()!= null && (temp > 0 && temp < 10) ) {
-                        if (map[i][j].isColonyCell() != null) {
-                            System.out.println(map[i][j].isColonyCell());
-                            if (map[i][j].isColonyCell() == Content.REDHILL) {
-                                ci.drawHex(i, j, g2, Color.RED);
-                            }
-                            if (map[i][j].isColonyCell() == Content.BLACKHILL) {
-                                ci.drawHex(i, j, g2, Color.BLACK);
-                            }
-                        }
-                    }
->>>>>>> origin/master
 
                 }
             }
         }
 //
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 
 
@@ -718,21 +581,21 @@ public class GameGUI extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent event) {
 
 
-                    JFileChooser chooser = new JFileChooser();
-                    chooser.setCurrentDirectory(new File("."));
-                    chooser.setDialogTitle("Load Map");
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new File("."));
+                chooser.setDialogTitle("Load Map");
 
-                    //checking 1.if brain is correct
-                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION && game.loadMap(chooser.getSelectedFile()) ) {
+                //checking 1.if brain is correct
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-                        loadMapStatus.setText("Loaded Map : [ " + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
-                        customMap = chooser.getSelectedFile() ;
-                        Map m = new MapImpl();
+                    loadMapStatus.setText("Loaded Map : [ " + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
+                    customMap = chooser.getSelectedFile() ;
 
 
-                    } else {
-                        loadMapStatus.setText("Your Map is not working, retry! ");
-                    }
+
+                } else {
+                    loadMapStatus.setText("Your Map is not working, retry! ");
+                }
 
 
 
@@ -988,12 +851,7 @@ public class GameGUI extends JFrame implements ActionListener {
                 int k = 0;
                 String bu = "b";
 
-<<<<<<< HEAD
                 if (isRandomWorld || (!isRandomWorld && customMap!=null)) {
-=======
-                //check if world is loaded
-                if (isRandomWorld || ( !isRandomWorld && !(customizedWorldFile == null))) {
->>>>>>> origin/master
 
 
                     if (isSingleGame && p1Ready && p2Ready) {
@@ -1001,11 +859,7 @@ public class GameGUI extends JFrame implements ActionListener {
                         gameStatus.setText("Single Game is Ready.");
 
                         fixtures = controller.createFixtures(inputBrains, tournament);
-<<<<<<< HEAD
                         startGame.setEnabled(true);
-=======
-                        game = fixtures.get(0);
->>>>>>> origin/master
 
                         tab.setEnabledAt(1, true);
                         tab.setSelectedIndex(1);
@@ -1070,6 +924,7 @@ public class GameGUI extends JFrame implements ActionListener {
         clear.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
+                //make fixtures
 
                 playerNames = new HashMap<Integer, String>();
                 inputBrains = new HashMap<String, File>();

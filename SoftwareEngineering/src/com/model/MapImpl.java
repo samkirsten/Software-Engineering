@@ -1,6 +1,9 @@
 package com.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import com.model.exceptions.*;
 
@@ -14,6 +17,8 @@ public class MapImpl implements Map{
     private ArrayList<CellImpl> BLACKHILL = new ArrayList<>();
     private ArrayList<CellImpl> Foodblob = new ArrayList<>();
     private ArrayList<CellImpl> Rocky = new ArrayList<>();
+    private String lexedMap[][] = new String[150][150];
+    private CellImpl[][] customMap = new CellImpl[150][150];
 
     public MapImpl(){
         emptyMap();
@@ -33,7 +38,7 @@ public class MapImpl implements Map{
         for(int y = 0; y < 150; y++) {
             for (int x = 0; x < 150; x++) {
                 map[x][y] = new CellImpl();
-
+                customMap[x][y] = new CellImpl();
 
             }
         }
@@ -454,35 +459,282 @@ public class MapImpl implements Map{
     private void  generateCustomMap(String world[][]){
         RED.clear();
         BLACK.clear();
+        BLACKHILL.clear();
+        REDHILL.clear();Foodblob.clear();Rocky.clear();
         for(int y = 0; y < 150 ; y++){
             for(int x =0; x < 150;x++){
-                if(world[x][y] == "#"){
+                if(world[y][x].equals("#")){
                     Content c = Content.ROCKY;
-                    map[x][y].setColonyCell(c);
-                }else if (world[x][y] == "5"){
+                    map[y][x].setContents(c);
+                    CellImpl m = customMap[y][x];
+                    Rocky.add(m);
+                }else if (world[y][x].equals("5")){
                     Content c = Content.FIVE;
-                    map[x][y].setColonyCell(c);
-                }else if (world[x][y] == "+"){
+                    map[x][y].setContents(c);
+                    CellImpl m = customMap[y][x];
+                    Foodblob.add(m);
+                }else if (world[y][x].equals("+")){
                     Content c = Content.REDHILL;
-                    RED.add(new Position(x,y));
-                    map[x][y].setColonyCell(c);
-                }else if (world[x][y] == "-"){
+                    RED.add(new Position(y,x));
+                    map[x][y].setContents(c);
+                    CellImpl m = customMap[y][x];
+                    REDHILL.add(m);
+                }else if (world[y][x].equals("-")){
                     Content c = Content.BLACKHILL;
-                    BLACK.add(new Position(x,y));
-                    map[x][y].setColonyCell(c);
+                    BLACK.add(new Position(y,x));
+                    map[y][x].setContents(c);
+                    CellImpl m = customMap[y][x];
+                    BLACKHILL.add(m);
                 }else{
                     Content c = Content.EMPTY;
-                    map[x][y].setColonyCell(c);
+                    map[y][x].setContents(c);
                 }
 
             }
         }
+
+                    for(int y = 0; y < 150; y++){
+                for(int x = 0; x < 150; x++){
+                    if(x<149){
+                        try {
+                            if(world[y][x].equals(".")){
+                                System.out.print(".");
+                            }else{
+                                if(world[y][x].equals("-") || world[y][x].equals("+") ){
+                                    System.out.print("+");
+                                }
+                                else if(world[y][x].equals("5")){
+                                    System.out.print("5");
+                                }
+                                else if(world[y][x].equals("#")){
+                                    System.out.print("#");
+                                }
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            if(customMap[y][x].getContents() == Content.EMPTY){
+                                System.out.println(".");
+                            }else{
+                                if(customMap[y][x].getContents() == Content.
+                                        BLACKHILL || customMap[x][y].getContents() == Content.REDHILL ){
+                                    System.out.println("+");
+                                }
+                                else if(customMap[y][x].getContents() == Content.FIVE){
+                                    System.out.println("5");
+                                }
+                                else if(customMap[y][x].getContents() == Content.ROCKY){
+                                    System.out.println("#");
+                                }
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+
     }
 
-    public boolean loadMap(File map){
+    public boolean loadMap(File world){
+        System.out.println(2);
+        try {
+            byte[] encoded = Files.readAllBytes(Paths.get(world.getPath()));
+            String worldString = new String(encoded, "UTF-8");
+            String lexString = new String(encoded, "UTF-8");
+            if(lexMap(lexString)){
 
-        return true;
+                generateCustomMap(lexedMap);
+                return true;
+            } else {
+                Arrays.fill(lexedMap,"");
+                return false;
+            }
+        }
+        catch(IOException e){
+            return false;
+        } catch (IncorrectMapSyntaxException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    private int lexFood(int y, int x, int offset, String[][] mapToLex) throws IncorrectMapSyntaxException{
+        if(mapToLex[y][x-1+offset].equals("5")){
+            for(int i=0;i<5;i++){
+                if(mapToLex[y][x-1+i+offset].equals("5")){
+                    mapToLex[y][x-1+i+offset] = "*";
+                }
+                else{
+                    throw new IncorrectMapSyntaxException();
+                }
+            }
+            return -1;
+        }
+        else if(mapToLex[y][x+offset].equals("5")){
+            for(int i=0;i<5;i++){
+                if(mapToLex[y][x+i+offset].equals("5")){
+                    mapToLex[y][x+i+offset] = "*";
+                }
+                else{
+                    throw new IncorrectMapSyntaxException();
+                }
+            }
+            return 0;
+        }
+        else if(mapToLex[y][x+1+offset].equals("5")){
+            for(int i=0;i<5;i++){
+                if(mapToLex[y][x+1+i+offset].equals("5")){
+                    mapToLex[y][x+1+i+offset] = "*";
+                }
+                else{
+                    throw new IncorrectMapSyntaxException();
+                }
+            }
+            return 1;
+        }
+        else{
+            throw new IncorrectMapSyntaxException();
+        }
+    }
+
+    private void lexColony(int y, int x, int length, String[][] mapToLex, String hill) throws IncorrectMapSyntaxException{
+        for(int i=0;i<length;i++){
+            if(mapToLex[y][x+i].contains(hill))
+                mapToLex[y][x+i] = "*";
+            else
+                throw new IncorrectMapSyntaxException();
+        }
+    }
+
+
+    private boolean lexMap(String worldWithSpace) throws IncorrectMapSyntaxException{
+
+        String world = worldWithSpace.replaceAll("\\s", "").substring(6);
+
+        final int requiredFoodBlobs = 11;
+        int worldSize = 150 * 150;
+        int foodQty = 0;
+        boolean redCol = false;
+        boolean blackCol = false;
+
+        String[][] mapWorld = new String[150][150];
+
+        for(int i=0;i<150;i++){	// fill 2d array with chars
+            for(int j=0;j<150;j++){
+                mapWorld[i][j]= world.substring(((i*150)+j),((i*150)+j)+1);
+                lexedMap[i][j]= world.substring(((i*150)+j),((i*150)+j)+1);
+            }
+        }
+
+        for(int i=0;i<150;i++){
+            for(int j=0;j<150;j++){
+                if(i==0||i==149){
+                    if(mapWorld[i][j].equals("#")){
+                        mapWorld[i][j] = "*";
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    switch(mapWorld[i][j]){
+                        case "#":
+                            mapWorld[i][j] = "*";
+                            break;
+                        case ".":
+                            mapWorld[i][j] = "*";
+                            break;
+                        case "5":
+                            int offset = 0;
+                            for(int k=0;k<5;k++){	// for each line
+                                offset = offset + lexFood(i+k,j,offset,mapWorld);
+                            }
+                            foodQty++;
+                            break;
+                        case "+":
+                            int redY = i;
+                            int redX = j;
+                            int redLength = 7;
+                            for(int k=0;k<13;k++){
+                                if(k<7){
+                                    if((redY)%2==0){
+                                        lexColony(redY,redX,redLength,mapWorld,"+");
+                                        redX--;
+                                    }
+                                    else {
+                                        lexColony(redY,redX,redLength,mapWorld,"+");
+                                    }
+                                    redLength++;
+                                }
+                                else{
+                                    if(k==7){
+                                        redX++;
+                                        redLength = redLength -2;
+                                    }
+                                    if((redY)%2==0){
+                                        lexColony(redY,redX,redLength,mapWorld,"+");
+                                    }
+                                    else{
+                                        lexColony(redY,redX,redLength,mapWorld,"+");
+                                        redX++;
+                                    }
+                                    redLength--;
+                                }
+                                redY++;
+                            }
+                            redCol = true;
+                            break;
+                        case "-":
+                            int blackY = i;
+                            int blackX = j;
+                            int blackLength = 7;
+                            for(int k=0;k<13;k++){
+                                if(k<7){
+                                    if((blackY)%2==0){
+                                        lexColony(blackY,blackX,blackLength,mapWorld,"-");
+                                        blackX--;
+                                    }
+                                    else {
+                                        lexColony(blackY,blackX,blackLength,mapWorld,"-");
+                                    }
+                                    blackLength++;
+                                }
+                                else{
+                                    if(k==7){
+                                        blackX++;
+                                        blackLength = blackLength -2;
+                                    }
+                                    if((blackY)%2==0){
+                                        lexColony(blackY,blackX,blackLength,mapWorld,"-");
+                                    }
+                                    else{
+                                        lexColony(blackY,blackX,blackLength,mapWorld,"-");
+                                        blackX++;
+                                    }
+                                    blackLength--;
+                                }
+                                blackY++;
+                            }
+                            blackCol = true;
+                            break;
+                        case "*":
+                            break;
+                        default:
+                            return false;
+                    }
+                }
+            }
+        }
+
+        if(foodQty == 11 && redCol && blackCol){
+            return true;
+        }
+        else
+            return false;
     }
 
     public void cleanAnt(){

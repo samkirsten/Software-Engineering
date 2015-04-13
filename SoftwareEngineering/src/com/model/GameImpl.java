@@ -250,8 +250,8 @@ public class GameImpl implements Game {
      * @return A boolean checking if a custom map is syntactically correct or not
      */
     public boolean loadMap(File map){
-
-        return this.getMap().loadMap(map);
+        System.out.println("1");
+        return getMap().loadMap(map);
 
     }
 

@@ -24,17 +24,9 @@ public class TournamentImpl implements Tournament {
 
         fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui));
 
-<<<<<<< HEAD
         return fixtures;
     }
 
-=======
-    /**
-     * Create the fixtures which each brain has to play each other
-     * @param brains
-     * @return  A list of games objects which contain information of which players and playing each other
-     */
->>>>>>> origin/master
     @Override
     public List<Game> createFixtures(HashMap<String,File> brains) {
 
@@ -47,14 +39,14 @@ public class TournamentImpl implements Tournament {
             brainFiles.add(brainFile);
         }
 
-        if (brains.size() == 4) {  // creating fixtures for if there is 4 players
+        if (brains.size() == 4) {
             for (int i = 0; i < 6; i++) {
                 Game tempGame = null;
                 switch (i) {
                     case 0:
-                        tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui);  // create a new game object and add to the list
+                        tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui);
                         fixtures.add(tempGame);
-                       // fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui,new MapImpl(tempGame.getMap())));
+                        // fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui,new MapImpl(tempGame.getMap())));
                         fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 1:
@@ -86,7 +78,7 @@ public class TournamentImpl implements Tournament {
             }
         }
         else if(brains.size()==3){
-            for (int i = 0; i < 3; i++) {  // creating fixtures for if there is 3 players
+            for (int i = 0; i < 3; i++) {
                 Game tempGame = null;
                 switch (i) {
                     case 0:
@@ -108,13 +100,14 @@ public class TournamentImpl implements Tournament {
             }
         }
 
-        else if(brains.size() == 2){  // creating a fixture for a single game
+        else if(brains.size() == 2){
 
             fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui));
         }
 
+        /// think we need this
 
-        if(brains.size() == 2){  // setting up the results table with the names of the players for each case of number of players
+        if(brains.size() == 2){
 
             resultsTable.put(names.get(0),0);
             resultsTable.put(names.get(1),0);
@@ -138,10 +131,7 @@ public class TournamentImpl implements Tournament {
 
     }
 
-    /**
-     * Update the scores after each game has ended
-     * @param game
-     */
+
     @Override
     public void updateScores(Game game){
 
@@ -163,19 +153,12 @@ public class TournamentImpl implements Tournament {
         }
     }
 
-    /**
-     * Get the results of the tournamanet
-     * @return A hashmap with the player name as key and integer as the score of that player
-     */
+
     @Override
     public HashMap<String, Integer> getResults() {
         return resultsTable;
     }
 
-    /**
-     * Setting the GUI for the tournament
-     * @param gui
-     */
     @Override
     public void setGUI(GameGUI gui) {
         this.gui = gui;
