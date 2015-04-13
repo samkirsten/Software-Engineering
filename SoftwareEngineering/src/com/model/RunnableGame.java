@@ -18,7 +18,7 @@ public class RunnableGame implements Runnable {
     @Override
     public void run() {
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 100000; i++) {
             game.nextRound();
             if (i % 1000 == 0) {
                 game.getGUI().updateGUI(game);

@@ -465,76 +465,79 @@ public class MapImpl implements Map{
             for(int x =0; x < 150;x++){
                 if(world[y][x].equals("#")){
                     Content c = Content.ROCKY;
-                    map[y][x].setContents(c);
-                    CellImpl m = customMap[y][x];
+                    map[149-x][149-y].setContents(c);
+                    CellImpl m = customMap[149-x][149-y];
                     Rocky.add(m);
                 }else if (world[y][x].equals("5")){
                     Content c = Content.FIVE;
-                    map[x][y].setContents(c);
-                    CellImpl m = customMap[y][x];
+                    map[149-x][149-y].setContents(c);
+                    CellImpl m = customMap[149-x][149-y];
                     Foodblob.add(m);
                 }else if (world[y][x].equals("+")){
                     Content c = Content.REDHILL;
-                    RED.add(new Position(y,x));
-                    map[x][y].setContents(c);
-                    CellImpl m = customMap[y][x];
+                    RED.add(new Position(149-x,149-y));
+                    map[149-x][149 -y].setContents(c);
+                    CellImpl m = customMap[149-x][149-y];
                     REDHILL.add(m);
                 }else if (world[y][x].equals("-")){
                     Content c = Content.BLACKHILL;
-                    BLACK.add(new Position(y,x));
-                    map[y][x].setContents(c);
-                    CellImpl m = customMap[y][x];
+                    BLACK.add(new Position(149-x,149-y));
+                    map[149-x][149-y].setContents(c);
+                    CellImpl m = customMap[149-x][149-y];
                     BLACKHILL.add(m);
                 }else{
                     Content c = Content.EMPTY;
-                    map[y][x].setContents(c);
+                    map[149-x][149-y].setContents(c);
                 }
 
             }
         }
 
-                    for(int y = 0; y < 150; y++){
-                for(int x = 0; x < 150; x++){
-                    if(x<149){
-                        try {
-                            if(world[y][x].equals(".")){
-                                System.out.print(".");
-                            }else{
-                                if(world[y][x].equals("-") || world[y][x].equals("+") ){
-                                    System.out.print("+");
-                                }
-                                else if(world[y][x].equals("5")){
-                                    System.out.print("5");
-                                }
-                                else if(world[y][x].equals("#")){
-                                    System.out.print("#");
-                                }
-                            }
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }else{
-                        try {
-                            if(customMap[y][x].getContents() == Content.EMPTY){
-                                System.out.println(".");
-                            }else{
-                                if(customMap[y][x].getContents() == Content.
-                                        BLACKHILL || customMap[x][y].getContents() == Content.REDHILL ){
-                                    System.out.println("+");
-                                }
-                                else if(customMap[y][x].getContents() == Content.FIVE){
-                                    System.out.println("5");
-                                }
-                                else if(customMap[y][x].getContents() == Content.ROCKY){
-                                    System.out.println("#");
-                                }
-                            }
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
-            }
+        
+
+
+//                    for(int y = 0; y < 150; y++){
+//                for(int x = 0; x < 150; x++){
+//                    if(x<149){
+//                        try {
+//                            if(world[y][x].equals(".")){
+//                                System.out.print(".");
+//                            }else{
+//                                if(world[y][x].equals("-") || world[y][x].equals("+") ){
+//                                    System.out.print("+");
+//                                }
+//                                else if(world[y][x].equals("5")){
+//                                    System.out.print("5");
+//                                }
+//                                else if(world[y][x].equals("#")){
+//                                    System.out.print("#");
+//                                }
+//                            }
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }else{
+//                        try {
+//                            if(customMap[y][x].getContents() == Content.EMPTY){
+//                                System.out.println(".");
+//                            }else{
+//                                if(customMap[y][x].getContents() == Content.
+//                                        BLACKHILL || customMap[x][y].getContents() == Content.REDHILL ){
+//                                    System.out.println("+");
+//                                }
+//                                else if(customMap[y][x].getContents() == Content.FIVE){
+//                                    System.out.println("5");
+//                                }
+//                                else if(customMap[y][x].getContents() == Content.ROCKY){
+//                                    System.out.println("#");
+//                                }
+//                            }
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
 
     }
 
