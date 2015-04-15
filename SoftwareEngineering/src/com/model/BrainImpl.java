@@ -405,6 +405,13 @@ public class BrainImpl implements Brain {
     }
 
 
+    /**
+     * Loads a brain from file. This controls the behaviour of every ant in the colony.
+     * The brain is fundamental to the operation of the colony and this method must be invoked before the game begins
+     * @param brain the brain to be loaded
+     * @return  true if brain successfully loaded into colony, false otherwise.
+     */
+
     @Override
     public boolean loadBrain(File brain) {
 
@@ -417,7 +424,6 @@ public class BrainImpl implements Brain {
                 boolean passed =  parseBrain();
 
 
-                //  System.out.println(passed);
 
                 if(passed){
 
@@ -443,9 +449,12 @@ public class BrainImpl implements Brain {
     }
 
 
-
+    /**
+     * Executes the next instruction for an ant. Should be invoked by the game
+     * @param id the id of the ant
+     */
     @Override
-    public void step(int id) {  // throw exception for psos
+    public void step(int id) {
 
         Colour enemyColour;
         if(colony.getColonyColour() == Colour.RED){
@@ -457,7 +466,6 @@ public class BrainImpl implements Brain {
         Position p = null;
         Ant a = null;
 
-        // for red ants scent marker 1-6 black 7-12     0 to clear
         if (colony.isAntAlive(id)){
             try {
                 a = colony.getAnt(id);
@@ -466,13 +474,13 @@ public class BrainImpl implements Brain {
                 e.printStackTrace();
             }
             if(a.isResting()){
-                if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){
+                if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){ // checks if the ant is surrounded while resting
                     try {
-                        colony.remove(a.getID());
+                        colony.remove(a.getID());      // if the ant is surrounded then it dies and removes it from the colony
                     } catch (AntNotFoundException e) {
                         e.printStackTrace();
                     }
-                    if(map.getCellContents(p) == Content.EMPTY){
+                    if(map.getCellContents(p) == Content.EMPTY){    // the ant turns into food and this food is dropped on to the cell its currently in
                         try {
                             map.setCellContents(p,Content.THREE);
                         } catch (InvalidContentCharacterException e) {
@@ -482,9 +490,9 @@ public class BrainImpl implements Brain {
                         int content = Content.getFoodValue(map.getCellContents(p));
                         if(a.hasFood()){
                             if(content<5) {
-                                content = content + 4;
+                                content = content + 4;  // if the ant is carrying foo then add 4 food particles to the cell
                             }else if(content >= 6){
-                                content = 9;
+                                content = 9;           // cap food particles in a cell to 9 of it goes over this value
                             }
                         }else{
                             if(content <5){
@@ -510,10 +518,10 @@ public class BrainImpl implements Brain {
                 } catch (AntNotFoundException e) {
                     e.printStackTrace();
                 }
-                //    System.out.println(state.get(currentState));
+
                 Token command = state.get(currentState).get(0);
 
-                if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){
+                if(map.getAdjacentEnemyAnts(p, enemyColour) == 5 || map.getAdjacentEnemyAnts(p, enemyColour) == 6){  // check if the ant gets surrounded when its about to invoke an instruction
                     try {
                         colony.remove(a.getID());
                     } catch (AntNotFoundException e) {
@@ -548,19 +556,20 @@ public class BrainImpl implements Brain {
                         }
                     }
                 }
-                else if (command instanceof Sense) {
+                else if (command instanceof Sense) {  // sense the cell the ant is facing
                     Position p1 = sensedCell(p, a.getDirection(), state.get(currentState).get(1));
-                    if (state.get(currentState).get(4) instanceof Marker) {
+
+                    if (state.get(currentState).get(4) instanceof Marker) {   // checks if the instruction is to sense for a marker
 
                         if (cellMatchCheckMarker(p1, a.getColour(), ((Int)state.get(currentState).get(5)).n)) {
 
-                            a.setState(((Int)state.get(currentState).get(2)).n);
+                            a.setState(((Int)state.get(currentState).get(2)).n);  // set the state of the ant depending on what is sense
 
                         } else {
                             a.setState(((Int)state.get(currentState).get(3)).n);
                         }
 
-                    } else if (state.get(currentState).get(4) instanceof FoeMarker) {
+                    } else if (state.get(currentState).get(4) instanceof FoeMarker) { // checks if the instruction is to sense for foemarker
 
                         if (cellMatchCheckEnemyMarker(p1, a.getColour())) {
 
@@ -580,17 +589,19 @@ public class BrainImpl implements Brain {
                         a.setState(((Int)state.get(currentState).get(3)).n);
 
                     }
-                } else if (command instanceof Mark) {
+                } else if (command instanceof Mark) {  // mark the cell the ant is currently in
                     if(a.getColour() == Colour.RED){
+
                         map.setCellScentMarker(p, ((Int)state.get(currentState).get(1)).n);
 
                     }else if(a.getColour() == Colour.BLACK){
 
                         map.setCellScentMarker(p, ((Int)state.get(currentState).get(1)).n+6);
                     }
-                    a.setState(((Int)state.get(currentState).get(2)).n);
+
+                    a.setState(((Int)state.get(currentState).get(2)).n);  // change to the state given in the instructions
                 }
-                else if (command instanceof Unmark) {
+                else if (command instanceof Unmark) {  // unmark the current cell the ant is in if the marker has the same colour as the ant
                     if(a.getColour() == Colour.RED){
 
                         if(map.getCellScentMarker(a.getColour(),p) == ((Int)state.get(currentState).get(1)).n){
@@ -604,9 +615,9 @@ public class BrainImpl implements Brain {
                             a.setState(((Int)state.get(currentState).get(2)).n);
                         }
                     }
-                } else if (command instanceof PickUp) {
+                } else if (command instanceof PickUp) { // try to pickup food at the current cell
                     Content contents = map.getCellContents(p);
-                    if (a.hasFood() ||  contents == Content.EMPTY) {
+                    if (a.hasFood() ||  contents == Content.EMPTY) {  // checks if the ant has food or if the cell is empty
 
                         a.setState(((Int)state.get(currentState).get(2)).n);
 
@@ -629,7 +640,7 @@ public class BrainImpl implements Brain {
                             a.setState(((Int)state.get(currentState).get(1)).n);
                         }
                     }
-                } else if (command instanceof Drop) {
+                } else if (command instanceof Drop) {  // drop food if the ant has holding food
                     Content contents = map.getCellContents(p);
                     if (a.hasFood()) {
                         if (contents == Content.EMPTY) {
@@ -663,7 +674,7 @@ public class BrainImpl implements Brain {
 
                     a.setState(((Int)state.get(currentState).get(1)).n);
 
-                } else if (command instanceof Turn) {
+                } else if (command instanceof Turn) { // turn left or right
 
                     if ((state.get(currentState).get(1)) instanceof Right) {
 
@@ -683,10 +694,10 @@ public class BrainImpl implements Brain {
 
                     a.setState(((Int)state.get(currentState).get(2)).n);
 
-                } else if (command instanceof Move) {
+                } else if (command instanceof Move) {  // move the ant in the direction it is facing
                     int dir = a.getDirection();
                     Position pos = getAdjacentCell(p,dir);
-                    if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){ // maybe have a method in map that returns a boolean if a cell has ant
+                    if(map.getCellIsRocky(pos) || map.getAntAtCell(pos) != null ){
 
                         a.setState(((Int)state.get(currentState).get(2)).n);
 
@@ -700,7 +711,7 @@ public class BrainImpl implements Brain {
                         a.setPosition(pos);
                         a.setState(((Int) state.get(currentState).get(1)).n);
                         a.startResting();
-                        if(map.getAdjacentEnemyAnts(pos, enemyColour) == 5 || map.getAdjacentEnemyAnts(pos, enemyColour) == 6){
+                        if(map.getAdjacentEnemyAnts(pos, enemyColour) == 5 || map.getAdjacentEnemyAnts(pos, enemyColour) == 6){  // checks if the ant is surrounded after it has moved
                             try {
                                 colony.remove(a.getID());
                             } catch (AntNotFoundException e) {
@@ -1279,23 +1290,6 @@ public class BrainImpl implements Brain {
     }
 
 
-//
-//    public static void main(String args[]) throws InterruptedException {
-//
-//
-//        for(int i=0;i<300000;i++){
-//
-//            Thread.sleep(0,1);
-//            System.out.println(i);
-//            if(i==300000-1){
-//
-//                System.out.println("finished");
-//            }
-//        }
-//
-//
-//
-//    }
 
 
 

@@ -13,6 +13,12 @@ public class TournamentImpl implements Tournament {
     private List<Game> fixtures = new ArrayList<>();
     private GameGUI gui;
 
+
+    /**
+     * Create a fixture with a custom map
+     * @param brains
+     * @return A list of game a object holding information of who each player is playing
+     */
     public List<Game> createCustomFixuture(HashMap<String,File> brains){
         List<String> names = new ArrayList<>(brains.keySet());
         List<File> brainFiles = new ArrayList<>();
@@ -27,6 +33,11 @@ public class TournamentImpl implements Tournament {
         return fixtures;
     }
 
+    /**
+     * Create fixtures for the tournament
+     * @param brains
+     * @return A list of game objects holding information of who each player is playing
+     */
     @Override
     public List<Game> createFixtures(HashMap<String,File> brains) {
 
@@ -46,7 +57,6 @@ public class TournamentImpl implements Tournament {
                     case 0:
                         tempGame = new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui);
                         fixtures.add(tempGame);
-                        // fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui,new MapImpl(tempGame.getMap())));
                         fixtures.add(new GameImpl(brainFiles.get(1),names.get(1),brainFiles.get(0),names.get(0),gui));
                         break;
                     case 1:
@@ -105,7 +115,7 @@ public class TournamentImpl implements Tournament {
             fixtures.add(new GameImpl(brainFiles.get(0),names.get(0),brainFiles.get(1),names.get(1),gui));
         }
 
-        /// think we need this
+
 
         if(brains.size() == 2){
 
@@ -132,6 +142,10 @@ public class TournamentImpl implements Tournament {
     }
 
 
+    /**
+     * Update the scores for each player
+     * @param game
+     */
     @Override
     public void updateScores(Game game){
 
@@ -154,11 +168,19 @@ public class TournamentImpl implements Tournament {
     }
 
 
+    /**
+     *  Get the scores of each player
+     * @return A hashmap containing the scores of each player
+     */
     @Override
     public HashMap<String, Integer> getResults() {
         return resultsTable;
     }
 
+    /**
+     * Set the gui that the tournament is linked to
+     * @param gui
+     */
     @Override
     public void setGUI(GameGUI gui) {
         this.gui = gui;
