@@ -59,7 +59,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
     private Tournament tournament;
     private GameController controller;
-
+    private GridBagConstraints gbc = new GridBagConstraints();
 
     public GameGUI(Tournament t) {
         super("Software Engineering");
@@ -67,14 +67,15 @@ public class GameGUI extends JFrame implements ActionListener {
         t.setGUI(this);
         controller = new ControllerImpl();
         CreateUI();
-        setSize(1000,1000);
+        setSize(960,729);
+        setResizable(false);
     }
 
 
     private void CreateUI() {
 
         container = getContentPane();
-        container.setLayout(new BorderLayout());
+        container.setLayout(new GridBagLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         tab = new JTabbedPane();
@@ -107,8 +108,12 @@ public class GameGUI extends JFrame implements ActionListener {
         menuPanel.add(startGame);
         menuPanel.add(gameStatus);
         menuPanel.setVisible(true);
+        gbc.gridy = 0;
+        gbc.weightx =3;
+        gbc.weighty = 3;
+        gbc.insets = new Insets(2, 2, 2, 2);
 
-        container.add(menuPanel, BorderLayout.NORTH);
+        container.add(menuPanel, gbc);
     }
 
 
@@ -126,11 +131,12 @@ public class GameGUI extends JFrame implements ActionListener {
         b6 = new JButton("null");
         b6.setEnabled(false);
         tablePanel = new JPanel();
-        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.PAGE_AXIS));
+        tablePanel.setLayout(new GridLayout(2,0));
+        tablePanel.setBackground(Color.BLACK);
 
         fixturePanel = new JPanel();
         fixturePanel.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Tournament Fixture"));
-        fixturePanel.setLayout(new BoxLayout(fixturePanel, BoxLayout.Y_AXIS));
+        fixturePanel.setLayout(new GridLayout(6, 1));
 
         //fixturePanel.add(makeButton("Setting up the Matches"));
 
@@ -249,12 +255,12 @@ public class GameGUI extends JFrame implements ActionListener {
 
         rankPanel = new JPanel();
         rankPanel.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Rank"));
-        rankPanel.setLayout(new GridLayout(4, 3));
+        rankPanel.setLayout(new GridLayout(4, 4));
 
         l1 = new JLabel("First");
         t1 = new JTextField("");
         t1.setEditable(false);
-        rankPanel.add(l1);
+        rankPanel.add(l1,new GridLayout(1,1));
         rankPanel.add(t1);
         l2 = new JLabel("Second");
         t2 = new JTextField("");
@@ -272,11 +278,18 @@ public class GameGUI extends JFrame implements ActionListener {
         rankPanel.add(l4);
         rankPanel.add(t4);
 
+        tablePanel.add(fixturePanel, new GridLayout(1, 1));
+        tablePanel.add(rankPanel, new GridLayout(2, 1));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridwidth = 5;
+        gbc.gridheight =5;
+        gbc.weightx = 55;
+        gbc.weighty = 55;
+        gbc.insets = new Insets(2, 2, 2, 2);
 
-        tablePanel.add(fixturePanel, BorderLayout.NORTH);
-        tablePanel.add(rankPanel, BorderLayout.SOUTH);
-        tablePanel.setSize(new Dimension(400, 300));
-        container.add(tablePanel, BorderLayout.EAST);
+        container.add(tablePanel, gbc);
 
     }
 
@@ -289,10 +302,17 @@ public class GameGUI extends JFrame implements ActionListener {
         c = new Graphic();
         Map map = new MapImpl();
         map.emptyMap();
-        c.setMap(map.getMap(),map);
-        mapPanel.add(c,BorderLayout.CENTER);
+        c.setMap(map.getMap(), map);
+        mapPanel.add(c, BorderLayout.CENTER);
         c.setVisible(true);
-        container.add(mapPanel, BorderLayout.CENTER);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 2;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.weightx = gbc.weighty = 45;
+        gbc.insets = new Insets(2, 2, 2, 2);
+        container.add(mapPanel, gbc);
 
     }
 
@@ -320,8 +340,8 @@ public class GameGUI extends JFrame implements ActionListener {
         if (result.size() == 4){
 
             String name4 = playerNames.get(4);
-            Integer score4 = result.get(name3);
-            t2.setText(name4+" 's score:" + score4);
+            Integer score4 = result.get(name4);
+            t4.setText(name4+" 's score:" + score4);
         }
 
     }
@@ -416,21 +436,8 @@ public class GameGUI extends JFrame implements ActionListener {
         }
 
         public Graphic(){
-            setSize(750,753);
             setBackground(Color.white);
         }
-//
-//        public BufferedImage createBufferedImage(){
-//            int w = this.getWidth();
-//            int h = this.getHeight();
-//            int type = BufferedImage.TYPE_INT_RGB;
-//            BufferedImage image1 = new BufferedImage(w,h,type);
-//            BufferedImage image2 = new BufferedImage(w,h,type);
-//            image1.createGraphics();
-//            image1 = image;
-//            return image1;
-//        }
-
 
         @Override
         public void paint(Graphics g){
@@ -505,18 +512,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
 
                     }
-//                    int temp = Content.getFoodValue(map[i][j].getContents());
-//                    if(map[i][j].isColonyCell()!= null && map[i][j].getContents()!= null && (temp > 0 && temp < 10) ) {
-//                        if (map[i][j].isColonyCell() != null) {
-//                            if (map[i][j].isColonyCell() == Content.REDHILL) {
-//                                ci.drawHex(i, j, g2, Color.RED);
-//                            }
-//                            if (map[i][j].isColonyCell() == Content.BLACKHILL) {
-//                                ci.drawHex(i, j, g2, Color.BLACK);
-//                            }
-//                        }
-//                    }
-
                 }
             }
         }
@@ -585,15 +580,20 @@ public class GameGUI extends JFrame implements ActionListener {
                 chooser.setCurrentDirectory(new File("."));
                 chooser.setDialogTitle("Load Map");
 
+
+                Map testMap = new MapImpl();
+
+
                 //checking 1.if brain is correct
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION &&  testMap.loadMap(chooser.getSelectedFile())==true ) {
 
                     loadMapStatus.setText("Loaded Map : [ " + chooser.getName(chooser.getSelectedFile()) + " ]is loaded.");
                     customMap = chooser.getSelectedFile() ;
 
 
 
-                } else {
+                } else if (testMap.loadMap(chooser.getSelectedFile())==false)
+                {
                     loadMapStatus.setText("Your Map is not working, retry! ");
                 }
 
@@ -714,8 +714,6 @@ public class GameGUI extends JFrame implements ActionListener {
 
         //load brain button for player 4
         final JButton player4 = new JButton("Load Player 4's Brain");
-        player4.setPreferredSize(new Dimension(10, 10));
-        player4.setBounds(50, 60, 80, 30);
         player4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
@@ -754,7 +752,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
 
         //load map radio buttons
-        JRadioButton randomMapButton = new JRadioButton("Random World");
+        final JRadioButton randomMapButton = new JRadioButton("Random World");
         randomMapButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -764,7 +762,7 @@ public class GameGUI extends JFrame implements ActionListener {
             }
         });
 
-        JRadioButton customMapButton = new JRadioButton("Custom World");
+        final JRadioButton customMapButton = new JRadioButton("Custom World");
         customMapButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -803,6 +801,9 @@ public class GameGUI extends JFrame implements ActionListener {
                 p3Ready = false;
                 p4Ready = false;
 
+                customMapButton.setEnabled(true);
+
+
             }
         });
 
@@ -823,6 +824,12 @@ public class GameGUI extends JFrame implements ActionListener {
                 player4.setEnabled(true);
                 p3BrainStatus.setEnabled(true);
                 p4BrainStatus.setEnabled(true);
+
+                loadMap.setEnabled(false);
+                randomMapButton.setSelected(true);
+                isRandomWorld = true ;
+                customMapButton.setEnabled(false);
+
 
                 //make new brain list
                 inputBrains = new HashMap<String, File>();
@@ -870,34 +877,35 @@ public class GameGUI extends JFrame implements ActionListener {
 
                         }
                     } else {
-                        if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
+                        if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
                             for (int a = 0; a < playerNames.size() + 2; a++) {
                                 for (int b = a + 1; b < playerNames.size(); b++) {
                                     System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
                                     Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                                     Blist.get(k).setEnabled(true);
+                                    System.out.println(k);
                                     k++;
                                 }
                             }
-                            gameStatus.setText("3 Player Tournament ready.");
+                            gameStatus.setText("4 Player Tournament ready.");
+
                             tab.setEnabledAt(1, true);
 
                             tab.setSelectedIndex(1);
                             fixtures = controller.createFixtures(inputBrains, tournament);
 
+
                         } else {
-                            if (!isSingleGame && p1Ready && p2Ready && p3Ready && p4Ready) {
+                            if (!isSingleGame && p1Ready && p2Ready && p3Ready) {
                                 for (int a = 0; a < playerNames.size() + 2; a++) {
                                     for (int b = a + 1; b < playerNames.size(); b++) {
                                         System.out.println(playerNames.get(a + 1) + " " + playerNames.get(b + 1));
                                         Blist.get(k).setText(playerNames.get(a + 1) + " vs " + playerNames.get(b + 1));
                                         Blist.get(k).setEnabled(true);
-                                        System.out.println(k);
                                         k++;
                                     }
                                 }
-                                gameStatus.setText("4 Player Tournament ready.");
-
+                                gameStatus.setText("3 Player Tournament ready.");
                                 tab.setEnabledAt(1, true);
 
                                 tab.setSelectedIndex(1);
